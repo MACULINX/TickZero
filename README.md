@@ -14,7 +14,9 @@
 - **⏱️ OBS Synchronization** - Precise timestamp alignment between game events and video recording
 - **🤖 AI-Powered Analysis** - Uses Google Gemini (FREE tier) to identify highlight-worthy moments
 - **✂️ Automatic Video Editing** - FFmpeg-based conversion to vertical format (9:16) with blurred background
-- **⚡ Hardware Acceleration** - Supports NVIDIA NVENC with automatic CPU fallback
+- **🎮 Multi-GPU Support** - Automatic detection and optimization for NVIDIA, AMD, and Intel GPUs
+- **🔄 Continuous Recording** - Record multiple matches with automatic processing between games
+- **⚡ Hardware Acceleration** - Smart fallback: NVIDIA NVENC → AMD AMF → Intel QSV → CPU
 
 ## 📋 Requirements
 
@@ -200,9 +202,33 @@ config = {
     'gsi_port': 3000,              # GSI server port
     'log_file': 'match_log.json',
     'output_dir': 'highlights',
-    'use_gpu': True                # Use NVENC if available
+    'use_gpu': True,               # Enable GPU acceleration
+    'continuous_mode': True,       # Auto-process after each match
+    'auto_process': True,          # Enable automatic processing
+    'auto_min_priority': 6         # Minimum clip priority (1-10)
 }
 ```
+
+### GPU Acceleration
+
+TickZero automatically detects and uses the best available GPU encoder:
+
+1. **NVIDIA NVENC** (h264_nvenc) - Requires NVIDIA GPU with drivers
+2. **AMD AMF** (h264_amf) - Requires AMD Radeon GPU
+3. **Intel QuickSync** (h264_qsv) - Requires Intel CPU with integrated graphics
+4. **CPU Fallback** (libx264) - Works on any system
+
+The system automatically tests each encoder and uses the first working option.
+
+### Continuous Recording Mode
+
+When `continuous_mode: True`, TickZero:
+- Detects match end automatically (via "gameover" event)
+- Processes highlights in background
+- Continues recording for the next match
+- No need to restart between matches!
+
+**Perfect for:** Multi-match gaming sessions, competitive play, streaming
 
 ## 🐛 Troubleshooting
 

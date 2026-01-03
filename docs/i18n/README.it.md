@@ -14,7 +14,9 @@
 - **⏱️ Sincronizzazione OBS** - Allineamento preciso del timestamp tra eventi di gioco e registrazione video
 - **🤖 Analisi Powered by AI** - Usa Google Gemini (tier GRATUITO) per identificare momenti degni di highlight
 - **✂️ Editing Video Automatico** - Conversione basata su FFmpeg in formato verticale (9:16) con sfondo sfocato
-- **⚡ Accelerazione Hardware** - Supporta NVIDIA NVENC con fallback automatico su CPU
+- **🎮 Supporto Multi-GPU** - Rilevamento e ottimizzazione automatica per GPU NVIDIA, AMD e Intel
+- **🔄 Registrazione Continua** - Registra più partite con processing automatico tra le partite
+- **⚡ Accelerazione Hardware** - Fallback intelligente: NVIDIA NVENC → AMD AMF → Intel QSV → CPU
 
 ## 📋 Requisiti
 
@@ -200,9 +202,33 @@ config = {
     'gsi_port': 3000,              # Porta server GSI
     'log_file': 'match_log.json',
     'output_dir': 'highlights',
-    'use_gpu': True                # Usa NVENC se disponibile
+    'use_gpu': True,               # Abilita accelerazione GPU
+    'continuous_mode': True,       # Auto-process dopo ogni partita
+    'auto_process': True,          # Abilita processing automatico
+    'auto_min_priority': 6         # Priorità minima clip (1-10)
 }
 ```
+
+### Accelerazione GPU
+
+TickZero rileva e usa automaticamente il miglior encoder GPU disponibile:
+
+1. **NVIDIA NVENC** (h264_nvenc) - Richiede GPU NVIDIA con driver
+2. **AMD AMF** (h264_amf) - Richiede GPU AMD Radeon
+3. **Intel QuickSync** (h264_qsv) - Richiede CPU Intel con grafica integrata
+4. **Fallback CPU** (libx264) - Funziona su qualsiasi sistema
+
+Il sistema testa automaticamente ogni encoder e usa la prima opzione funzionante.
+
+### Modalità Registrazione Continua
+
+Con `continuous_mode: True`, TickZero:
+- Rileva automaticamente la fine della partita (evento "gameover")
+- Processa gli highlight in background
+- Continua a registrare per la partita successiva
+- Non serve riavviare tra le partite!
+
+**Perfetto per:** Sessioni multi-partita, gioco competitivo, streaming
 
 ## 🐛 Risoluzione Problemi
 
