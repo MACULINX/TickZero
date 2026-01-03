@@ -48,7 +48,39 @@ pip install -r requirements.txt
 2. Ir a **Herramientas → Configuración del Servidor WebSocket**
 3. Habilitar el servidor WebSocket
 4. Anotar el puerto (predeterminado: `4455`) y la contraseña (si está configurada)
-5. Actualizar `config` en `main.py` si es necesario
+5. Actualizar `config` en `main.py`:
+
+```python
+config = {
+    'obs_host': 'localhost',
+    'obs_port': 4455,              # Puerto OBS WebSocket
+    'obs_password': '',            # Contraseña OBS WebSocket
+    'gsi_port': 3000,              # Puerto servidor GSI
+    'log_file': 'match_log.json',
+    'output_dir': 'highlights',
+    'use_gpu': True,               # Habilitar aceleración GPU
+    'continuous_mode': True,       # Auto-procesar tras cada partida
+    'auto_process': True,          # Habilitar procesamiento automático
+    'auto_min_priority': 6         # Prioridad mínima (1-10)
+}
+```
+
+### Aceleración por GPU
+
+TickZero detecta y usa automáticamente el mejor codificador GPU disponible:
+
+1. **NVIDIA NVENC** (h264_nvenc) - Requiere GPU NVIDIA con drivers
+2. **AMD AMF** (h264_amf) - Requiere GPU AMD Radeon
+3. **Intel QuickSync** (h264_qsv) - Requiere CPU Intel con gráficos integrados
+4. **CPU Fallback** (libx264) - Funciona en cualquier sistema
+
+### Modo de Grabación Continua
+
+Con `continuous_mode: True`, TickZero:
+- Detecta automáticamente el fin de la partida (evento "gameover")
+- Procesa los destacados en segundo plano
+- Continúa grabando para la siguiente partida
+- ¡No es necesario reiniciar entre partidas!
 
 ### 3. Habilitar Game State Integration de CS2
 
@@ -145,6 +177,29 @@ clip_01_3k_headshot_p9.mp4
 clip_02_clutch_1v3_p8.mp4
 clip_03_ace_p10.mp4
 ```
+
+## 🐛 Solución de Problemas
+
+### Problemas de Conexión OBS
+- ✅ Asegúrate de que OBS Studio se esté ejecutando
+- ✅ Verifica que WebSocket esté habilitado: **Herramientas → Configuración del Servidor WebSocket**
+- ✅ Verifica que el puerto y la contraseña coincidan con tu configuración
+
+### No se Registran Eventos
+- ✅ Verifica que `gamestate_integration_highlights.cfg` esté en la carpeta CS2 correcta
+- ✅ Comprueba que el servidor GSI se esté ejecutando (debería mostrar "Listening on port 3000")
+- ✅ Inicia CS2 y revisa la consola para ver mensajes de conexión GSI
+
+### Errores de FFmpeg
+- ✅ Asegúrate de tener FFmpeg instalado: `ffmpeg -version`
+- ✅ Verifica que la ruta del video fuente sea correcta
+- ✅ Intenta configurar `use_gpu: False` si encuentras errores de NVENC
+
+### IA No Devuelve Destacados
+- ✅ Verifica que `match_log.json` contenga eventos de asesinatos
+- ✅ Reduce el umbral `min_priority` (intenta con 4 o 5)
+- ✅ Verifica que tu clave API de Google sea válida: ejecuta `python examples/test_gemini_api.py`
+- ✅ Comprueba no haber excedido la cuota diaria (1500 solicitudes)
 
 ## 🤝 Contribuir
 

@@ -48,7 +48,39 @@ pip install -r requirements.txt
 2. Zu **Tools → WebSocket Server-Einstellungen** gehen
 3. WebSocket-Server aktivieren
 4. Port notieren (Standard: `4455`) und Passwort (falls gesetzt)
-5. `config` in `main.py` bei Bedarf aktualisieren
+5. `config` in `main.py` aktualisieren:
+
+```python
+config = {
+    'obs_host': 'localhost',
+    'obs_port': 4455,              # OBS WebSocket Port
+    'obs_password': '',            # OBS WebSocket Passwort
+    'gsi_port': 3000,              # GSI Server Port
+    'log_file': 'match_log.json',
+    'output_dir': 'highlights',
+    'use_gpu': True,               # GPU-Beschleunigung aktivieren
+    'continuous_mode': True,       # Auto-Verarbeitung nach jedem Match
+    'auto_process': True,          # Automatische Verarbeitung aktivieren
+    'auto_min_priority': 6         # Minimale Priorität (1-10)
+}
+```
+
+### GPU-Beschleunigung
+
+TickZero erkennt und nutzt automatisch den besten verfügbaren GPU-Encoder:
+
+1. **NVIDIA NVENC** (h264_nvenc) - Erfordert NVIDIA GPU mit Treibern
+2. **AMD AMF** (h264_amf) - Erfordert AMD Radeon GPU
+3. **Intel QuickSync** (h264_qsv) - Erfordert Intel CPU mit integrierter Grafik
+4. **CPU Fallback** (libx264) - Funktioniert auf jedem System
+
+### Kontinuierlicher Aufnahmemodus
+
+Mit `continuous_mode: True`, TickZero:
+- Erkennt automatisch das Spielende (Ereignis "gameover")
+- Verarbeitet Highlights im Hintergrund
+- Setzt die Aufnahme für das nächste Match fort
+- Kein Neustart zwischen Matches erforderlich!
 
 ### 3. CS2 Game State Integration Aktivieren
 
@@ -145,6 +177,29 @@ clip_01_3k_headshot_p9.mp4
 clip_02_clutch_1v3_p8.mp4
 clip_03_ace_p10.mp4
 ```
+
+## 🐛 Fehlerbehebung
+
+### OBS Verbindungsprobleme
+- ✅ Stellen Sie sicher, dass OBS Studio läuft
+- ✅ Prüfen Sie, ob WebSocket aktiviert ist: **Tools → WebSocket Server-Einstellungen**
+- ✅ Überprüfen Sie, ob Port und Passwort mit Ihrer Konfiguration übereinstimmen
+
+### Keine Ereignisse werden protokolliert
+- ✅ Überprüfen Sie, ob `gamestate_integration_highlights.cfg` im richtigen CS2-Ordner liegt
+- ✅ Prüfen Sie, ob der GSI-Server läuft (sollte "Listening on port 3000" anzeigen)
+- ✅ Starten Sie CS2 und prüfen Sie die Konsole auf GSI-Verbindungsmeldungen
+
+### FFmpeg Fehler
+- ✅ Stellen Sie sicher, dass FFmpeg installiert ist: `ffmpeg -version`
+- ✅ Überprüfen Sie, ob der Quellvidepfad korrekt ist
+- ✅ Versuchen Sie `use_gpu: False` zu setzen, wenn NVENC-Fehler auftreten
+
+### KI liefert keine Highlights
+- ✅ Überprüfen Sie, ob `match_log.json` Kill-Ereignisse enthält
+- ✅ Senken Sie den `min_priority` Schwellenwert (versuchen Sie 4 oder 5)
+- ✅ Überprüfen Sie, ob Ihr Google API-Schlüssel gültig ist: `python examples/test_gemini_api.py` ausführen
+- ✅ Prüfen Sie, ob das tägliche Kontingent (1500 Anfragen) überschritten wurde
 
 ## 🤝 Mitwirken
 

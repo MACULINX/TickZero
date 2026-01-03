@@ -48,7 +48,39 @@ pip install -r requirements.txt
 2. 转到 **工具 → WebSocket服务器设置**
 3. 启用WebSocket服务器
 4. 记录端口(默认: `4455`)和密码(如果设置)
-5. 如需要,更新`main.py`中的`config`
+5. 更新`main.py`中的`config`:
+
+```python
+config = {
+    'obs_host': 'localhost',
+    'obs_port': 4455,              # OBS WebSocket端口
+    'obs_password': '',            # OBS WebSocket密码
+    'gsi_port': 3000,              # GSI服务器端口
+    'log_file': 'match_log.json',
+    'output_dir': 'highlights',
+    'use_gpu': True,               # 启用GPU加速
+    'continuous_mode': True,       # 比赛后自动处理
+    'auto_process': True,          # 启用自动处理
+    'auto_min_priority': 6         # 最低优先级(1-10)
+}
+```
+
+### GPU加速
+
+TickZero会自动检测并使用最佳可用的GPU编码器:
+
+1. **NVIDIA NVENC** (h264_nvenc) - 需要安装驱动的NVIDIA GPU
+2. **AMD AMF** (h264_amf) - 需要AMD Radeon GPU
+3. **Intel QuickSync** (h264_qsv) - 需要带核显的Intel CPU
+4. **CPU Fallback** (libx264) - 适用于任何系统
+
+### 连续录制模式
+
+启用 `continuous_mode: True` 后, TickZero会:
+- 自动检测比赛结束("gameover"事件)
+- 后台处理高光时刻
+- 继续录制下一场比赛
+- 比赛之间无需重启!
 
 ### 3. 启用CS2游戏状态集成
 
@@ -145,6 +177,29 @@ clip_01_3k_headshot_p9.mp4
 clip_02_clutch_1v3_p8.mp4
 clip_03_ace_p10.mp4
 ```
+
+## 🐛 故障排除
+
+### OBS连接问题
+- ✅ 确保OBS Studio正在运行
+- ✅ 检查WebSocket是否启用: **工具 → WebSocket服务器设置**
+- ✅ 验证端口和密码是否与配置匹配
+
+###未记录任何事件
+- ✅ 验证`gamestate_integration_highlights.cfg`是否在正确的CS2文件夹中
+- ✅ 检查GSI服务器是否运行(应显示"Listening on port 3000")
+- ✅ 启动CS2并检查控制台是否有GSI连接消息
+
+### FFmpeg错误
+- ✅ 确保已安装FFmpeg: `ffmpeg -version`
+- ✅ 验证源视频路径是否正确
+- ✅ 如果遇到NVENC错误,尝试设置`use_gpu: False`
+
+### AI未返回高光时刻
+- ✅ 检查`match_log.json`是否包含击杀事件
+- ✅ 降低`min_priority`阈值(尝试4或5)
+- ✅ 验证Google API密钥是否有效: 运行`python examples/test_gemini_api.py`
+- ✅ 检查是否超过每日配额(1500次请求)
 
 ## 🤝 贡献
 

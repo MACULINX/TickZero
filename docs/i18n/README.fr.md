@@ -48,7 +48,39 @@ pip install -r requirements.txt
 2. Aller dans **Outils → Paramètres du Serveur WebSocket**
 3. Activer le serveur WebSocket
 4. Noter le port (par défaut: `4455`) et le mot de passe (si défini)
-5. Mettre à jour `config` dans `main.py` si nécessaire
+5. Mettre à jour `config` dans `main.py`:
+
+```python
+config = {
+    'obs_host': 'localhost',
+    'obs_port': 4455,              # Port OBS WebSocket
+    'obs_password': '',            # Mot de passe OBS WebSocket
+    'gsi_port': 3000,              # Port serveur GSI
+    'log_file': 'match_log.json',
+    'output_dir': 'highlights',
+    'use_gpu': True,               # Activer l'accélération GPU
+    'continuous_mode': True,       # Auto-traitement après chaque match
+    'auto_process': True,          # Activer le traitement automatique
+    'auto_min_priority': 6         # Priorité minimale (1-10)
+}
+```
+
+### Accélération Matérielle GPU
+
+TickZero détecte et utilise automatiquement le meilleur encodeur GPU disponible:
+
+1. **NVIDIA NVENC** (h264_nvenc) - Nécessite GPU NVIDIA avec pilotes
+2. **AMD AMF** (h264_amf) - Nécessite GPU AMD Radeon
+3. **Intel QuickSync** (h264_qsv) - Nécessite CPU Intel avec graphismes intégrés
+4. **CPU Fallback** (libx264) - Fonctionne sur tous les systèmes
+
+### Mode Enregistrement Continu
+
+Avec `continuous_mode: True`, TickZero:
+- Détecte automatiquement la fin du match (événement "gameover")
+- Traite les moments forts en arrière-plan
+- Continue l'enregistrement pour le match suivant
+- Pas besoin de redémarrer entre les matchs !
 
 ### 3. Activer l'Intégration d'État de Jeu CS2
 
@@ -145,6 +177,29 @@ clip_01_3k_headshot_p9.mp4
 clip_02_clutch_1v3_p8.mp4
 clip_03_ace_p10.mp4
 ```
+
+## 🐛 Dépannage
+
+### Problèmes de Connexion OBS
+- ✅ Assurez-vous qu'OBS Studio est lancé
+- ✅ Vérifiez que le WebSocket est activé: **Outils → Paramètres du Serveur WebSocket**
+- ✅ Vérifiez que le port et le mot de passe correspondent à votre configuration
+
+### Aucun Événement Enregistré
+- ✅ Vérifiez que `gamestate_integration_highlights.cfg` est dans le bon dossier CS2
+- ✅ Vérifiez que le serveur GSI fonctionne (devrait afficher "Listening on port 3000")
+- ✅ Lancez CS2 et vérifiez la console pour les messages de connexion GSI
+
+### Erreurs FFmpeg
+- ✅ Assurez-vous que FFmpeg est installé: `ffmpeg -version`
+- ✅ Vérifiez que le chemin de la vidéo source est correct
+- ✅ Essayez de définir `use_gpu: False` si vous rencontrez des erreurs NVENC
+
+### L'IA ne Retourne Aucun Moment Fort
+- ✅ Vérifiez que `match_log.json` contient des événements de kill
+- ✅ Baissez le seuil `min_priority` (essayez 4 ou 5)
+- ✅ Vérifiez que votre clé API Google est valide: lancez `python examples/test_gemini_api.py`
+- ✅ Vérifiez que vous n'avez pas dépassé le quota quotidien (1500 requêtes)
 
 ## 🤝 Contribuer
 
