@@ -38,14 +38,19 @@ class CS2HighlightPipeline:
             password=self.config.get('obs_password', '')
         )
         
+        # Setup match-end callback for continuous mode
+        match_end_callback = self._on_match_end if self.config.get('continuous_mode') else None
+        
         self.gsi = GSIServer(
             obs_manager=self.obs,
             port=self.config.get('gsi_port', 3000),
-            log_file=self.config.get('log_file', 'match_log.json')
+            log_file=self.config.get('log_file', 'match_log.json'),
+            on_match_end=match_end_callback
         )
         
         self.ai_director = None  # Initialize when needed (requires API key)
         self.video_editor = None  # Initialize during post-processing
+        self.processing_thread = None  # Background processing thread
     
     def start_live_logging(self):
         """
@@ -76,14 +81,61 @@ class CS2HighlightPipeline:
         self.gsi.start()
         
         logger.info("\n" + "=" * 60)
-        logger.info("✓ LIVE LOGGING ACTIVE")
+        logger.info("\n✓ LIVE LOGGING ACTIVE")
         logger.info("=" * 60)
         logger.info("\nYou can now launch CS2 and play your match.")
         logger.info("Game events will be automatically logged with video timestamps.")
-        logger.info("\nPress Ctrl+C when match is finished to stop logging.")
+        
+        if self.config.get('continuous_mode'):
+            logger.info("\n🔄 CONTINUOUS MODE ENABLED")
+            logger.info("Highlights will be auto-processed after each match.")
+            logger.info("Recording will continue for multiple matches.")
+            logger.info("\nPress Ctrl+C when done playing to stop.")
+        else:
+            logger.info("\nPress Ctrl+C when match is finished to stop logging.")
         logger.info("=" * 60 + "\n")
         
         return True
+    
+    def _on_match_end(self):
+        """
+        Callback when match ends in continuous mode.
+        Triggers background processing while continuing to record.
+        """
+        logger.info("\n" + "=" * 60)
+        logger.info("🔄 MATCH ENDED - AUTO-PROCESSING HIGHLIGHTS")
+        logger.info("=" * 60)
+        
+        # Get current recording path
+        recording_path = self.obs.last_recording_path
+        
+        if not recording_path:
+            logger.warning("Cannot auto-process: recording path unknown")
+            return
+        
+        # Start processing in background thread
+        self.processing_thread = threading.Thread(
+            target=self._background_process,
+            args=(recording_path,),
+            daemon=True
+        )
+        self.processing_thread.start()
+        
+        logger.info("\n📹 Recording continues for next match...\n")
+    
+    def _background_process(self, video_path):
+        """Process highlights in background while recording continues."""
+        try:
+            time.sleep(3)  # Wait for file to be fully written
+            
+            min_priority = self.config.get('auto_min_priority', 6)
+            logger.info(f"\n[Background] Processing highlights from: {video_path}")
+            
+            self.run_post_processing(video_path, min_priority=min_priority)
+            
+            logger.info("\n[Background] Processing complete!\n")
+        except Exception as e:
+            logger.error(f"[Background] Processing failed: {e}")
     
     def stop_live_logging(self):
         """Stop live logging and save event data."""
@@ -94,6 +146,9 @@ class CS2HighlightPipeline:
         # Stop GSI server (this saves logs)
         self.gsi.stop()
         
+        # Get the recording file path before stopping
+        recording_path = self.obs.get_last_recording_path()
+        
         # Stop OBS recording
         self.obs.stop_recording()
         
@@ -102,6 +157,8 @@ class CS2HighlightPipeline:
         
         logger.info("\n✓ Live logging session complete")
         logger.info(f"✓ Events saved to: {self.gsi.log_file}")
+        
+        return recording_path
     
     def run_post_processing(self, source_video, api_key=None, min_priority=6):
         """
@@ -181,7 +238,10 @@ def main():
         'gsi_port': 3000,
         'log_file': 'match_log.json',
         'output_dir': 'highlights',
-        'use_gpu': True
+        'use_gpu': True,
+        'continuous_mode': True,     # Enable continuous multi-match recording
+        'auto_process': True,        # Automatically process highlights after match
+        'auto_min_priority': 6       # Minimum priority for auto-processing
     }
     
     pipeline = CS2HighlightPipeline(config)
@@ -199,7 +259,25 @@ def main():
                     while True:
                         time.sleep(1)
                 except KeyboardInterrupt:
-                    pipeline.stop_live_logging()
+                    recording_path = pipeline.stop_live_logging()
+                    
+                    # Auto-process highlights if enabled
+                    if config.get('auto_process', False):
+                        logger.info("\n" + "=" * 60)
+                        logger.info("AUTO-PROCESSING ENABLED")
+                        logger.info("=" * 60)
+                        
+                        if recording_path:
+                            logger.info(f"\nStarting automatic highlight processing...")
+                            logger.info(f"Recording: {recording_path}")
+                            
+                            time.sleep(2)  # Brief pause for OBS to finish writing
+                            
+                            min_priority = config.get('auto_min_priority', 6)
+                            pipeline.run_post_processing(recording_path, min_priority=min_priority)
+                        else:
+                            logger.warning("Could not auto-process: recording path not found")
+                            logger.info("You can manually process with: python main.py process <video_path>")
         
         elif mode == 'process':
             # POST-PROCESSING MODE
@@ -240,7 +318,17 @@ def main():
                     while True:
                         time.sleep(1)
                 except KeyboardInterrupt:
-                    pipeline.stop_live_logging()
+                    recording_path = pipeline.stop_live_logging()
+                    
+                    # Ask about auto-processing
+                    if recording_path:
+                        auto_process = input("\nAuto-process highlights now? (y/n): ").strip().lower()
+                        if auto_process == 'y':
+                            min_priority = input("Minimum priority (1-10, default 6): ").strip()
+                            min_priority = int(min_priority) if min_priority else 6
+                            
+                            time.sleep(2)  # Brief pause
+                            pipeline.run_post_processing(recording_path, min_priority=min_priority)
         
         elif choice == '2':
             video_path = input("Enter path to recorded video: ").strip()

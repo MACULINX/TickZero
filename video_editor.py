@@ -30,27 +30,87 @@ class VideoEditor:
         # Create output directory
         Path(output_dir).mkdir(parents=True, exist_ok=True)
         
-        # Check if GPU encoding is available
-        self.gpu_available = self._check_gpu_support() if use_gpu else False
+        # Check for GPU support (returns encoder name or None)
+        self.gpu_encoder, self.gpu_type = self._check_gpu_support() if use_gpu else (None, None)
+        self.gpu_available = self.gpu_encoder is not None
         
     def _check_gpu_support(self):
-        """Check if NVENC (NVIDIA GPU encoding) is available."""
+        """
+        Check for available GPU encoders in priority order:
+        1. NVIDIA NVENC (h264_nvenc)
+        2. AMD AMF (h264_amf) 
+        3. Intel QuickSync (h264_qsv)
+        4. Fallback to CPU (libx264)
+        
+        Returns:
+            tuple: (encoder_name, encoder_type) or (None, None) if only CPU available
+        """
+        # Priority order: NVIDIA > AMD > Intel > CPU
+        encoders_to_test = [
+            ('h264_nvenc', 'NVIDIA NVENC', 'nvcuda.dll'),
+            ('h264_amf', 'AMD AMF', None),
+            ('h264_qsv', 'Intel QuickSync', None),
+        ]
+        
         try:
+            # First, get list of available encoders in FFmpeg
             result = subprocess.run(
                 ['ffmpeg', '-hide_banner', '-encoders'],
                 capture_output=True,
                 text=True,
                 timeout=5
             )
-            has_nvenc = 'h264_nvenc' in result.stdout
-            if has_nvenc:
-                logger.info("✓ NVENC GPU encoding available")
-            else:
-                logger.info("ℹ GPU encoding not available, will use CPU")
-            return has_nvenc
+            available_encoders = result.stdout
+            
         except Exception as e:
-            logger.warning(f"Could not check GPU support: {e}")
-            return False
+            logger.warning(f"Could not query FFmpeg encoders: {e}, will use CPU")
+            return None, None
+        
+        # Test each encoder in priority order
+        for encoder, friendly_name, dll_hint in encoders_to_test:
+            if encoder not in available_encoders:
+                logger.debug(f"{friendly_name} encoder not found in FFmpeg")
+                continue
+            
+            # Actually test if the encoder can initialize
+            logger.info(f"Testing {friendly_name} availability...")
+            test_cmd = [
+                'ffmpeg', '-f', 'lavfi', '-i', 'nullsrc=s=256x256:d=0.1',
+                '-c:v', encoder, '-f', 'null', '-'
+            ]
+            
+            try:
+                test_result = subprocess.run(
+                    test_cmd,
+                    capture_output=True,
+                    text=True,
+                    timeout=10
+                )
+                
+                if test_result.returncode == 0:
+                    logger.info(f"✓ {friendly_name} GPU encoding available and working")
+                    return encoder, friendly_name
+                else:
+                    # Check for specific error messages
+                    stderr = test_result.stderr.lower()
+                    if dll_hint and dll_hint.lower() in stderr:
+                        logger.info(f"ℹ {friendly_name} found but drivers not available")
+                    elif 'cannot load' in stderr or 'not found' in stderr:
+                        logger.info(f"ℹ {friendly_name} found but cannot initialize")
+                    else:
+                        logger.debug(f"{friendly_name} test failed: {test_result.returncode}")
+                    continue
+                    
+            except subprocess.TimeoutExpired:
+                logger.warning(f"{friendly_name} test timed out")
+                continue
+            except Exception as e:
+                logger.warning(f"Error testing {friendly_name}: {e}")
+                continue
+        
+        # No GPU encoder worked, will use CPU
+        logger.info("ℹ No GPU encoders available, will use CPU (libx264)")
+        return None, None
     
     def create_highlight(self, start_time, end_time, output_name, label="highlight"):
         """
@@ -104,18 +164,42 @@ class VideoEditor:
         cmd.extend(['-filter_complex', filter_complex])
         cmd.extend(['-map', '[v]'])  # Use filtered video output
         
-        # Encoder selection
+        # Encoder selection with vendor-specific optimizations
         if self.gpu_available:
-            cmd.extend([
-                '-c:v', 'h264_nvenc',         # NVIDIA GPU encoder
-                '-preset', 'p4',              # Balanced preset (p1=fast, p7=slow)
-                '-rc', 'vbr',                 # Variable bitrate
-                '-cq', '23',                  # Quality (lower = better, 0-51)
-                '-b:v', '5M',                 # Target bitrate
-                '-maxrate', '8M',             # Max bitrate
-                '-bufsize', '10M',            # Buffer size
-            ])
+            cmd.extend(['-c:v', self.gpu_encoder])
+            
+            # Vendor-specific encoding parameters
+            if 'nvenc' in self.gpu_encoder:
+                # NVIDIA NVENC settings
+                cmd.extend([
+                    '-preset', 'p4',              # Balanced preset (p1=fast, p7=slow)
+                    '-rc', 'vbr',                 # Variable bitrate
+                    '-cq', '23',                  # Quality (lower = better, 0-51)
+                    '-b:v', '5M',                 # Target bitrate
+                    '-maxrate', '8M',             # Max bitrate
+                    '-bufsize', '10M',            # Buffer size
+                ])
+            elif 'amf' in self.gpu_encoder:
+                # AMD AMF settings
+                cmd.extend([
+                    '-quality', 'balanced',       # Quality preset
+                    '-rc', 'vbr_latency',         # Rate control
+                    '-qp_i', '23',                # I-frame quality
+                    '-qp_p', '23',                # P-frame quality
+                    '-b:v', '5M',                 # Target bitrate
+                    '-maxrate', '8M',             # Max bitrate
+                ])
+            elif 'qsv' in self.gpu_encoder:
+                # Intel QuickSync settings
+                cmd.extend([
+                    '-preset', 'medium',          # Encoding speed
+                    '-global_quality', '23',      # Quality
+                    '-b:v', '5M',                 # Target bitrate
+                    '-maxrate', '8M',             # Max bitrate
+                    '-bufsize', '10M',            # Buffer size
+                ])
         else:
+            # CPU fallback - libx264
             cmd.extend([
                 '-c:v', 'libx264',            # CPU encoder (fallback)
                 '-preset', 'medium',          # Encoding speed (faster = lower quality)

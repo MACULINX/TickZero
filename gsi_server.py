@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class GSIServer:
     """Receives and processes CS2 Game State Integration data."""
     
-    def __init__(self, obs_manager, port=3000, log_file="match_log.json"):
+    def __init__(self, obs_manager, port=3000, log_file="match_log.json", on_match_end=None):
         """
         Initialize GSI server.
         
@@ -24,6 +24,7 @@ class GSIServer:
             obs_manager: OBSManager instance for timestamp synchronization
             port: Port to listen on (default: 3000)
             log_file: Path to save match log JSON
+            on_match_end: Callback function called when match ends
         """
         self.port = port
         self.log_file = log_file
@@ -31,11 +32,15 @@ class GSIServer:
         self.server = None
         self.server_thread = None
         self.is_running = False
+        self.on_match_end = on_match_end
         
         # Match state tracking
         self.previous_state = {}
         self.match_events = []
         self.current_round = 0
+        self.last_round_phase = None
+        self.match_ended = False
+        self.rounds_since_event = 0  # Track inactivity
         
     def start(self):
         """Start the GSI HTTP server in a separate thread."""
@@ -128,8 +133,9 @@ class GSIServer:
             logger.error(f"Error processing game state: {e}")
     
     def _log_round_phase_change(self, event_time, phase, round_data):
-        """Log round phase changes (live, over, freezetime, etc.)."""
+        """Log round phase changes and detect match end."""
         video_timestamp = self.obs_manager.calculate_video_timestamp(event_time)
+        current_round = round_data.get('round', 0)
         
         event = {
             "type": "round_phase_change",
@@ -137,11 +143,23 @@ class GSIServer:
             "video_time": video_timestamp,
             "datetime": datetime.fromtimestamp(event_time).strftime('%H:%M:%S.%f'),
             "phase": phase,
-            "round": round_data.get('round', 0)
+            "round": current_round
         }
         
         self.match_events.append(event)
-        logger.info(f"📍 Round Phase: {phase} | Video Time: {video_timestamp:.2f}s")
+        logger.info(f"📍 Round Phase: {phase} | Round: {current_round} | Video Time: {video_timestamp:.2f}s")
+        
+        # Detect match end: "gameover" phase or significant reset in rounds
+        if phase == "gameover":
+            logger.info("🏁 Match ended (gameover detected)")
+            self._trigger_match_end()
+        elif self.last_round_phase and current_round < self.current_round - 5:
+            # Round number reset significantly (new match started)
+            logger.info(f"🏁 New match detected (round reset from {self.current_round} to {current_round})")
+            self._trigger_match_end()
+        
+        self.current_round = current_round
+        self.last_round_phase = phase
     
     def _log_kill_event(self, event_time, player_data, round_data):
         """
@@ -180,6 +198,17 @@ class GSIServer:
         
         self.match_events.append(event)
         logger.info(f"💀 Kill | Weapon: {event['weapon']} | HS: {event['headshot']} | HP: {event['health']} | Video Time: {video_timestamp:.2f}s")
+    
+    def _trigger_match_end(self):
+        """Trigger match end callback."""
+        if not self.match_ended and self.on_match_end:
+            self.match_ended = True
+            self.save_logs()
+            # Call the callback (will trigger processing in background)
+            self.on_match_end()
+            # Reset for next match
+            self.match_events = []
+            self.match_ended = False
     
     def save_logs(self):
         """Save all logged events to JSON file."""

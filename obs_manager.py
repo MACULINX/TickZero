@@ -29,6 +29,7 @@ class OBSManager:
         self.ws = None
         self.recording_start_time = None  # System timestamp when recording started (T=0)
         self.is_recording = False
+        self.last_recording_path = None  # Path to last recorded file
         
     def connect(self):
         """Establish connection to OBS WebSocket."""
@@ -84,16 +85,35 @@ class OBSManager:
             return None
     
     def stop_recording(self):
-        """Stop OBS recording."""
+        """Stop OBS recording and capture the output file path."""
         try:
+            # Try to get the recording path before stopping
+            try:
+                record_status = self.ws.call(obs_requests.GetRecordStatus())
+                if hasattr(record_status, 'datain') and 'outputPath' in record_status.datain:
+                    self.last_recording_path = record_status.datain['outputPath']
+                elif hasattr(record_status, 'getOutputPath'):
+                    self.last_recording_path = record_status.getOutputPath()
+            except Exception as e:
+                logger.warning(f"Could not retrieve recording path: {e}")
+            
+            # Stop recording
             self.ws.call(obs_requests.StopRecord())
             self.is_recording = False
             duration = time.time() - self.recording_start_time if self.recording_start_time else 0
             logger.info(f"✓ Recording stopped. Total duration: {duration:.2f}s")
+            
+            if self.last_recording_path:
+                logger.info(f"✓ Recording saved to: {self.last_recording_path}")
+            
             return True
         except Exception as e:
             logger.error(f"✗ Failed to stop recording: {e}")
             return False
+    
+    def get_last_recording_path(self):
+        """Get the path to the last recorded file."""
+        return self.last_recording_path
     
     def get_recording_status(self):
         """
