@@ -2,7 +2,8 @@
 Quick test to verify Google Gemini API is working correctly.
 Run this before using the full pipeline to check your API key.
 """
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 import os
 
 def test_gemini_api():
@@ -25,10 +26,10 @@ def test_gemini_api():
     
     print(f"\n✓ GOOGLE_API_KEY trovata: {api_key[:20]}...")
     
-    # Configure Gemini
+    # Configure Gemini client
     try:
-        genai.configure(api_key=api_key)
-        print("✓ Gemini configurato correttamente")
+        client = genai.Client(api_key=api_key)
+        print("✓ Gemini client configurato correttamente")
     except Exception as e:
         print(f"\n❌ Errore durante la configurazione: {e}")
         return False
@@ -37,10 +38,10 @@ def test_gemini_api():
     print("\n[Test] Invio richiesta di prova a Gemini...")
     
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
-        response = model.generate_content(
-            "Rispondi con un solo emoji che rappresenta il gaming",
-            generation_config=genai.GenerationConfig(temperature=0.5)
+        response = client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents="Rispondi con un solo emoji che rappresenta il gaming",
+            config=types.GenerateContentConfig(temperature=0.5)
         )
         
         result = response.text.strip()
@@ -59,9 +60,10 @@ def test_gemini_api():
     print("\n[Test] Verifica risposta JSON...")
     
     try:
-        response = model.generate_content(
-            'Restituisci un JSON con questa struttura: {"test": "ok", "message": "Gemini funziona!"}',
-            generation_config=genai.GenerationConfig(
+        response = client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents='Restituisci un JSON con questa struttura: {"test": "ok", "message": "Gemini funziona!"}',
+            config=types.GenerateContentConfig(
                 temperature=0.3,
                 response_mime_type="application/json"
             )

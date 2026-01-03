@@ -4,7 +4,8 @@ Processes match logs and returns timestamp ranges for video cuts.
 """
 import json
 import logging
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 import os
 
 logging.basicConfig(level=logging.INFO)
@@ -14,27 +15,23 @@ logger = logging.getLogger(__name__)
 class AIDirector:
     """Analyzes game events using LLM to identify highlight moments."""
     
-    def __init__(self, api_key=None, model="gemini-1.5-flash"):
+    def __init__(self, api_key=None, model="gemini-2.5-flash"):
         """
         Initialize AI Director with Google Gemini.
         
         Args:
             api_key: Google API key (or set GOOGLE_API_KEY env variable)
-            model: Gemini model to use (default: gemini-1.5-flash - FREE with daily quota)
-                   Options: gemini-1.5-flash (fast, free), gemini-1.5-pro (more capable)
+            model: Gemini model to use (default: gemini-2.5-flash - FREE with daily quota)
+                   Options: gemini-2.5-flash (fast, free), gemini-2.5-pro (more capable)
         """
-        # Configure Gemini
-        if api_key:
-            genai.configure(api_key=api_key)
-        else:
-            # Try to get from environment
+        # Get API key
+        if not api_key:
             api_key = os.getenv('GOOGLE_API_KEY')
-            if api_key:
-                genai.configure(api_key=api_key)
-            else:
+            if not api_key:
                 logger.warning("No API key provided. Set GOOGLE_API_KEY environment variable.")
         
-        self.model = genai.GenerativeModel(model)
+        # Configure Gemini client
+        self.client = genai.Client(api_key=api_key)
         self.model_name = model
         
     def analyze_match_log(self, log_file_path):
@@ -133,10 +130,11 @@ Priority scale: 1-10 (10 = must-clip ACE, 1 = skip)"""
             # Create full prompt with system instruction
             full_prompt = f"{system_instruction}\n\n{prompt}"
             
-            # Generate response with Gemini
-            response = self.model.generate_content(
-                full_prompt,
-                generation_config=genai.GenerationConfig(
+            # Generate response with Gemini (new API)
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=full_prompt,
+                config=types.GenerateContentConfig(
                     temperature=0.3,
                     response_mime_type="application/json"
                 )

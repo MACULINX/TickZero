@@ -1,71 +1,94 @@
-# CS2 Capture-to-Content Pipeline
+# TickZero
 
-Automated highlight creation system for Counter-Strike 2 that converts gameplay into vertical (9:16) TikTok/Reels-ready clips using **FREE Google Gemini AI**.
+**TickZero: AI-driven highlight extraction for CS2. Transform your Counter-Strike 2 gameplay into viral TikTok/Reels clips automatically using FREE AI.**
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![AI-Powered](https://img.shields.io/badge/AI-Google%20Gemini-orange.svg)](https://ai.google.dev/)
+
+> 📖 **Read this in other languages:** [Italiano](docs/i18n/README.it.md) · [Español](docs/i18n/README.es.md) · [Français](docs/i18n/README.fr.md) · [Deutsch](docs/i18n/README.de.md) · [Русский](docs/i18n/README.ru.md) · [简体中文](docs/i18n/README.zh.md)
 
 ## 🎯 Features
 
-- **Live Event Logging**: Captures kills, headshots, and round events in real-time via CS2 GSI
-- **OBS Synchronization**: Precise timestamp alignment between game events and video recording
-- **AI-Powered Analysis**: Uses Google Gemini (FREE) to identify highlight-worthy moments
-- **Automatic Video Editing**: FFmpeg-based conversion to vertical format with blurred background
-- **Hardware Acceleration**: Supports NVIDIA NVENC with CPU fallback
+- **🎮 Live Event Logging** - Captures kills, headshots, and round events in real-time via CS2 Game State Integration
+- **⏱️ OBS Synchronization** - Precise timestamp alignment between game events and video recording
+- **🤖 AI-Powered Analysis** - Uses Google Gemini (FREE tier) to identify highlight-worthy moments
+- **✂️ Automatic Video Editing** - FFmpeg-based conversion to vertical format (9:16) with blurred background
+- **⚡ Hardware Acceleration** - Supports NVIDIA NVENC with automatic CPU fallback
 
 ## 📋 Requirements
 
 ### Software
-- Python 3.10+
-- OBS Studio (with WebSocket plugin enabled)
-- FFmpeg (with hardware encoding support optional)
-- Counter-Strike 2
-- Google API key (Gemini - **FREE** with daily quota!)
+- **Python** 3.10 or higher
+- **OBS Studio** with WebSocket plugin enabled
+- **FFmpeg** (hardware encoding support optional)
+- **Counter-Strike 2**
+- **Google API Key** for Gemini (FREE tier available - no credit card required!)
 
 ### Python Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-## 🚀 Setup
+**Dependencies:** `google-genai`, `obs-websocket-py`, `flask`
 
-### 1. OBS WebSocket Configuration
+## 🚀 Quick Start
 
-1. Open OBS Studio
-2. Go to **Tools → WebSocket Server Settings**
-3. Enable WebSocket server
-4. Note the port (default: 4455) and password (if set)
-5. Update `config` in `main.py` if needed
-
-### 2. CS2 Game State Integration
-
-1. Copy `gamestate_integration_highlights.cfg` to:
-   ```
-   C:\Program Files (x86)\Steam\steamapps\common\Counter-Strike Global Offensive\game\csgo\cfg\
-   ```
-   
-2. Verify the `uri` points to `http://localhost:3000`
-
-### 3. Google Gemini API Key (FREE!)
-
-1. Get your free API key from: https://makersuite.google.com/app/apikey
-2. Set it as environment variable:
+### 1. Clone and Install
 
 ```bash
-# Windows (PowerShell)
-$env:GOOGLE_API_KEY = "your-api-key-here"
-
-# Linux/Mac
-export GOOGLE_API_KEY="your-api-key-here"
+git clone https://github.com/MACULINX/TickZero.git
+cd TickZero
+pip install -r requirements.txt
 ```
 
-Or pass it directly when running post-processing.
+### 2. Configure OBS WebSocket
 
-**Note:** Gemini-1.5-Flash is FREE with generous daily quota (no credit card required)!
+1. Open **OBS Studio**
+2. Go to **Tools → WebSocket Server Settings**
+3. Enable WebSocket server
+4. Note the port (default: `4455`) and password (if set)
+5. Update `config` in `main.py` if needed
 
-📖 **[Guida in Italiano per ottenere la chiave API Gemini →](SETUP_GEMINI.md)**
+### 3. Enable CS2 Game State Integration
 
+Copy `gamestate_integration_highlights.cfg` to your CS2 config folder:
+
+```
+Windows: C:\Program Files (x86)\Steam\steamapps\common\Counter-Strike Global Offensive\game\csgo\cfg\
+Linux:   ~/.steam/steam/steamapps/common/Counter-Strike Global Offensive/game/csgo/cfg/
+```
+
+### 4. Get Google Gemini API Key (FREE!)
+
+1. Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Sign in with your Google account
+3. Click **"Create API Key"**
+4. Copy your key (starts with `AIzaSy...`)
+5. Set it as environment variable:
+
+**Windows (PowerShell):**
+```powershell
+$env:GOOGLE_API_KEY = "your-api-key-here"
+
+# Make it permanent:
+[System.Environment]::SetEnvironmentVariable('GOOGLE_API_KEY', 'your-api-key-here', 'User')
+```
+
+**Linux/Mac:**
+```bash
+export GOOGLE_API_KEY="your-api-key-here"
+
+# Make it permanent (add to ~/.bashrc or ~/.zshrc):
+echo 'export GOOGLE_API_KEY="your-api-key-here"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+> 💡 **Note:** Gemini 2.5 Flash is FREE with 1500 requests/day. That's enough for ~50 matches per day!
 
 ## 📖 Usage
 
-The pipeline operates in **two distinct phases**:
+The pipeline works in **two phases**:
 
 ### Phase 1: Live Logging (During Match)
 
@@ -75,19 +98,19 @@ Run this **BEFORE** starting your CS2 match:
 python main.py live
 ```
 
-This will:
-1. Connect to OBS WebSocket
-2. Start recording
-3. Start GSI server on port 3000
-4. Log all game events with precise video timestamps
+**What happens:**
+1. ✅ Connects to OBS WebSocket
+2. ✅ Starts recording automatically
+3. ✅ Starts GSI server on port 3000
+4. ✅ Logs all game events with precise video timestamps
 
-**Play your match normally.** When finished, press `Ctrl+C` to stop logging.
+Play your match normally. When finished, press `Ctrl+C` to stop logging.
 
 Events are saved to `match_log.json`.
 
 ### Phase 2: Post-Processing (After Match)
 
-Run this **AFTER** the match to create highlights:
+Run this **AFTER** the match to create highlight clips:
 
 ```bash
 python main.py process <path_to_recording.mp4> [api_key] [min_priority]
@@ -95,57 +118,42 @@ python main.py process <path_to_recording.mp4> [api_key] [min_priority]
 
 **Example:**
 ```bash
-python main.py process "C:\Videos\cs2_match.mp4" your-google-api-key 6
+python main.py process "C:\Videos\cs2_match.mp4" 6
 ```
 
 **Parameters:**
-- `<path_to_recording.mp4>`: Path to OBS recording
-- `[api_key]`: Google API key (optional if set as GOOGLE_API_KEY env variable)
-- `[min_priority]`: Minimum clip priority 1-10 (default: 6)
+- `<path_to_recording.mp4>` - Path to your OBS recording (required)
+- `[api_key]` - Google API key (optional if `GOOGLE_API_KEY` env var is set)
+- `[min_priority]` - Minimum clip priority 1-10 (default: 6)
 
-This will:
-1. Analyze `match_log.json` with AI
-2. Identify highlight moments (multi-kills, clutches, etc.)
-3. Create vertical video clips in `highlights/` directory
+**What happens:**
+1. 🤖 AI analyzes `match_log.json`
+2. 🎯 Identifies highlight moments (multi-kills, clutches, headshots)
+3. ✂️ Creates vertical video clips in `highlights/` directory
 
 ## 🎬 Output Format
 
-**Vertical Video Specs:**
-- Resolution: 1080x1920 (9:16)
-- Format: MP4 (H.264)
-- Audio: AAC stereo
-- Visual: Blurred background + centered gameplay
+**Vertical Video Specifications:**
+- **Resolution:** 1080×1920 (9:16 aspect ratio)
+- **Format:** MP4 (H.264)
+- **Audio:** AAC stereo
+- **Visual Style:** Blurred background + centered gameplay
 
-**File Naming:**
+**File Naming Convention:**
 ```
 clip_01_3k_headshot_p9.mp4
 clip_02_clutch_1v3_p8.mp4
+clip_03_ace_p10.mp4
 ```
 
-## 🔧 Configuration
-
-Edit `config` dict in `main.py`:
-
-```python
-config = {
-    'obs_host': 'localhost',
-    'obs_port': 4455,           # OBS WebSocket port
-    'obs_password': '',         # OBS WebSocket password
-    'gsi_port': 3000,           # GSI server port
-    'log_file': 'match_log.json',
-    'output_dir': 'highlights',
-    'use_gpu': True             # Use NVENC if available
-}
-```
-
-## 📊 How It Works
+## 🎯 How It Works
 
 ### Timestamp Synchronization
 
-**Critical Concept**: The system maintains two time references:
+The system maintains two time references:
 
-1. **System Time** (`time.time()`): When events occur in real-world
-2. **Video Time**: Seconds from recording start (T=0)
+1. **System Time** (`time.time()`) - When events occur in real-world
+2. **Video Time** - Seconds from recording start (T=0)
 
 **Conversion Formula:**
 ```
@@ -154,60 +162,120 @@ Video Time = Event System Time - Recording Start Time
 
 ### Event Detection
 
-The GSI server monitors for:
-- **Kills**: Detected via `player.match_stats.kills` increment
-- **Round Changes**: `round.phase` transitions (live, over, freezetime)
-- **Context**: Weapon, headshot status, health, round number
+The GSI server monitors:
+- **Kills** - Detected via `player.match_stats.kills` increment
+- **Round Changes** - `round.phase` transitions (live, over, freezetime)
+- **Context** - Weapon used, headshot status, player health, round number
 
 ### AI Highlight Criteria
 
-The AI Director prioritizes:
-1. Multi-kills (2K, 3K, 4K, ACE)
-2. Clutch situations (1vX)
-3. Headshot kills
-4. High-skill plays
-5. Low health survival
+The AI Director (powered by Google Gemini) prioritizes:
 
-**Clip Duration**: 8-15 seconds (optimal for TikTok)
+1. 🔥 **Multi-kills** (2K, 3K, 4K, ACE) - More kills = Higher priority
+2. 💪 **Clutch situations** (1v2, 1v3, 1v4, 1v5) - Especially if won
+3. 🎯 **Headshot kills** - One-taps get extra points
+4. ⚡ **High-skill plays** - Quick reactions, difficult shots
+5. ❤️ **Low health clutches** - Surviving with <20 HP
 
-### Video Processing
+**Clip Duration:** 8-15 seconds (optimal for TikTok/Reels)
 
-FFmpeg filter graph:
+### Video Processing Pipeline
+
+FFmpeg applies this filter graph:
+
 ```
-Background: Scale → Crop → Blur (boxblur=20:5)
+Background: Scale → Crop to 9:16 → Blur (boxblur=20:5)
 Foreground: Scale to 1080px width → Center overlay
+```
+
+## 🔧 Configuration
+
+Edit the `config` dictionary in `main.py`:
+
+```python
+config = {
+    'obs_host': 'localhost',
+    'obs_port': 4455,              # OBS WebSocket port
+    'obs_password': '',            # OBS WebSocket password (if set)
+    'gsi_port': 3000,              # GSI server port
+    'log_file': 'match_log.json',
+    'output_dir': 'highlights',
+    'use_gpu': True                # Use NVENC if available
+}
 ```
 
 ## 🐛 Troubleshooting
 
-### OBS won't connect
-- Ensure OBS is running
-- Check WebSocket is enabled (Tools → WebSocket Server Settings)
-- Verify port and password in config
+### OBS Connection Issues
+- ✅ Ensure OBS Studio is running
+- ✅ Check WebSocket is enabled: **Tools → WebSocket Server Settings**
+- ✅ Verify port and password match your config
 
-### No events logged
-- Verify `gamestate_integration_highlights.cfg` is in correct CS2 directory
-- Check GSI server is running (should show "listening on port 3000")
-- Launch CS2 and check console for GSI connection messages
+### No Events Being Logged
+- ✅ Verify `gamestate_integration_highlights.cfg` is in the correct CS2 directory
+- ✅ Check GSI server is running (should show "Listening on port 3000")
+- ✅ Launch CS2 and check console for GSI connection messages
 
-### FFmpeg errors
-- Ensure FFmpeg is installed and in PATH: `ffmpeg -version`
-- Check source video path is correct
-- Try `use_gpu: False` if NVENC issues occur
+### FFmpeg Errors
+- ✅ Ensure FFmpeg is installed: `ffmpeg -version`
+- ✅ Verify source video path is correct
+- ✅ Try setting `use_gpu: False` if you encounter NVENC errors
 
-### AI returns no highlights
-- Check `match_log.json` contains kill events
-- Lower `min_priority` threshold (try 4 or 5)
-- Verify Google API key is valid and has quota remaining
-- Get free key at: https://makersuite.google.com/app/apikey
+### AI Returns No Highlights
+- ✅ Check `match_log.json` contains kill events
+- ✅ Lower `min_priority` threshold (try 4 or 5)
+- ✅ Verify Google API key is valid: run `python examples/test_gemini_api.py`
+- ✅ Check you haven't exceeded daily quota (1500 requests)
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+**Development:**
+```bash
+# Fork the repository
+git clone https://github.com/yourusername/cs2-highlights-pipeline.git
+cd cs2-highlights-pipeline
+
+# Create a feature branch
+git checkout -b feature/amazing-feature
+
+# Make your changes and commit
+git commit -m "Add amazing feature"
+
+# Push to your fork
+git push origin feature/amazing-feature
+
+# Open a Pull Request
+```
 
 ## 📝 License
 
-This project is provided as-is for educational purposes.
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Credits
+**Summary:** You can freely use, modify, and distribute this code, but you must include the original copyright notice and cannot hold the authors liable.
 
-Built with:
-- [obs-websocket-py](https://github.com/Elektordi/obs-websocket-py)
-- [Google Gemini API](https://ai.google.dev/) - FREE tier available!
-- [FFmpeg](https://ffmpeg.org/)
+## 🙏 Acknowledgments
+
+### Built With
+- [obs-websocket-py](https://github.com/Elektordi/obs-websocket-py) - OBS WebSocket Python client
+- [Google Gemini API](https://ai.google.dev/) - AI-powered highlight analysis
+- [FFmpeg](https://ffmpeg.org/) - Video processing engine
+
+### AI Assistance
+Parts of this project's codebase were created with the assistance of AI language models (Google Gemini, Claude) to accelerate development and improve code quality. All AI-generated code has been reviewed, tested, and adapted for this specific use case.
+
+### Community
+Special thanks to the Counter-Strike community and content creators who inspired this project.
+
+## 📞 Support
+
+- 🐛 **Bug Reports:** [Open an issue](https://github.com/MACULINX/TickZero/issues)
+- 💡 **Feature Requests:** [Start a discussion](https://github.com/MACULINX/TickZero/discussions)
+- 📧 **Contact:** [@MACULINX](https://github.com/MACULINX)
+
+---
+
+**Made with ❤️ by gamers, for gamers.**
+
+**Star ⭐ this repo if you found it useful!**

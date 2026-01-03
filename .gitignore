@@ -1,0 +1,41 @@
+# Ignore Python virtual environment
+venv/
+env/
+.venv/
+
+# Ignore Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Ignore generated files
+match_log.json
+highlights/
+*.mp4
+*.avi
+*.mkv
+
+# Ignore IDE/editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Ignore environment variables
+.env
+.env.local
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Ignore log files
+*.log
+
+# Ignore temporary files
+tmp/
+temp/
+*.tmp
