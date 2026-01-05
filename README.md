@@ -82,7 +82,7 @@ pip install -r requirements.txt
 
 ### 3. Enable CS2 Game State Integration
 
-Copy `gamestate_integration_highlights.cfg` to your CS2 config folder:
+Copy `config/gamestate_integration_highlights.cfg` to your CS2 config folder:
 
 ```
 Windows: C:\Program Files (x86)\Steam\steamapps\common\Counter-Strike Global Offensive\game\csgo\cfg\
