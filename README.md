@@ -144,8 +144,8 @@ python main.py process "C:\Videos\cs2_match.mp4" 6
 **Vertical Video Specifications:**
 - **Resolution:** 1080×1920 (9:16 aspect ratio)
 - **Format:** MP4 (H.264)
-- **Audio:** AAC stereo
-- **Visual Style:** Blurred background + centered gameplay
+- **Audio:** AAC stereo (preserved from source)
+- **Visual Style:** Center-cropped gameplay
 
 **File Naming Convention:**
 ```
@@ -191,12 +191,15 @@ The AI Director (powered by Google Gemini) prioritizes:
 
 ### Video Processing Pipeline
 
-FFmpeg applies this filter graph:
+FFmpeg applies a simple center crop:
 
 ```
-Background: Scale → Crop to 9:16 → Blur (boxblur=20:5)
-Foreground: Scale to 1080px width → Center overlay
+Crop 1080x1920 from center of 16:9 source
+Position: (input_width - 1080) / 2, (input_height - 1920) / 2
+Result: Clean 9:16 vertical video with centered gameplay
 ```
+
+Audio is preserved from the original recording.
 
 ## 🔧 Configuration
 

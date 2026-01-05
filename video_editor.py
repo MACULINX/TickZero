@@ -1,6 +1,6 @@
 """
 VideoEditor: FFmpeg-based video processing for creating vertical highlights.
-Converts 16:9 gameplay to 9:16 with blurred background and centered foreground.
+Converts 16:9 gameplay to 9:16 with simple center crop.
 """
 import subprocess
 import os
@@ -116,10 +116,10 @@ class VideoEditor:
         """
         Create a single vertical highlight clip.
         
-        FILTER GRAPH EXPLANATION:
-        - Background Layer: Scale to 1920px height → Crop to 1080x1920 → Heavy blur
-        - Foreground Layer: Scale to 1080px width (maintains aspect) → Overlay centered
-        - Result: 9:16 vertical video with blurred background + centered gameplay
+        SIMPLE 9:16 CENTER CROP:
+        - Crops center 1080x1920 region from 16:9 source video
+        - Preserves original audio from recording
+        - Clean gameplay without blur effects
         
         Args:
             start_time: Start timestamp in seconds (from video_time)
@@ -137,18 +137,10 @@ class VideoEditor:
         logger.info(f"  Time: {start_time:.1f}s → {end_time:.1f}s ({duration:.1f}s)")
         logger.info(f"  Output: {output_path}")
         
-        # Complex filter for 16:9 → 9:16 conversion
-        # [0:v] = input video stream
-        filter_complex = (
-            # BACKGROUND: Blur layer that fills entire 9:16 frame
-            "[0:v]scale=-1:1920,crop=1080:1920,boxblur=20:5[bg];"
-            
-            # FOREGROUND: Scaled gameplay centered on screen
-            "[0:v]scale=1080:-1[fg];"
-            
-            # COMPOSITE: Overlay foreground on blurred background
-            "[bg][fg]overlay=(W-w)/2:(H-h)/2[v]"
-        )
+        # Simple center crop for 9:16 conversion
+        # Crop 1080x1920 from center of 1920x1080 source
+        # (iw-1080)/2 = center horizontally, (ih-1920)/2 = center vertically
+        filter_complex = "[0:v]crop=1080:1920:(iw-1080)/2:(ih-1920)/2[v]"
         
         # Build FFmpeg command
         cmd = ['ffmpeg', '-y']  # -y = overwrite output
@@ -162,7 +154,8 @@ class VideoEditor:
         
         # Video encoding
         cmd.extend(['-filter_complex', filter_complex])
-        cmd.extend(['-map', '[v]'])  # Use filtered video output
+        cmd.extend(['-map', '[v]'])      # Use filtered video output
+        cmd.extend(['-map', '0:a?'])     # Map audio stream if present
         
         # Encoder selection with vendor-specific optimizations
         if self.gpu_available:
