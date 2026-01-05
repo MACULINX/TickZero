@@ -242,13 +242,28 @@ class MatchDatabase:
         if not kwargs:
             return
         
+        # Whitelist of allowed columns to prevent SQL injection
+        allowed_columns = {
+            'processed', 'highlights_generated', 'notes', 
+            'total_kills', 'total_deaths', 'total_rounds',
+            'duration_seconds', 'map_name', 'player_steamid', 'player_name'
+        }
+        
+        # Filter out any non-whitelisted columns
+        safe_kwargs = {k: v for k, v in kwargs.items() if k in allowed_columns}
+        
+        if not safe_kwargs:
+            logger.warning(f"No valid columns to update for match #{match_id}")
+            return
+        
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
-        # Build UPDATE query dynamically
-        fields = ', '.join(f"{k} = ?" for k in kwargs.keys())
-        values = list(kwargs.values()) + [match_id]
+        # Build UPDATE query with validated column names
+        fields = ', '.join(f"{k} = ?" for k in safe_kwargs.keys())
+        values = list(safe_kwargs.values()) + [match_id]
         
+        # Safe to use f-string now because column names are whitelisted
         cursor.execute(f"UPDATE matches SET {fields} WHERE id = ?", values)
         conn.commit()
         conn.close()

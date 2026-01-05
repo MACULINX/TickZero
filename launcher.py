@@ -73,7 +73,15 @@ class TickZeroLauncher:
     
     def clear_screen(self):
         """Clear the console screen."""
-        os.system('cls' if os.name == 'nt' else 'clear')
+        # Use subprocess instead of os.system for security
+        try:
+            if os.name == 'nt':
+                subprocess.run(['cmd', '/c', 'cls'], check=False)
+            else:
+                subprocess.run(['clear'], check=False)
+        except:
+            # Fallback: print newlines
+            print('\n' * 50)
     
     def show_header(self):
         """Display application header."""
@@ -183,8 +191,17 @@ class TickZeroLauncher:
         print("Enter the path to your recorded CS2 match video:")
         video_path = input(f"{Colors.CYAN}Video path:{Colors.END} ").strip().strip('"')
         
-        if not video_path or not Path(video_path).exists():
-            print(f"{Colors.RED}Error: File not found{Colors.END}")
+        # Validate file path exists and is a file (security: prevent path traversal)
+        try:
+            video_file = Path(video_path).resolve()
+            if not video_file.exists() or not video_file.is_file():
+                print(f"{Colors.RED}Error: File not found or invalid{Colors.END}")
+                input(f"\n{Colors.BOLD}Press Enter to return to main menu...{Colors.END}")
+                return
+            # Convert to absolute path string for safety
+            video_path = str(video_file)
+        except (OSError, ValueError) as e:
+            print(f"{Colors.RED}Error: Invalid file path{Colors.END}")
             input(f"\n{Colors.BOLD}Press Enter to return to main menu...{Colors.END}")
             return
         
