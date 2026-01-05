@@ -36,6 +36,34 @@ pip install -r requirements.txt
 
 ## 🚀 Quick Start
 
+### New: Unified Launcher (Easiest!)
+
+**Single command to access all features:**
+
+```bash
+python launcher.py
+```
+
+This opens an interactive menu where you can:
+- 🎮 Start recording sessions
+- 🌐 Browse match history
+- ✂️ Process video files
+- ⚙️ Configure settings
+- ℹ️ Get help
+
+**Direct commands also available:**
+```bash
+python launcher.py --record    # Start recording
+python launcher.py --browse    # Open match history browser
+python launcher.py --help      # Show help
+```
+
+---
+
+### Manual Mode (Advanced Users)
+
+If you prefer direct control:
+
 ### 1. Clone and Install
 
 ```bash
@@ -90,7 +118,27 @@ source ~/.bashrc
 
 ## 📖 Usage
 
-The pipeline works in **two phases**:
+### Recommended: Use the Unified Launcher
+
+**Start the launcher:**
+```bash
+python launcher.py
+```
+
+**From the menu:**
+1. Select option [1] to start recording
+2. Play your CS2 match
+3. When done, press Ctrl+C
+4. Select option [2] to browse match history
+5. Click on a match to generate highlights
+
+That's it! The launcher guides you through everything.
+
+---
+
+### Manual Commands (Alternative)
+
+The launcher provides a **two-phase pipeline**:
 
 ### Phase 1: Live Logging (During Match)
 
