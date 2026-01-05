@@ -12,6 +12,7 @@ from obs_manager import OBSManager
 from gsi_server import GSIServer
 from ai_director import AIDirector
 from video_editor import VideoEditor
+from match_database import MatchDatabase
 
 logging.basicConfig(
     level=logging.INFO,
@@ -31,6 +32,9 @@ class CS2HighlightPipeline:
             config: Configuration dict (optional)
         """
         self.config = config or {}
+        
+        # Initialize database
+        self.db = MatchDatabase(self.config.get('db_path', 'matches.db'))
         
         # Initialize components
         self.obs = OBSManager(
@@ -152,6 +156,13 @@ class CS2HighlightPipeline:
             if self.config.get('continuous_mode'):
                 logger.info("\n⏳ Ready for next match...\n")
             return
+        
+        # Save match to database
+        match_id = self.db.save_match(
+            video_path=recording_path,
+            log_path=self.gsi.log_file
+        )
+        logger.info(f"✓ Match #{match_id} saved to database")
         
         # Start processing in background thread if auto-processing is enabled
         if self.config.get('auto_process', False):

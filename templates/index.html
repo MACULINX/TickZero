@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - CS2 Match History{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <h2>📊 Match History Dashboard</h2>
+
+    <!-- Statistics Cards -->
+    <div class="stats-container">
+        <div class="stat-card">
+            <div class="stat-value">{{ stats.total_matches }}</div>
+            <div class="stat-label">Total Matches</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ stats.total_kills }}</div>
+            <div class="stat-label">Total Kills</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ "%.1f"|format(stats.total_duration_hours) }}h</div>
+            <div class="stat-label">Total Playtime</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ stats.pending_matches }}</div>
+            <div class="stat-label">Pending Processing</div>
+        </div>
+    </div>
+
+    <!-- Recent Matches -->
+    <div class="section">
+        <h3>📋 Recent Matches</h3>
+        {% if matches %}
+        <table class="match-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Kills</th>
+                    <th>Rounds</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for match in matches %}
+                <tr>
+                    <td>{{ match.match_date }}</td>
+                    <td>{{ match.total_kills }}</td>
+                    <td>{{ match.total_rounds }}</td>
+                    <td>{{ "%.1f"|format(match.duration_seconds / 60) }} min</td>
+                    <td>
+                        {% if match.processed %}
+                        <span class="badge badge-success">✓ Processed</span>
+                        {% else %}
+                        <span class="badge badge-warning">Pending</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('match_detail', match_id=match.id) }}" class="btn btn-small">View</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="section-footer">
+            <a href="{{ url_for('match_list') }}" class="btn">View All Matches</a>
+        </div>
+        {% else %}
+        <p class="empty-state">No matches recorded yet. Play some CS2 and they'll appear here!</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
