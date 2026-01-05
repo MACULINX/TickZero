@@ -116,8 +116,9 @@ class VideoEditor:
         """
         Create a single vertical highlight clip.
         
-        SIMPLE 9:16 CENTER CROP:
-        - Crops center 1080x1920 region from 16:9 source video
+        9:16 CONVERSION PROCESS:
+        - Scales 16:9 source to 1920px height (becomes ~3413x1920)
+        - Crops center 1080x1920 region for 9:16 aspect ratio
         - Preserves original audio from recording
         - Clean gameplay without blur effects
         
@@ -137,10 +138,10 @@ class VideoEditor:
         logger.info(f"  Time: {start_time:.1f}s → {end_time:.1f}s ({duration:.1f}s)")
         logger.info(f"  Output: {output_path}")
         
-        # Simple center crop for 9:16 conversion
-        # Crop 1080x1920 from center of 1920x1080 source
-        # (iw-1080)/2 = center horizontally, (ih-1920)/2 = center vertically
-        filter_complex = "[0:v]crop=1080:1920:(iw-1080)/2:(ih-1920)/2[v]"
+        # Scale to 1920px height, then crop center 1080x1920 for 9:16
+        # Step 1: scale=-1:1920 scales to 1920px height (width auto-calculated)
+        # Step 2: crop=1080:1920 takes center 1080x1920 region
+        filter_complex = "[0:v]scale=-1:1920,crop=1080:1920:(iw-1080)/2:0[v]"
         
         # Build FFmpeg command
         cmd = ['ffmpeg', '-y']  # -y = overwrite output
