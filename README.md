@@ -102,11 +102,17 @@ python main.py live
 
 **What happens:**
 1. ✅ Connects to OBS WebSocket
-2. ✅ Starts recording automatically
-3. ✅ Starts GSI server on port 3000
-4. ✅ Logs all game events with precise video timestamps
+2. ✅ Starts GSI server on port 3000
+3. ⏳ **Waits for match to start**
+4. ✅ **Automatically starts recording** when the first round goes live
+5. ✅ Logs all game events with precise video timestamps
+6. ✅ **Automatically stops recording** when match ends (in continuous mode)
 
-Play your match normally. When finished, press `Ctrl+C` to stop logging.
+> **Note:** With `auto_recording: True` (default), recording starts automatically when the match begins, not when you run the script. This ensures you only record actual gameplay, not warmup or menu time. The system detects match start when the first round transitions to "live" phase.
+
+Play your match normally. The system will automatically handle recording.
+
+**Manual Stop:** Press `Ctrl+C` to stop logging (if not using continuous mode).
 
 Events are saved to `match_log.json`.
 
@@ -165,9 +171,11 @@ Video Time = Event System Time - Recording Start Time
 ### Event Detection
 
 The GSI server monitors:
-- **Kills** - Detected via `player.match_stats.kills` increment
+- **Kills** - Detected via `player.match_stats.kills` increment **for the main player only**
 - **Round Changes** - `round.phase` transitions (live, over, freezetime)
 - **Context** - Weapon used, headshot status, player health, round number
+
+> **Note:** When you die and spectate teammates, the system automatically ignores their kills. Only kills performed by the player who launched the program are logged, ensuring accurate personal highlight tracking.
 
 ### AI Highlight Criteria
 
@@ -203,6 +211,7 @@ config = {
     'log_file': 'match_log.json',
     'output_dir': 'highlights',
     'use_gpu': True,               # Enable GPU acceleration
+    'auto_recording': True,        # Auto-start/stop recording based on match detection
     'continuous_mode': True,       # Auto-process after each match
     'auto_process': True,          # Enable automatic processing
     'auto_min_priority': 6         # Minimum clip priority (1-10)
@@ -252,6 +261,11 @@ When `continuous_mode: True`, TickZero:
 - ✅ Lower `min_priority` threshold (try 4 or 5)
 - ✅ Verify Google API key is valid: run `python examples/test_gemini_api.py`
 - ✅ Check you haven't exceeded daily quota (1500 requests)
+
+### Teammate Kills Being Logged
+- ✅ Ensure you're using the latest version of `gsi_server.py` with SteamID filtering
+- ✅ Check console output shows "👤 Main player locked" with your name at match start
+- ✅ Run `python debug_gsi_payload.py` to verify SteamID consistency in GSI payloads
 
 ## 🤝 Contributing
 

@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class GSIServer:
     """Receives and processes CS2 Game State Integration data."""
     
-    def __init__(self, obs_manager, port=3000, log_file="match_log.json", on_match_end=None):
+    def __init__(self, obs_manager, port=3000, log_file="match_log.json", on_match_start=None, on_match_end=None):
         """
         Initialize GSI server.
         
@@ -24,6 +24,7 @@ class GSIServer:
             obs_manager: OBSManager instance for timestamp synchronization
             port: Port to listen on (default: 3000)
             log_file: Path to save match log JSON
+            on_match_start: Callback function called when match starts
             on_match_end: Callback function called when match ends
         """
         self.port = port
@@ -32,6 +33,7 @@ class GSIServer:
         self.server = None
         self.server_thread = None
         self.is_running = False
+        self.on_match_start = on_match_start
         self.on_match_end = on_match_end
         
         # Match state tracking
@@ -39,8 +41,11 @@ class GSIServer:
         self.match_events = []
         self.current_round = 0
         self.last_round_phase = None
+        self.match_started = False  # Track if match has started
+        self.match_in_progress = False  # Track if match is currently ongoing
         self.match_ended = False
         self.rounds_since_event = 0  # Track inactivity
+        self.main_player_steamid = None  # Track the main player's SteamID
         
     def start(self):
         """Start the GSI HTTP server in a separate thread."""
@@ -110,6 +115,12 @@ class GSIServer:
             round_data = state.get('round', {})
             map_data = state.get('map', {})
             
+            # Capture main player's SteamID on first valid payload
+            if not self.main_player_steamid and 'steamid' in player_data:
+                self.main_player_steamid = player_data['steamid']
+                player_name = player_data.get('name', 'Unknown')
+                logger.info(f"👤 Main player locked: {player_name} (SteamID: {self.main_player_steamid})")
+            
             # Detect round phase changes
             if 'phase' in round_data:
                 current_phase = round_data['phase']
@@ -124,7 +135,15 @@ class GSIServer:
                 previous_kills = self.previous_state.get('player', {}).get('match_stats', {}).get('kills', 0)
                 
                 if current_kills > previous_kills:
-                    self._log_kill_event(event_time, player_data, round_data)
+                    # Verify this kill is from the main player, not a spectated teammate
+                    current_steamid = player_data.get('steamid')
+                    if self.main_player_steamid and current_steamid != self.main_player_steamid:
+                        # Kill from spectated player - ignore it
+                        spectated_name = player_data.get('name', 'Unknown')
+                        logger.debug(f"⏭️  Ignored kill from spectated player: {spectated_name} (SteamID: {current_steamid})")
+                    else:
+                        # Kill from main player - log it
+                        self._log_kill_event(event_time, player_data, round_data)
             
             # Update previous state for next comparison
             self.previous_state = state
@@ -133,7 +152,7 @@ class GSIServer:
             logger.error(f"Error processing game state: {e}")
     
     def _log_round_phase_change(self, event_time, phase, round_data):
-        """Log round phase changes and detect match end."""
+        """Log round phase changes and detect match start/end."""
         video_timestamp = self.obs_manager.calculate_video_timestamp(event_time)
         current_round = round_data.get('round', 0)
         
@@ -149,9 +168,17 @@ class GSIServer:
         self.match_events.append(event)
         logger.info(f"📍 Round Phase: {phase} | Round: {current_round} | Video Time: {video_timestamp:.2f}s")
         
+        # Detect match start: first "live" phase in early rounds (not warmup)
+        if not self.match_in_progress and phase == "live" and current_round <= 1:
+            logger.info("🎮 MATCH STARTED - First round is live")
+            self.match_started = True
+            self.match_in_progress = True
+            if self.on_match_start:
+                self.on_match_start()
+        
         # Detect match end: "gameover" phase or significant reset in rounds
-        if phase == "gameover":
-            logger.info("🏁 Match ended (gameover detected)")
+        if phase == "gameover" and self.match_in_progress:
+            logger.info("🏁 MATCH ENDED - Gameover detected")
             self._trigger_match_end()
         elif self.last_round_phase and current_round < self.current_round - 5:
             # Round number reset significantly (new match started)
@@ -203,12 +230,14 @@ class GSIServer:
         """Trigger match end callback."""
         if not self.match_ended and self.on_match_end:
             self.match_ended = True
+            self.match_in_progress = False
             self.save_logs()
             # Call the callback (will trigger processing in background)
             self.on_match_end()
             # Reset for next match
             self.match_events = []
             self.match_ended = False
+            self.match_started = False
     
     def save_logs(self):
         """Save all logged events to JSON file."""

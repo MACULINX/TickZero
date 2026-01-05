@@ -5,6 +5,7 @@ Coordinates OBS recording, GSI event logging, and post-processing workflow.
 import sys
 import time
 import logging
+import threading
 from pathlib import Path
 
 from obs_manager import OBSManager
@@ -38,13 +39,15 @@ class CS2HighlightPipeline:
             password=self.config.get('obs_password', '')
         )
         
-        # Setup match-end callback for continuous mode
+        # Setup match callbacks
+        match_start_callback = self._on_match_start if self.config.get('auto_recording', True) else None
         match_end_callback = self._on_match_end if self.config.get('continuous_mode') else None
         
         self.gsi = GSIServer(
             obs_manager=self.obs,
             port=self.config.get('gsi_port', 3000),
             log_file=self.config.get('log_file', 'match_log.json'),
+            on_match_start=match_start_callback,
             on_match_end=match_end_callback
         )
         
@@ -69,12 +72,18 @@ class CS2HighlightPipeline:
             logger.error("Failed to connect to OBS. Make sure OBS is running and WebSocket is enabled.")
             return False
         
-        # Step 2: Start recording
-        logger.info("\n[2/3] Starting OBS recording...")
-        start_time = self.obs.start_recording()
-        if not start_time:
-            logger.error("Failed to start recording.")
-            return False
+        # Step 2: Start recording (or wait for match to start)
+        logger.info("\n[2/3] Preparing recording...")
+        if self.config.get('auto_recording', True):
+            logger.info("✓ Auto-recording enabled")
+            logger.info("  Recording will start automatically when match begins")
+        else:
+            # Manual mode - start recording immediately
+            logger.info("✓ Starting recording immediately (auto_recording disabled)")
+            start_time = self.obs.start_recording()
+            if not start_time:
+                logger.error("Failed to start recording.")
+                return False
         
         # Step 3: Start GSI server
         logger.info("\n[3/3] Starting GSI server...")
@@ -83,7 +92,15 @@ class CS2HighlightPipeline:
         logger.info("\n" + "=" * 60)
         logger.info("\n✓ LIVE LOGGING ACTIVE")
         logger.info("=" * 60)
-        logger.info("\nYou can now launch CS2 and play your match.")
+        
+        if self.config.get('auto_recording', True):
+            logger.info("\n⏳ WAITING FOR MATCH TO START...")
+            logger.info("Launch CS2 and join a match.")
+            logger.info("Recording will begin automatically when the first round goes live.")
+        else:
+            logger.info("\n✓ RECORDING IN PROGRESS")
+            logger.info("You can now launch CS2 and play your match.")
+        
         logger.info("Game events will be automatically logged with video timestamps.")
         
         if self.config.get('continuous_mode'):
@@ -97,31 +114,59 @@ class CS2HighlightPipeline:
         
         return True
     
+    def _on_match_start(self):
+        """
+        Callback when match starts (first round goes live).
+        Triggers automatic recording start.
+        """
+        logger.info("\n" + "=" * 60)
+        logger.info("🎮 MATCH STARTED - BEGINNING RECORDING")
+        logger.info("=" * 60)
+        
+        start_time = self.obs.start_recording()
+        if start_time:
+            logger.info("✓ Recording started successfully")
+            logger.info("✓ All game events will be captured\n")
+        else:
+            logger.error("✗ Failed to start recording")
+    
     def _on_match_end(self):
         """
         Callback when match ends in continuous mode.
-        Triggers background processing while continuing to record.
+        Stops current recording, triggers processing, and prepares for next match.
         """
         logger.info("\n" + "=" * 60)
-        logger.info("🔄 MATCH ENDED - AUTO-PROCESSING HIGHLIGHTS")
+        logger.info("🏁 MATCH ENDED")
         logger.info("=" * 60)
         
-        # Get current recording path
-        recording_path = self.obs.last_recording_path
+        # Get current recording path and stop recording
+        recording_path = self.obs.get_last_recording_path()
+        
+        if self.obs.is_recording:
+            logger.info("Stopping recording...")
+            self.obs.stop_recording()
+            time.sleep(1)  # Brief pause for file to be written
         
         if not recording_path:
             logger.warning("Cannot auto-process: recording path unknown")
+            if self.config.get('continuous_mode'):
+                logger.info("\n⏳ Ready for next match...\n")
             return
         
-        # Start processing in background thread
-        self.processing_thread = threading.Thread(
-            target=self._background_process,
-            args=(recording_path,),
-            daemon=True
-        )
-        self.processing_thread.start()
+        # Start processing in background thread if auto-processing is enabled
+        if self.config.get('auto_process', False):
+            logger.info("Starting background processing...")
+            self.processing_thread = threading.Thread(
+                target=self._background_process,
+                args=(recording_path,),
+                daemon=True
+            )
+            self.processing_thread.start()
         
-        logger.info("\n📹 Recording continues for next match...\n")
+        # In continuous mode, wait for next match
+        if self.config.get('continuous_mode'):
+            logger.info("\n⏳ Ready for next match...")
+            logger.info("Recording will start automatically when the next match begins.\n")
     
     def _background_process(self, video_path):
         """Process highlights in background while recording continues."""
@@ -239,6 +284,7 @@ def main():
         'log_file': 'match_log.json',
         'output_dir': 'highlights',
         'use_gpu': True,
+        'auto_recording': True,      # Automatically start/stop recording based on match detection
         'continuous_mode': True,     # Enable continuous multi-match recording
         'auto_process': True,        # Automatically process highlights after match
         'auto_min_priority': 6       # Minimum priority for auto-processing

@@ -102,11 +102,17 @@ python main.py live
 
 **Cosa succede:**
 1. ✅ Si connette a OBS WebSocket
-2. ✅ Avvia la registrazione automaticamente
-3. ✅ Avvia il server GSI sulla porta 3000
-4. ✅ Logga tutti gli eventi di gioco con timestamp video precisi
+2. ✅ Avvia il server GSI sulla porta 3000
+3. ⏳ **Attende l'inizio della partita**
+4. ✅ **Avvia automaticamente la registrazione** quando il primo round diventa "live"
+5. ✅ Logga tutti gli eventi di gioco con timestamp video precisi
+6. ✅ **Ferma automaticamente la registrazione** quando la partita finisce (in modalità continua)
 
-Gioca la tua partita normalmente. Quando finisci, premi `Ctrl+C` per fermare il logging.
+> **Nota:** Con `auto_recording: True` (default), la registrazione parte automaticamente quando inizia la partita, non quando esegui lo script. Questo assicura che registri solo il gameplay effettivo, senza warmup o menu. Il sistema rileva l'inizio partita quando il primo round passa alla fase "live".
+
+Gioca la tua partita normalmente. Il sistema gestirà automaticamente la registrazione.
+
+**Stop Manuale:** Premi `Ctrl+C` per fermare il logging (se non usi modalità continua).
 
 Gli eventi vengono salvati in `match_log.json`.
 
@@ -165,9 +171,11 @@ Video Time = Event System Time - Recording Start Time
 ### Rilevamento Eventi
 
 Il server GSI monitora:
-- **Kill** - Rilevate tramite incremento di `player.match_stats.kills`
+- **Kill** - Rilevate tramite incremento di `player.match_stats.kills` **solo per il giocatore principale**
 - **Cambi Round** - Transizioni di `round.phase` (live, over, freezetime)
 - **Contesto** - Arma usata, stato headshot, salute giocatore, numero round
+
+> **Nota:** Quando muori e spetti i compagni, il sistema ignora automaticamente le loro kill. Vengono loggiate solo le kill effettuate dal giocatore che ha avviato il programma, garantendo un tracking accurato degli highlight personali.
 
 ### Criteri Highlight AI
 
@@ -203,6 +211,7 @@ config = {
     'log_file': 'match_log.json',
     'output_dir': 'highlights',
     'use_gpu': True,               # Abilita accelerazione GPU
+    'auto_recording': True,        # Avvia/ferma registrazione automaticamente
     'continuous_mode': True,       # Auto-process dopo ogni partita
     'auto_process': True,          # Abilita processing automatico
     'auto_min_priority': 6         # Priorità minima clip (1-10)
@@ -252,6 +261,11 @@ Con `continuous_mode: True`, TickZero:
 - ✅ Abbassa la soglia `min_priority` (prova 4 o 5)
 - ✅ Verifica che la chiave API Google sia valida: esegui `python examples/test_gemini_api.py`
 - ✅ Controlla di non aver superato la quota giornaliera (1500 richieste)
+
+### Vengono Loggate le Kill dei Compagni
+- ✅ Assicurati di usare l'ultima versione di `gsi_server.py` con filtro SteamID
+- ✅ Controlla che l'output console mostri "👤 Main player locked" con il tuo nome all'inizio partita
+- ✅ Esegui `python debug_gsi_payload.py` per verificare la consistenza dello SteamID nei payload GSI
 
 ## 🤝 Contribuire
 
