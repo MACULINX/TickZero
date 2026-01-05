@@ -130,7 +130,7 @@ class TickZeroLauncher:
         time.sleep(2)
         
         try:
-            subprocess.run([sys.executable, "main.py", "live"])
+            subprocess.run([sys.executable, "src/main.py", "live"])
         except KeyboardInterrupt:
             print(f"\n{Colors.YELLOW}Recording stopped by user{Colors.END}")
         except Exception as e:
@@ -150,7 +150,7 @@ class TickZeroLauncher:
         # Start web server in background thread
         def run_server():
             try:
-                from web_interface import run_web_interface
+                from src.web.web_interface import run_web_interface
                 run_web_interface(port=port, debug=False)
             except Exception as e:
                 print(f"{Colors.RED}Error starting web server: {e}{Colors.END}")
@@ -216,7 +216,7 @@ class TickZeroLauncher:
         print(f"\n{Colors.YELLOW}Processing highlights...{Colors.END}\n")
         
         try:
-            subprocess.run([sys.executable, "main.py", "process", video_path, str(min_priority)])
+            subprocess.run([sys.executable, "src/main.py", "process", video_path, str(min_priority)])
             print(f"\n{Colors.GREEN}✓ Processing complete!{Colors.END}")
         except Exception as e:
             print(f"\n{Colors.RED}Error: {e}{Colors.END}")
@@ -320,7 +320,7 @@ class TickZeroLauncher:
         print(f"\n{Colors.BOLD}Testing OBS Connection...{Colors.END}\n")
         
         try:
-            from obs_manager import OBSManager
+            from src.core.obs_manager import OBSManager
             obs = OBSManager(
                 host=self.config['obs_host'],
                 port=self.config['obs_port'],

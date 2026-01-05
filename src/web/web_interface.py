@@ -3,7 +3,7 @@ Web Interface: Flask application for browsing match history and generating highl
 Provides web UI for selecting past matches and triggering highlight generation.
 """
 from flask import Flask, render_template, jsonify, request, redirect, url_for
-from match_database import MatchDatabase
+from src.web.match_database import MatchDatabase
 from pathlib import Path
 import logging
 import subprocess
