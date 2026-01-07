@@ -130,7 +130,7 @@ class TickZeroLauncher:
         time.sleep(2)
         
         try:
-            subprocess.run([sys.executable, "src/main.py", "live"])
+            subprocess.run([sys.executable, "-m", "src.main", "live"])
         except KeyboardInterrupt:
             print(f"\n{Colors.YELLOW}Recording stopped by user{Colors.END}")
         except Exception as e:
@@ -140,123 +140,135 @@ class TickZeroLauncher:
     
     def open_browser_ui(self):
         """Launch web interface and open browser."""
-        self.clear_screen()
-        self.show_header()
-        print(f"\n{Colors.BOLD}{Colors.GREEN}Starting Match History Browser...{Colors.END}\n")
-        
-        port = self.config.get('web_port', 5000)
-        url = f"http://localhost:{port}"
-        
-        # Start web server in background thread
-        def run_server():
-            try:
-                from src.web.web_interface import run_web_interface
-                run_web_interface(port=port, debug=False)
-            except Exception as e:
-                print(f"{Colors.RED}Error starting web server: {e}{Colors.END}")
-        
-        server_thread = threading.Thread(target=run_server, daemon=True)
-        server_thread.start()
-        
-        # Wait for server to start
-        print("Starting web server...")
-        time.sleep(3)
-        
-        # Open browser
-        print(f"Opening browser at {url}...")
         try:
-            webbrowser.open(url)
-            print(f"\n{Colors.GREEN}✓ Web interface is running!{Colors.END}")
-            print(f"{Colors.CYAN}URL: {url}{Colors.END}\n")
-            print(f"{Colors.YELLOW}Press Ctrl+C to close the web interface{Colors.END}\n")
+            self.clear_screen()
+            self.show_header()
+            print(f"\n{Colors.BOLD}{Colors.GREEN}Starting Match History Browser...{Colors.END}\n")
             
-            # Keep running until Ctrl+C
+            port = self.config.get('web_port', 5000)
+            url = f"http://localhost:{port}"
+            
+            # Start web server in background thread
+            def run_server():
+                try:
+                    from src.web.web_interface import run_web_interface
+                    run_web_interface(port=port, debug=False)
+                except Exception as e:
+                    print(f"{Colors.RED}Error starting web server: {e}{Colors.END}")
+            
+            server_thread = threading.Thread(target=run_server, daemon=True)
+            server_thread.start()
+            
+            # Wait for server to start
+            print("Starting web server...")
+            time.sleep(3)
+            
+            # Open browser
+            print(f"Opening browser at {url}...")
             try:
-                while True:
-                    time.sleep(1)
-            except KeyboardInterrupt:
-                print(f"\n{Colors.YELLOW}Closing web interface...{Colors.END}")
-        except Exception as e:
-            print(f"{Colors.RED}Error opening browser: {e}{Colors.END}")
-            print(f"Please open manually: {url}")
-        
-        input(f"\n{Colors.BOLD}Press Enter to return to main menu...{Colors.END}")
+                webbrowser.open(url)
+                print(f"\n{Colors.GREEN}✓ Web interface is running!{Colors.END}")
+                print(f"{Colors.CYAN}URL: {url}{Colors.END}\n")
+                print(f"{Colors.YELLOW}Press Ctrl+C to close the web interface{Colors.END}\n")
+                
+                # Keep running until Ctrl+C
+                try:
+                    while True:
+                        time.sleep(1)
+                except KeyboardInterrupt:
+                    print(f"\n{Colors.YELLOW}Closing web interface...{Colors.END}")
+            except Exception as e:
+                print(f"{Colors.RED}Error opening browser: {e}{Colors.END}")
+                print(f"Please open manually: {url}")
+            
+            input(f"\n{Colors.BOLD}Press Enter to return to main menu...{Colors.END}")
+        except (KeyboardInterrupt, EOFError):
+            # User pressed Ctrl+C, return to main menu
+            pass
     
     def process_video(self):
         """Process a video file to generate highlights."""
-        self.clear_screen()
-        self.show_header()
-        print(f"\n{Colors.BOLD}{Colors.GREEN}Process Video File{Colors.END}\n")
-        
-        print("Enter the path to your recorded CS2 match video:")
-        video_path = input(f"{Colors.CYAN}Video path:{Colors.END} ").strip().strip('"')
-        
-        # Validate file path exists and is a file (security: prevent path traversal)
         try:
-            video_file = Path(video_path).resolve()
-            if not video_file.exists() or not video_file.is_file():
-                print(f"{Colors.RED}Error: File not found or invalid{Colors.END}")
+            self.clear_screen()
+            self.show_header()
+            print(f"\n{Colors.BOLD}{Colors.GREEN}Process Video File{Colors.END}\n")
+            
+            print("Enter the path to your recorded CS2 match video:")
+            video_path = input(f"{Colors.CYAN}Video path:{Colors.END} ").strip().strip('"')
+            
+            # Validate file path exists and is a file (security: prevent path traversal)
+            try:
+                video_file = Path(video_path).resolve()
+                if not video_file.exists() or not video_file.is_file():
+                    print(f"{Colors.RED}Error: File not found or invalid{Colors.END}")
+                    input(f"\n{Colors.BOLD}Press Enter to return to main menu...{Colors.END}")
+                    return
+                # Convert to absolute path string for safety
+                video_path = str(video_file)
+            except (OSError, ValueError) as e:
+                print(f"{Colors.RED}Error: Invalid file path{Colors.END}")
                 input(f"\n{Colors.BOLD}Press Enter to return to main menu...{Colors.END}")
                 return
-            # Convert to absolute path string for safety
-            video_path = str(video_file)
-        except (OSError, ValueError) as e:
-            print(f"{Colors.RED}Error: Invalid file path{Colors.END}")
+            
+            print(f"\nMinimum priority for highlights (1-10, default: {self.config.get('auto_min_priority', 6)}):")
+            priority_input = input(f"{Colors.CYAN}Priority:{Colors.END} ").strip()
+            
+            try:
+                min_priority = int(priority_input) if priority_input else self.config.get('auto_min_priority', 6)
+            except:
+                min_priority = 6
+            
+            print(f"\n{Colors.YELLOW}Processing highlights...{Colors.END}\n")
+            
+            try:
+                subprocess.run([sys.executable, "-m", "src.main", "process", video_path, str(min_priority)])
+                print(f"\n{Colors.GREEN}✓ Processing complete!{Colors.END}")
+            except Exception as e:
+                print(f"\n{Colors.RED}Error: {e}{Colors.END}")
+            
             input(f"\n{Colors.BOLD}Press Enter to return to main menu...{Colors.END}")
-            return
-        
-        print(f"\nMinimum priority for highlights (1-10, default: {self.config.get('auto_min_priority', 6)}):")
-        priority_input = input(f"{Colors.CYAN}Priority:{Colors.END} ").strip()
-        
-        try:
-            min_priority = int(priority_input) if priority_input else self.config.get('auto_min_priority', 6)
-        except:
-            min_priority = 6
-        
-        print(f"\n{Colors.YELLOW}Processing highlights...{Colors.END}\n")
-        
-        try:
-            subprocess.run([sys.executable, "src/main.py", "process", video_path, str(min_priority)])
-            print(f"\n{Colors.GREEN}✓ Processing complete!{Colors.END}")
-        except Exception as e:
-            print(f"\n{Colors.RED}Error: {e}{Colors.END}")
-        
-        input(f"\n{Colors.BOLD}Press Enter to return to main menu...{Colors.END}")
+        except (KeyboardInterrupt, EOFError):
+            # User pressed Ctrl+C, return to main menu
+            pass
     
     def settings(self):
         """Configuration settings menu."""
-        while True:
-            self.clear_screen()
-            self.show_header()
-            print(f"\n{Colors.BOLD}Settings:{Colors.END}\n")
-            
-            print(f"  {Colors.GREEN}[1]{Colors.END} OBS WebSocket Settings")
-            print(f"      Host: {self.config.get('obs_host')} | Port: {self.config.get('obs_port')}")
-            print(f"\n  {Colors.GREEN}[2]{Colors.END} Recording Settings")
-            print(f"      Auto-recording: {self.config.get('auto_recording')}")
-            print(f"      Continuous mode: {self.config.get('continuous_mode')}")
-            print(f"\n  {Colors.GREEN}[3]{Colors.END} Highlight Processing")
-            print(f"      Auto-process: {self.config.get('auto_process')}")
-            print(f"      Min priority: {self.config.get('auto_min_priority')}")
-            print(f"      GPU: {self.config.get('use_gpu')}")
-            print(f"\n  {Colors.GREEN}[4]{Colors.END} Test OBS Connection")
-            print(f"  {Colors.GREEN}[5]{Colors.END} View Configuration File")
-            print(f"  {Colors.GREEN}[0]{Colors.END} Back to Main Menu")
-            
-            choice = input(f"\n{Colors.BOLD}Select option:{Colors.END} ").strip()
-            
-            if choice == '1':
-                self._edit_obs_settings()
-            elif choice == '2':
-                self._edit_recording_settings()
-            elif choice == '3':
-                self._edit_processing_settings()
-            elif choice == '4':
-                self._test_obs_connection()
-            elif choice == '5':
-                self._view_config()
-            elif choice == '0':
-                break
+        try:
+            while True:
+                self.clear_screen()
+                self.show_header()
+                print(f"\n{Colors.BOLD}Settings:{Colors.END}\n")
+                
+                print(f"  {Colors.GREEN}[1]{Colors.END} OBS WebSocket Settings")
+                print(f"      Host: {self.config.get('obs_host')} | Port: {self.config.get('obs_port')}")
+                print(f"\n  {Colors.GREEN}[2]{Colors.END} Recording Settings")
+                print(f"      Auto-recording: {self.config.get('auto_recording')}")
+                print(f"      Continuous mode: {self.config.get('continuous_mode')}")
+                print(f"\n  {Colors.GREEN}[3]{Colors.END} Highlight Processing")
+                print(f"      Auto-process: {self.config.get('auto_process')}")
+                print(f"      Min priority: {self.config.get('auto_min_priority')}")
+                print(f"      GPU: {self.config.get('use_gpu')}")
+                print(f"\n  {Colors.GREEN}[4]{Colors.END} Test OBS Connection")
+                print(f"  {Colors.GREEN}[5]{Colors.END} View Configuration File")
+                print(f"  {Colors.GREEN}[0]{Colors.END} Back to Main Menu")
+                
+                choice = input(f"\n{Colors.BOLD}Select option:{Colors.END} ").strip()
+                
+                if choice == '1':
+                    self._edit_obs_settings()
+                elif choice == '2':
+                    self._edit_recording_settings()
+                elif choice == '3':
+                    self._edit_processing_settings()
+                elif choice == '4':
+                    self._test_obs_connection()
+                elif choice == '5':
+                    self._view_config()
+                elif choice == '0':
+                    break
+        except (KeyboardInterrupt, EOFError):
+            # User pressed Ctrl+C, return to main menu
+            pass
     
     def _edit_obs_settings(self):
         """Edit OBS WebSocket settings."""
@@ -378,26 +390,32 @@ class TickZeroLauncher:
     
     def run(self):
         """Main application loop."""
-        while True:
-            choice = self.show_menu()
-            
-            if choice == '1':
-                self.start_recording()
-            elif choice == '2':
-                self.open_browser_ui()
-            elif choice == '3':
-                self.process_video()
-            elif choice == '4':
-                self.settings()
-            elif choice == '5':
-                self.show_help()
-            elif choice == '6':
-                self.clear_screen()
-                print(f"\n{Colors.CYAN}Thanks for using TickZero!{Colors.END}\n")
-                sys.exit(0)
-            else:
-                print(f"{Colors.RED}Invalid option. Please try again.{Colors.END}")
-                time.sleep(1)
+        try:
+            while True:
+                choice = self.show_menu()
+                
+                if choice == '1':
+                    self.start_recording()
+                elif choice == '2':
+                    self.open_browser_ui()
+                elif choice == '3':
+                    self.process_video()
+                elif choice == '4':
+                    self.settings()
+                elif choice == '5':
+                    self.show_help()
+                elif choice == '6':
+                    self.clear_screen()
+                    print(f"\n{Colors.CYAN}Thanks for using TickZero!{Colors.END}\n")
+                    sys.exit(0)
+                else:
+                    print(f"{Colors.RED}Invalid option. Please try again.{Colors.END}")
+                    time.sleep(1)
+        except (KeyboardInterrupt, EOFError):
+            # User pressed Ctrl+C or Ctrl+Z
+            self.clear_screen()
+            print(f"\n{Colors.CYAN}Thanks for using TickZero!{Colors.END}\n")
+            sys.exit(0)
 
 
 def main():

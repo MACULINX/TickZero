@@ -87,24 +87,48 @@ class OBSManager:
     def stop_recording(self):
         """Stop OBS recording and capture the output file path."""
         try:
-            # Try to get the recording path before stopping
-            try:
-                record_status = self.ws.call(obs_requests.GetRecordStatus())
-                if hasattr(record_status, 'datain') and 'outputPath' in record_status.datain:
-                    self.last_recording_path = record_status.datain['outputPath']
-                elif hasattr(record_status, 'getOutputPath'):
-                    self.last_recording_path = record_status.getOutputPath()
-            except Exception as e:
-                logger.warning(f"Could not retrieve recording path: {e}")
-            
-            # Stop recording
-            self.ws.call(obs_requests.StopRecord())
+            # Stop recording first
+            stop_response = self.ws.call(obs_requests.StopRecord())
             self.is_recording = False
+            
+            # Try multiple methods to get the recording path
+            # Method 1: Check if StopRecord response contains the path
+            if hasattr(stop_response, 'datain'):
+                if isinstance(stop_response.datain, dict) and 'outputPath' in stop_response.datain:
+                    self.last_recording_path = stop_response.datain['outputPath']
+                    logger.info(f"✓ Got recording path from StopRecord response")
+            
+            # Method 2: Query record status (this might work on some OBS versions)
+            if not self.last_recording_path:
+                try:
+                    record_status = self.ws.call(obs_requests.GetRecordStatus())
+                    # Try different attribute names
+                    if hasattr(record_status, 'datain') and isinstance(record_status.datain, dict):
+                        self.last_recording_path = (record_status.datain.get('outputPath') or 
+                                                    record_status.datain.get('recordOutputPath') or
+                                                    record_status.datain.get('lastRecordingPath'))
+                        if self.last_recording_path:
+                            logger.info(f"✓ Got recording path from GetRecordStatus")
+                except Exception as e:
+                    logger.debug(f"GetRecordStatus method failed: {e}")
+            
+            # Method 3: Try to get from last record file name  
+            if not self.last_recording_path:
+                try:
+                    # Some OBS versions expose GetLastReplayBufferReplay or similar
+                    # This is a last resort fallback
+                    pass
+                except:
+                    pass
+            
             duration = time.time() - self.recording_start_time if self.recording_start_time else 0
             logger.info(f"✓ Recording stopped. Total duration: {duration:.2f}s")
             
             if self.last_recording_path:
                 logger.info(f"✓ Recording saved to: {self.last_recording_path}")
+            else:
+                logger.warning(f"⚠ Could not retrieve recording file path automatically")
+                logger.warning(f"  You may need to manually specify the video file path when processing")
             
             return True
         except Exception as e:
@@ -113,6 +137,11 @@ class OBSManager:
     
     def get_last_recording_path(self):
         """Get the path to the last recorded file."""
+        if not self.last_recording_path:
+            logger.warning("Recording path not available. This may happen if:")
+            logger.warning("  1. OBS version doesn't support path retrieval via WebSocket")
+            logger.warning("  2. Recording was started manually in OBS")
+            logger.warning("  3. Recording hasn't been stopped yet")
         return self.last_recording_path
     
     def get_recording_status(self):

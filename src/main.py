@@ -339,14 +339,35 @@ def main():
         elif mode == 'process':
             # POST-PROCESSING MODE
             # Usage: python main.py process <video_path> [api_key] [min_priority]
+            #    OR: python main.py process <video_path> [min_priority]
             if len(sys.argv) < 3:
                 print("Usage: python main.py process <video_path> [api_key] [min_priority]")
+                print("   OR: python main.py process <video_path> [min_priority]")
                 print("Example: python main.py process recording.mp4 your-google-api-key 6")
+                print("Example: python main.py process recording.mp4 6")
                 sys.exit(1)
             
             video_path = sys.argv[2]
-            api_key = sys.argv[3] if len(sys.argv) > 3 else None
-            min_priority = int(sys.argv[4]) if len(sys.argv) > 4 else 6
+            
+            # Smart argument parsing: detect if 3rd arg is API key or priority
+            api_key = None
+            min_priority = 6
+            
+            if len(sys.argv) > 3:
+                third_arg = sys.argv[3]
+                # If it's a number 1-10, treat as priority
+                try:
+                    possible_priority = int(third_arg)
+                    if 1 <= possible_priority <= 10:
+                        min_priority = possible_priority
+                    else:
+                        # Not a valid priority, assume it's an API key
+                        api_key = third_arg
+                        min_priority = int(sys.argv[4]) if len(sys.argv) > 4 else 6
+                except ValueError:
+                    # Not a number, it's an API key
+                    api_key = third_arg
+                    min_priority = int(sys.argv[4]) if len(sys.argv) > 4 else 6
             
             pipeline.run_post_processing(video_path, api_key, min_priority)
         

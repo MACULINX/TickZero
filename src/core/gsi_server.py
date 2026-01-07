@@ -41,6 +41,7 @@ class GSIServer:
         self.match_events = []
         self.current_round = 0
         self.last_round_phase = None
+        self.last_map_phase = None  # Track map-level phase (warmup, live, gameover)
         self.match_started = False  # Track if match has started
         self.match_in_progress = False  # Track if match is currently ongoing
         self.match_ended = False
@@ -121,6 +122,13 @@ class GSIServer:
                 player_name = player_data.get('name', 'Unknown')
                 logger.info(f"👤 Main player locked: {player_name} (SteamID: {self.main_player_steamid})")
             
+            # Detect map phase changes (for match-level events like gameover)
+            if 'phase' in map_data:
+                current_map_phase = map_data['phase']
+                if current_map_phase != self.last_map_phase:
+                    self._check_map_phase(event_time, current_map_phase, map_data)
+                    self.last_map_phase = current_map_phase
+            
             # Detect round phase changes
             if 'phase' in round_data:
                 current_phase = round_data['phase']
@@ -151,8 +159,27 @@ class GSIServer:
         except Exception as e:
             logger.error(f"Error processing game state: {e}")
     
+    def _check_map_phase(self, event_time, map_phase, map_data):
+        """Check map-level phase changes for match start/end detection."""
+        video_timestamp = self.obs_manager.calculate_video_timestamp(event_time)
+        
+        logger.info(f"🗺️  Map Phase: {map_phase} | Video Time: {video_timestamp:.2f}s")
+        
+        # Detect match start: transition to "live" from warmup
+        if map_phase == "live" and not self.match_in_progress:
+            logger.info("🎮 MATCH STARTED - Map is now live")
+            self.match_started = True
+            self.match_in_progress = True
+            if self.on_match_start:
+                self.on_match_start()
+        
+        # Detect match end: "gameover" phase (OFFICIAL METHOD per Valve docs)
+        elif map_phase == "gameover" and self.match_in_progress:
+            logger.info("🏁 MATCH ENDED - Map phase: gameover")
+            self._trigger_match_end()
+    
     def _log_round_phase_change(self, event_time, phase, round_data):
-        """Log round phase changes and detect match start/end."""
+        """Log round phase changes."""
         video_timestamp = self.obs_manager.calculate_video_timestamp(event_time)
         current_round = round_data.get('round', 0)
         
@@ -168,23 +195,7 @@ class GSIServer:
         self.match_events.append(event)
         logger.info(f"📍 Round Phase: {phase} | Round: {current_round} | Video Time: {video_timestamp:.2f}s")
         
-        # Detect match start: first "live" phase in early rounds (not warmup)
-        if not self.match_in_progress and phase == "live" and current_round <= 1:
-            logger.info("🎮 MATCH STARTED - First round is live")
-            self.match_started = True
-            self.match_in_progress = True
-            if self.on_match_start:
-                self.on_match_start()
-        
-        # Detect match end: "gameover" phase or significant reset in rounds
-        if phase == "gameover" and self.match_in_progress:
-            logger.info("🏁 MATCH ENDED - Gameover detected")
-            self._trigger_match_end()
-        elif self.last_round_phase and current_round < self.current_round - 5:
-            # Round number reset significantly (new match started)
-            logger.info(f"🏁 New match detected (round reset from {self.current_round} to {current_round})")
-            self._trigger_match_end()
-        
+        # Update tracking
         self.current_round = current_round
         self.last_round_phase = phase
     

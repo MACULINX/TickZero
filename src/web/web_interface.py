@@ -8,11 +8,19 @@ from pathlib import Path
 import logging
 import subprocess
 import threading
+import os
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = Flask(__name__)
+# Get project root directory (2 levels up from this file)
+project_root = Path(__file__).parent.parent.parent
+template_dir = project_root / 'templates'
+static_dir = project_root / 'static'
+
+app = Flask(__name__, 
+            template_folder=str(template_dir),
+            static_folder=str(static_dir))
 db = MatchDatabase()
 
 
@@ -87,11 +95,12 @@ def _process_match_highlights(match_id, video_path, log_path, min_priority):
         min_priority: Minimum priority threshold
     """
     try:
+        import sys
         logger.info(f"Starting highlight processing for match #{match_id}")
         
-        # Call main.py process command
+        # Call main.py process command using module syntax
         cmd = [
-            'python', 'main.py', 'process',
+            sys.executable, '-m', 'src.main', 'process',
             video_path,
             str(min_priority)
         ]
@@ -100,7 +109,8 @@ def _process_match_highlights(match_id, video_path, log_path, min_priority):
             cmd,
             capture_output=True,
             text=True,
-            timeout=600  # 10 minute timeout
+            timeout=600,  # 10 minute timeout
+            cwd=str(project_root)  # Run from project root
         )
         
         if result.returncode == 0:
