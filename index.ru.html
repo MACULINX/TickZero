@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="TickZero: Извлечение хайлайтов на основе ИИ для CS2. Автоматически превращайте свой геймплей Counter-Strike 2 в вирусные клипы для TikTok/Reels с помощью БЕСПЛА">
+    <meta name="description"
+        content="TickZero: Извлечение хайлайтов на основе ИИ для CS2. Автоматически превращайте свой геймплей Counter-Strike 2 в вирусные клипы для TikTok/Reels с помощью БЕСПЛА">
     <meta name="keywords"
         content="CS2, Counter-Strike 2, highlights, TikTok, Reels, AI, clips, gaming, content creation">
     <meta name="author" content="MACULINX">
@@ -12,10 +13,16 @@
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="TickZero - Генератор хайлайтов CS2 на базе ИИ">
-    <meta property="og:description" content="Автоматически превращайте свой геймплей CS2 в вирусные клипы с помощью БЕСПЛАТНОГО ИИ">
+    <meta property="og:description"
+        content="Автоматически превращайте свой геймплей CS2 в вирусные клипы с помощью БЕСПЛАТНОГО ИИ">
     <meta property="og:image" content="assets/images/logo.png">
 
     <title>TickZero - Генератор хайлайтов CS2 на базе ИИ</title>
+
+    <!-- Resource Hints -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://api.github.com">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,10 +30,482 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
 
+    <style>
+        /* Critical CSS */
+        :root {
+            --color-primary: #0066ff;
+            --color-primary-dark: #0052cc;
+            --color-primary-light: #3388ff;
+            --color-secondary: #00d4ff;
+            --color-accent: #00ff88;
+            --color-bg-primary: #ffffff;
+            --color-bg-secondary: #f8f9fa;
+            --color-bg-tertiary: #e9ecef;
+            --color-bg-dark: #0a0f1a;
+            --color-bg-card: #ffffff;
+            --color-text-primary: #1a1a1a;
+            --color-text-secondary: #333333;
+            --color-text-tertiary: #666666;
+            --color-text-white: #ffffff;
+            --color-border: #e0e0e0;
+            --color-border-light: #f0f0f0;
+            --color-success: #00c853;
+            --color-warning: #ffa726;
+            --color-info: #29b6f6;
+            --gradient-primary: linear-gradient(135deg, #0066ff 0%, #00d4ff 100%);
+            --gradient-hero: linear-gradient(135deg, #0a0f1a 0%, #1a2332 100%);
+            --gradient-text: linear-gradient(135deg, #0066ff 0%, #00d4ff 50%, #00ff88 100%);
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --spacing-xs: .5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+            --spacing-2xl: 4rem;
+            --spacing-3xl: 6rem;
+            --radius-sm: .5rem;
+            --radius-md: .75rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.5rem;
+            --radius-full: 9999px;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, .05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, .1);
+            --transition-base: .25s ease-in-out;
+            --container-max-width: 1200px
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px
+        }
+
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--color-text-primary);
+            background-color: var(--color-bg-primary)
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color var(--transition-base)
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            background: none
+        }
+
+        ul {
+            list-style: none
+        }
+
+        .container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg)
+        }
+
+        .gradient-text {
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, .95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--color-border-light);
+            transition: all var(--transition-base)
+        }
+
+        .navbar.scrolled {
+            box-shadow: var(--shadow-md)
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--color-text-primary)
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg)
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            font-size: .938rem;
+            color: var(--color-text-secondary);
+            transition: color var(--transition-base)
+        }
+
+        .nav-links a:hover {
+            color: var(--color-primary)
+        }
+
+        .nav-links .btn-primary {
+            padding: .625rem 1.75rem
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            padding: var(--spacing-xs)
+        }
+
+        .mobile-menu-toggle span {
+            width: 24px;
+            height: 2px;
+            background-color: var(--color-text-primary);
+            transition: all var(--transition-base)
+        }
+
+        .language-selector {
+            position: relative
+        }
+
+        .lang-btn {
+            display: flex;
+            align-items: center;
+            gap: .375rem;
+            padding: .5rem .75rem;
+            background: 0 0;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-family: var(--font-family);
+            font-size: .875rem;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            transition: all var(--transition-base)
+        }
+
+        .lang-btn:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+            background: rgba(0, 102, 255, .05)
+        }
+
+        .lang-btn svg {
+            width: 12px;
+            height: 12px;
+            transition: transform var(--transition-base)
+        }
+
+        .language-selector:hover .lang-btn svg {
+            transform: rotate(180deg)
+        }
+
+        .lang-dropdown {
+            position: absolute;
+            top: calc(100% + .5rem);
+            right: 0;
+            min-width: 180px;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all var(--transition-base);
+            z-index: 1000;
+            padding: .5rem;
+            margin: 0
+        }
+
+        .language-selector:hover .lang-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0)
+        }
+
+        .lang-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            padding: .625rem 1rem;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            transition: all var(--transition-base);
+            font-size: .938rem;
+            font-weight: 500
+        }
+
+        .lang-dropdown a:hover {
+            background: rgba(0, 102, 255, .08);
+            color: var(--color-primary)
+        }
+
+        .lang-dropdown a.active {
+            background: rgba(0, 102, 255, .12);
+            color: var(--color-primary);
+            font-weight: 600
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-xs);
+            padding: .75rem 1.5rem;
+            font-weight: 600;
+            font-size: .938rem;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-base);
+            cursor: pointer;
+            white-space: nowrap
+        }
+
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1rem
+        }
+
+        .btn-primary {
+            background: rgba(255, 255, 255, .05);
+            border: 2px solid transparent;
+            background-image: var(--gradient-primary);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            border-radius: var(--radius-md);
+            box-shadow: 0 4px 12px rgba(0, 102, 255, .2);
+            position: relative
+        }
+
+        .btn-primary svg {
+            color: var(--color-primary)
+        }
+
+        .btn-primary:before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius-md);
+            padding: 2px;
+            background: var(--gradient-primary);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            z-index: -1
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 102, 255, .3)
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: rgba(255, 255, 255, .9);
+            border: 2px solid rgba(255, 255, 255, .3)
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--color-secondary);
+            color: var(--color-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 212, 255, .3)
+        }
+
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 70px;
+            overflow: hidden;
+            background: var(--gradient-hero);
+            color: var(--color-text-white)
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: .1;
+            background-image: radial-gradient(circle at 20% 50%, var(--color-primary) 0, transparent 50%), radial-gradient(circle at 80% 80%, var(--color-secondary) 0, transparent 50%);
+            z-index: 0
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: var(--spacing-3xl) 0
+        }
+
+        .hero-badge {
+            margin-bottom: var(--spacing-md)
+        }
+
+        .badge {
+            display: inline-block;
+            padding: .5rem 1.25rem;
+            background: rgba(255, 255, 255, .1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, .2);
+            border-radius: var(--radius-full);
+            font-size: .875rem;
+            font-weight: 500
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: var(--spacing-md)
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.125rem, 2vw, 1.25rem);
+            line-height: 1.6;
+            color: rgba(255, 255, 255, .9);
+            max-width: 700px;
+            margin: 0 auto var(--spacing-xl)
+        }
+
+        .hero-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-2xl);
+            flex-wrap: wrap
+        }
+
+        .hero-stats {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-2xl);
+            padding-top: var(--spacing-xl);
+            border-top: 1px solid rgba(255, 255, 255, .1);
+            margin-top: var(--spacing-xl);
+            flex-wrap: wrap
+        }
+
+        .stat {
+            text-align: center
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-secondary);
+            line-height: 1;
+            margin-bottom: .5rem
+        }
+
+        .stat-label {
+            font-size: .875rem;
+            color: rgba(255, 255, 255, .6);
+            text-transform: uppercase;
+            letter-spacing: .5px
+        }
+
+        @media (max-width:768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: #fff;
+                flex-direction: column;
+                padding: var(--spacing-lg);
+                box-shadow: var(--shadow-lg);
+                transform: translateX(-100%);
+                transition: transform var(--transition-base)
+            }
+
+            .nav-links.active {
+                transform: translateX(0)
+            }
+
+            .mobile-menu-toggle {
+                display: flex
+            }
+
+            .hero-cta {
+                flex-direction: column
+            }
+
+            .hero-stats {
+                gap: var(--spacing-lg)
+            }
+        }
+
+        @media (max-width:480px) {
+            :root {
+                --spacing-xl: 2rem;
+                --spacing-2xl: 3rem;
+                --spacing-3xl: 4rem
+            }
+
+            .container {
+                padding: 0 var(--spacing-md)
+            }
+        }
+    </style>
+
     <!-- Styles -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/flags.css">
+    <!-- Critical CSS will be inlined below -->
+    <link rel="stylesheet" href="assets/css/style.css" media="print" onload="this.media='all'; this.onload=null;">
+    <link rel="stylesheet" href="assets/css/flags.css" media="print" onload="this.media='all'; this.onload=null;">
     <link rel="stylesheet" href="assets/css/cookie-consent.css">
+
+    <!-- Noscript fallback for CSS -->
+    <noscript>
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/flags.css">
+    </noscript>
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/images/logo.png">
@@ -38,9 +517,38 @@
     <link rel="alternate" hreflang="de" href="index.de.html">
     <link rel="alternate" hreflang="ru" href="index.ru.html">
     <link rel="alternate" hreflang="zh" href="index.zh.html">
-    
+
     <!-- Canonical URL -->
     <link rel="canonical" href="https://tickzero.maculinx.com/index.ru.html">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#0f172a">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "TickZero",
+      "description": "TickZero: Извлечение хайлайтов на базе ИИ для Counter-Strike 2. Автоматически создавайте готовые для TikTok и Reels видео из ваших лучших моментов с помощью БЕСПЛАТНОГО ИИ.",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "MACULINX"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "ratingCount": "1"
+      }
+    }
+    </script>
 </head>
 
 <body>
@@ -60,7 +568,8 @@
                     <li class="language-selector">
                         <button class="lang-btn" aria-label="Выберите язык">
                             <span class="flag-icon flag-ru"></span><span class="lang-code">RU</span>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
                         </button>
@@ -70,7 +579,8 @@
                             <li><a href="index.es.html"><span class="flag-icon flag-es"></span>Español</a></li>
                             <li><a href="index.fr.html"><span class="flag-icon flag-fr"></span>Français</a></li>
                             <li><a href="index.de.html"><span class="flag-icon flag-de"></span>Deutsch</a></li>
-                            <li><a href="index.ru.html" class="active"><span class="flag-icon flag-ru"></span>Русский</a></li>
+                            <li><a href="index.ru.html" class="active"><span
+                                        class="flag-icon flag-ru"></span>Русский</a></li>
                             <li><a href="index.zh.html"><span class="flag-icon flag-zh"></span>中文</a></li>
                         </ul>
                     </li>
@@ -97,7 +607,8 @@
                     <span class="gradient-text">Вирусные Клипы</span>
                 </h1>
                 <p class="hero-subtitle">
-                    Извлечение хайлайтов на базе ИИ для Counter-Strike 2. Автоматически создавайте готовые для TikTok и Reels
+                    Извлечение хайлайтов на базе ИИ для Counter-Strike 2. Автоматически создавайте готовые для TikTok и
+                    Reels
                     видео из ваших лучших моментов с помощью БЕСПЛАТНОГО ИИ.
                 </p>
                 <div class="hero-cta">
@@ -155,7 +666,8 @@
                         </svg>
                     </div>
                     <h3>Запись событий в реальном времени</h3>
-                    <p>Захватывает киллы, хедшоты и события раунда в прямом эфире через CS2 Game State Integration с точной
+                    <p>Захватывает киллы, хедшоты и события раунда в прямом эфире через CS2 Game State Integration с
+                        точной
                         синхронизацией времени OBS.</p>
                 </div>
                 <div class="feature-card">
@@ -221,7 +733,8 @@
                         </svg>
                     </div>
                     <h3>100% Бесплатно</h3>
-                    <p>Полностью с открытым исходным кодом без скрытых затрат. Использует бесплатный уровень Google Gemini (1500 запросов/день -
+                    <p>Полностью с открытым исходным кодом без скрытых затрат. Использует бесплатный уровень Google
+                        Gemini (1500 запросов/день -
                         достаточно для ~50 матчей в день).</p>
                 </div>
             </div>
@@ -253,7 +766,8 @@
                     <div class="step-content">
                         <h3>Анализ ИИ</h3>
                         <p>After your match, Google Gemini AI analyzes your gameplay log to identify highlight-worthy
-                            moments. Приоритет отдается эйсам, мульти-киллам, клатчам, сериям хедшотов и скилловым моментам.
+                            moments. Приоритет отдается эйсам, мульти-киллам, клатчам, сериям хедшотов и скилловым
+                            моментам.
                         </p>
                         <ul class="highlight-list">
                             <li>🔥 Multi-kills (2K, 3K, 4K, ACE)</li>
@@ -267,7 +781,8 @@
                     <div class="step-number">3</div>
                     <div class="step-content">
                         <h3>Экспорт и Поделиться</h3>
-                        <p>TickZero автоматически создает вертикальные (9:16) клипы, оптимизированные для TikTok и Reels. Each
+                        <p>TickZero автоматически создает вертикальные (9:16) клипы, оптимизированные для TikTok и
+                            Reels. Each
                             clip is hardware-accelerated, professionally formatted, and ready to upload.</p>
                         <div class="output-info">
                             <div class="output-spec">
@@ -287,7 +802,7 @@
     </section>
 
     <!-- План развития Section -->
-        <section id="roadmap" class="roadmap">
+    <section id="roadmap" class="roadmap">
         <div class="container">
             <div class="section-header">
                 <h2>План Развития</h2>
@@ -375,7 +890,7 @@
     </section>
 
     <!-- FAQ Section -->
-        <section id="faq" class="faq">
+    <section id="faq" class="faq">
         <div class="container">
             <div class="section-header">
                 <h2>Часто задаваемые вопросы</h2>
@@ -391,7 +906,9 @@
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Да! TickZero на 100% бесплатен и имеет открытый исходный код под лицензией MIT. Он использует бесплатный уровень Google Gemini (1500 запросов в день), чего достаточно примерно для 50 матчей в день. Карта не требуется, скрытых платежей нет.</p>
+                        <p>Да! TickZero на 100% бесплатен и имеет открытый исходный код под лицензией MIT. Он использует
+                            бесплатный уровень Google Gemini (1500 запросов в день), чего достаточно примерно для 50
+                            матчей в день. Карта не требуется, скрытых платежей нет.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -431,7 +948,8 @@
                             <li><strong>Скилловые моменты:</strong> Быстрая реакция и сложные выстрелы</li>
                             <li><strong>Клатчи на лоу-хп:</strong> Выживание с минимальным здоровьем</li>
                         </ul>
-                        <p>Вы можете настроить минимальный порог приоритета, чтобы контролировать избирательность ИИ.</p>
+                        <p>Вы можете настроить минимальный порог приоритета, чтобы контролировать избирательность ИИ.
+                        </p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -443,7 +961,10 @@
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>В настоящее время TickZero разработан для работы с OBS Studio через WebSocket для автоматического управления записью и точной синхронизации таймстампов. Однако вы можете записывать вручную с любым ПО и обрабатывать видео позже - вам просто нужно убедиться, что таймстампы лога событий совпадают со временем начала записи.</p>
+                        <p>В настоящее время TickZero разработан для работы с OBS Studio через WebSocket для
+                            автоматического управления записью и точной синхронизации таймстампов. Однако вы можете
+                            записывать вручную с любым ПО и обрабатывать видео позже - вам просто нужно убедиться, что
+                            таймстампы лога событий совпадают со временем начала записи.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -455,7 +976,9 @@
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Да! TickZero кроссплатформенный и работает на Windows, Linux и macOS. Единственное требование - наличие Python 3.10+, OBS Studio и FFmpeg в вашей системе. CS2 Game State Integration также работает на всех платформах.</p>
+                        <p>Да! TickZero кроссплатформенный и работает на Windows, Linux и macOS. Единственное требование
+                            - наличие Python 3.10+, OBS Studio и FFmpeg в вашей системе. CS2 Game State Integration
+                            также работает на всех платформах.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -467,7 +990,9 @@
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>TickZero захватывает только ВАШИ личные убийства. Когда вы умираете и наблюдаете за товарищами, система автоматически фильтрует их убийства, используя отслеживание SteamID. Это обеспечивает точное отслеживание личных хайлайтов и предотвращает ложные срабатывания.</p>
+                        <p>TickZero захватывает только ВАШИ личные убийства. Когда вы умираете и наблюдаете за
+                            товарищами, система автоматически фильтрует их убийства, используя отслеживание SteamID. Это
+                            обеспечивает точное отслеживание личных хайлайтов и предотвращает ложные срабатывания.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -497,7 +1022,9 @@
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>В настоящее время клипы оптимизированы для TikTok/Reels (8-15 секунд, 1080×1920). Пользовательская длительность и форматы запланированы для версии 2.0. Вы можете изменить исходный код для настройки этих параметров, если вы знакомы с Python.</p>
+                        <p>В настоящее время клипы оптимизированы для TikTok/Reels (8-15 секунд, 1080×1920).
+                            Пользовательская длительность и форматы запланированы для версии 2.0. Вы можете изменить
+                            исходный код для настройки этих параметров, если вы знакомы с Python.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -514,7 +1041,8 @@
                             <li><strong>Сообщить о баге:</strong> <a href="https://github.com/MACULINX/TickZero/issues"
                                     target="_blank">Открыть issue</a> на GitHub</li>
                             <li><strong>Запросить функцию:</strong> <a
-                                    href="https://github.com/MACULINX/TickZero/discussions" target="_blank">Начать обсуждение</a></li>
+                                    href="https://github.com/MACULINX/TickZero/discussions" target="_blank">Начать
+                                    обсуждение</a></li>
                             <li><strong>Внести вклад:</strong> Отправить pull request</li>
                             <li><strong>Получить помощь:</strong> Проверить существующие issues и обсуждения</li>
                         </ul>
@@ -593,7 +1121,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <img src="assets/images/logo.png" alt="TickZero Logo">
+                        <img src="assets/images/logo.png" alt="TickZero Logo" loading="lazy">
                         <span>TickZero</span>
                     </div>
                     <p class="footer-description">
@@ -623,7 +1151,8 @@
                     <ul class="footer-links">
                         <li><a href="https://github.com/MACULINX/TickZero/blob/master/docs/i18n/README.ru.md"
                                 target="_blank">Документация</a></li>
-                        <li><a href="https://github.com/MACULINX/TickZero/issues" target="_blank">Сообщить о проблеме</a></li>
+                        <li><a href="https://github.com/MACULINX/TickZero/issues" target="_blank">Сообщить о
+                                проблеме</a></li>
                         <li><a href="https://github.com/MACULINX/TickZero/discussions" target="_blank">Обсуждения</a>
                         </li>
                         <li><a href="https://github.com/MACULINX/TickZero/blob/master/CONTRIBUTING.md"
@@ -647,8 +1176,8 @@
     </footer>
 
     <!-- JavaScript -->
-    <script src="assets/js/cookie-consent.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/cookie-consent.js" async></script>
+    <script src="assets/js/main.js" defer></script>
 </body>
 
 </html>

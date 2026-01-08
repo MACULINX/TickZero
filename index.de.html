@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="TickZero: KI-gesteuerte Highlight-Extraktion für CS2. Verwandeln Sie Ihr Counter-Strike 2 Gameplay automatisch in virale TikTok/Reels-Clips mit KOSTENLOSER KI.">
+    <meta name="description"
+        content="TickZero: KI-gesteuerte Highlight-Extraktion für CS2. Verwandeln Sie Ihr Counter-Strike 2 Gameplay automatisch in virale TikTok/Reels-Clips mit KOSTENLOSER KI.">
     <meta name="keywords"
         content="CS2, Counter-Strike 2, highlights, TikTok, Reels, AI, clips, gaming, content creation">
     <meta name="author" content="MACULINX">
@@ -12,10 +13,16 @@
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="TickZero - KI-gesteuerter CS2 Highlight Generator">
-    <meta property="og:description" content="Verwandeln Sie Ihr CS2-Gameplay automatisch mit KOSTENLOSER KI in virale Clips">
+    <meta property="og:description"
+        content="Verwandeln Sie Ihr CS2-Gameplay automatisch mit KOSTENLOSER KI in virale Clips">
     <meta property="og:image" content="assets/images/logo.png">
 
     <title>TickZero - KI-gesteuerter CS2 Highlight Generator</title>
+
+    <!-- Resource Hints -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://api.github.com">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,10 +30,482 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
 
+    <style>
+        /* Critical CSS */
+        :root {
+            --color-primary: #0066ff;
+            --color-primary-dark: #0052cc;
+            --color-primary-light: #3388ff;
+            --color-secondary: #00d4ff;
+            --color-accent: #00ff88;
+            --color-bg-primary: #ffffff;
+            --color-bg-secondary: #f8f9fa;
+            --color-bg-tertiary: #e9ecef;
+            --color-bg-dark: #0a0f1a;
+            --color-bg-card: #ffffff;
+            --color-text-primary: #1a1a1a;
+            --color-text-secondary: #333333;
+            --color-text-tertiary: #666666;
+            --color-text-white: #ffffff;
+            --color-border: #e0e0e0;
+            --color-border-light: #f0f0f0;
+            --color-success: #00c853;
+            --color-warning: #ffa726;
+            --color-info: #29b6f6;
+            --gradient-primary: linear-gradient(135deg, #0066ff 0%, #00d4ff 100%);
+            --gradient-hero: linear-gradient(135deg, #0a0f1a 0%, #1a2332 100%);
+            --gradient-text: linear-gradient(135deg, #0066ff 0%, #00d4ff 50%, #00ff88 100%);
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --spacing-xs: .5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+            --spacing-2xl: 4rem;
+            --spacing-3xl: 6rem;
+            --radius-sm: .5rem;
+            --radius-md: .75rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.5rem;
+            --radius-full: 9999px;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, .05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, .1);
+            --transition-base: .25s ease-in-out;
+            --container-max-width: 1200px
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px
+        }
+
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--color-text-primary);
+            background-color: var(--color-bg-primary)
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color var(--transition-base)
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            background: none
+        }
+
+        ul {
+            list-style: none
+        }
+
+        .container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg)
+        }
+
+        .gradient-text {
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, .95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--color-border-light);
+            transition: all var(--transition-base)
+        }
+
+        .navbar.scrolled {
+            box-shadow: var(--shadow-md)
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--color-text-primary)
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg)
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            font-size: .938rem;
+            color: var(--color-text-secondary);
+            transition: color var(--transition-base)
+        }
+
+        .nav-links a:hover {
+            color: var(--color-primary)
+        }
+
+        .nav-links .btn-primary {
+            padding: .625rem 1.75rem
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            padding: var(--spacing-xs)
+        }
+
+        .mobile-menu-toggle span {
+            width: 24px;
+            height: 2px;
+            background-color: var(--color-text-primary);
+            transition: all var(--transition-base)
+        }
+
+        .language-selector {
+            position: relative
+        }
+
+        .lang-btn {
+            display: flex;
+            align-items: center;
+            gap: .375rem;
+            padding: .5rem .75rem;
+            background: 0 0;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-family: var(--font-family);
+            font-size: .875rem;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            transition: all var(--transition-base)
+        }
+
+        .lang-btn:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+            background: rgba(0, 102, 255, .05)
+        }
+
+        .lang-btn svg {
+            width: 12px;
+            height: 12px;
+            transition: transform var(--transition-base)
+        }
+
+        .language-selector:hover .lang-btn svg {
+            transform: rotate(180deg)
+        }
+
+        .lang-dropdown {
+            position: absolute;
+            top: calc(100% + .5rem);
+            right: 0;
+            min-width: 180px;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all var(--transition-base);
+            z-index: 1000;
+            padding: .5rem;
+            margin: 0
+        }
+
+        .language-selector:hover .lang-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0)
+        }
+
+        .lang-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            padding: .625rem 1rem;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            transition: all var(--transition-base);
+            font-size: .938rem;
+            font-weight: 500
+        }
+
+        .lang-dropdown a:hover {
+            background: rgba(0, 102, 255, .08);
+            color: var(--color-primary)
+        }
+
+        .lang-dropdown a.active {
+            background: rgba(0, 102, 255, .12);
+            color: var(--color-primary);
+            font-weight: 600
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-xs);
+            padding: .75rem 1.5rem;
+            font-weight: 600;
+            font-size: .938rem;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-base);
+            cursor: pointer;
+            white-space: nowrap
+        }
+
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1rem
+        }
+
+        .btn-primary {
+            background: rgba(255, 255, 255, .05);
+            border: 2px solid transparent;
+            background-image: var(--gradient-primary);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            border-radius: var(--radius-md);
+            box-shadow: 0 4px 12px rgba(0, 102, 255, .2);
+            position: relative
+        }
+
+        .btn-primary svg {
+            color: var(--color-primary)
+        }
+
+        .btn-primary:before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius-md);
+            padding: 2px;
+            background: var(--gradient-primary);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            z-index: -1
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 102, 255, .3)
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: rgba(255, 255, 255, .9);
+            border: 2px solid rgba(255, 255, 255, .3)
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--color-secondary);
+            color: var(--color-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 212, 255, .3)
+        }
+
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 70px;
+            overflow: hidden;
+            background: var(--gradient-hero);
+            color: var(--color-text-white)
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: .1;
+            background-image: radial-gradient(circle at 20% 50%, var(--color-primary) 0, transparent 50%), radial-gradient(circle at 80% 80%, var(--color-secondary) 0, transparent 50%);
+            z-index: 0
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: var(--spacing-3xl) 0
+        }
+
+        .hero-badge {
+            margin-bottom: var(--spacing-md)
+        }
+
+        .badge {
+            display: inline-block;
+            padding: .5rem 1.25rem;
+            background: rgba(255, 255, 255, .1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, .2);
+            border-radius: var(--radius-full);
+            font-size: .875rem;
+            font-weight: 500
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: var(--spacing-md)
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.125rem, 2vw, 1.25rem);
+            line-height: 1.6;
+            color: rgba(255, 255, 255, .9);
+            max-width: 700px;
+            margin: 0 auto var(--spacing-xl)
+        }
+
+        .hero-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-2xl);
+            flex-wrap: wrap
+        }
+
+        .hero-stats {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-2xl);
+            padding-top: var(--spacing-xl);
+            border-top: 1px solid rgba(255, 255, 255, .1);
+            margin-top: var(--spacing-xl);
+            flex-wrap: wrap
+        }
+
+        .stat {
+            text-align: center
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-secondary);
+            line-height: 1;
+            margin-bottom: .5rem
+        }
+
+        .stat-label {
+            font-size: .875rem;
+            color: rgba(255, 255, 255, .6);
+            text-transform: uppercase;
+            letter-spacing: .5px
+        }
+
+        @media (max-width:768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: #fff;
+                flex-direction: column;
+                padding: var(--spacing-lg);
+                box-shadow: var(--shadow-lg);
+                transform: translateX(-100%);
+                transition: transform var(--transition-base)
+            }
+
+            .nav-links.active {
+                transform: translateX(0)
+            }
+
+            .mobile-menu-toggle {
+                display: flex
+            }
+
+            .hero-cta {
+                flex-direction: column
+            }
+
+            .hero-stats {
+                gap: var(--spacing-lg)
+            }
+        }
+
+        @media (max-width:480px) {
+            :root {
+                --spacing-xl: 2rem;
+                --spacing-2xl: 3rem;
+                --spacing-3xl: 4rem
+            }
+
+            .container {
+                padding: 0 var(--spacing-md)
+            }
+        }
+    </style>
+
     <!-- Styles -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/flags.css">
+    <!-- Critical CSS will be inlined below -->
+    <link rel="stylesheet" href="assets/css/style.css" media="print" onload="this.media='all'; this.onload=null;">
+    <link rel="stylesheet" href="assets/css/flags.css" media="print" onload="this.media='all'; this.onload=null;">
     <link rel="stylesheet" href="assets/css/cookie-consent.css">
+
+    <!-- Noscript fallback for CSS -->
+    <noscript>
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/flags.css">
+    </noscript>
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/images/logo.png">
@@ -38,9 +517,38 @@
     <link rel="alternate" hreflang="de" href="index.de.html">
     <link rel="alternate" hreflang="ru" href="index.ru.html">
     <link rel="alternate" hreflang="zh" href="index.zh.html">
-    
+
     <!-- Canonical URL -->
     <link rel="canonical" href="https://tickzero.maculinx.com/index.de.html">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#0f172a">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "TickZero",
+      "description": "TickZero: KI-gesteuerte Highlight-Extraktion für CS2. Verwandeln Sie Ihr Counter-Strike 2 Gameplay automatisch in virale TikTok/Reels-Clips mit KOSTENLOSER KI.",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "MACULINX"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "ratingCount": "1"
+      }
+    }
+    </script>
 </head>
 
 <body>
@@ -60,7 +568,8 @@
                     <li class="language-selector">
                         <button class="lang-btn" aria-label="Sprache wählen">
                             <span class="flag-icon flag-de"></span><span class="lang-code">DE</span>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
                         </button>
@@ -69,7 +578,8 @@
                             <li><a href="index.it.html"><span class="flag-icon flag-it"></span>Italiano</a></li>
                             <li><a href="index.es.html"><span class="flag-icon flag-es"></span>Español</a></li>
                             <li><a href="index.fr.html"><span class="flag-icon flag-fr"></span>Français</a></li>
-                            <li><a href="index.de.html" class="active"><span class="flag-icon flag-de"></span>Deutsch</a></li>
+                            <li><a href="index.de.html" class="active"><span
+                                        class="flag-icon flag-de"></span>Deutsch</a></li>
                             <li><a href="index.ru.html"><span class="flag-icon flag-ru"></span>Русский</a></li>
                             <li><a href="index.zh.html"><span class="flag-icon flag-zh"></span>中文</a></li>
                         </ul>
@@ -97,7 +607,8 @@
                     <span class="gradient-text">Virale Clips</span>
                 </h1>
                 <p class="hero-subtitle">
-                    KI-gestützte Highlight-Extraktion für Counter-Strike 2. Erstellen Sie automatisch TikTok- und Reels-bereite
+                    KI-gestützte Highlight-Extraktion für Counter-Strike 2. Erstellen Sie automatisch TikTok- und
+                    Reels-bereite
                     Inhalte aus Ihren besten Momenten mit KOSTENLOSER KI-Technologie.
                 </p>
                 <div class="hero-cta">
@@ -155,7 +666,8 @@
                         </svg>
                     </div>
                     <h3>Live-Event-Logging</h3>
-                    <p>Erfasst Kills, Headshots und Rundenevents in Echtzeit über CS2 Game State Integration mit präziser OBS
+                    <p>Erfasst Kills, Headshots und Rundenevents in Echtzeit über CS2 Game State Integration mit
+                        präziser OBS
                         Zeitstempel-Synchronisation.</p>
                 </div>
                 <div class="feature-card">
@@ -183,7 +695,8 @@
                         </svg>
                     </div>
                     <h3>Automatische Videobearbeitung</h3>
-                    <p>FFmpeg-basierte Konvertierung in das vertikale Format (9:16), optimiert für TikTok und Instagram Reels mit
+                    <p>FFmpeg-basierte Konvertierung in das vertikale Format (9:16), optimiert für TikTok und Instagram
+                        Reels mit
                         professioneller Qualität.</p>
                 </div>
                 <div class="feature-card">
@@ -198,7 +711,8 @@
                         </svg>
                     </div>
                     <h3>Multi-GPU Unterstützung</h3>
-                    <p>Automatische Hardwarebeschleunigung mit Unterstützung für NVIDIA NVENC, AMD AMF, Intel QuickSync und CPU
+                    <p>Automatische Hardwarebeschleunigung mit Unterstützung für NVIDIA NVENC, AMD AMF, Intel QuickSync
+                        und CPU
                         Fallback.</p>
                 </div>
                 <div class="feature-card">
@@ -221,7 +735,8 @@
                         </svg>
                     </div>
                     <h3>100% Kostenlos</h3>
-                    <p>Komplett Open-Source ohne versteckte Kosten. Nutzt den KOSTENLOSEN Tarif von Google Gemini (1500 Anfragen/Tag -
+                    <p>Komplett Open-Source ohne versteckte Kosten. Nutzt den KOSTENLOSEN Tarif von Google Gemini (1500
+                        Anfragen/Tag -
                         genug für ~50 Matches täglich).</p>
                 </div>
             </div>
@@ -240,7 +755,8 @@
                     <div class="step-number">1</div>
                     <div class="step-content">
                         <h3>CS2 Spielen</h3>
-                        <p>Starten Sie den Live-Logging-Modus von TickZero vor Ihrem Match. The system automatically starts
+                        <p>Starten Sie den Live-Logging-Modus von TickZero vor Ihrem Match. The system automatically
+                            starts
                             recording when the first round goes live and captures every kill, headshot, and clutch
                             moment with precise timestamps.</p>
                         <div class="code-snippet">
@@ -287,7 +803,7 @@
     </section>
 
     <!-- Roadmap Section -->
-        <section id="roadmap" class="roadmap">
+    <section id="roadmap" class="roadmap">
         <div class="container">
             <div class="section-header">
                 <h2>Entwicklungs-Roadmap</h2>
@@ -375,7 +891,7 @@
     </section>
 
     <!-- FAQ Section -->
-        <section id="faq" class="faq">
+    <section id="faq" class="faq">
         <div class="container">
             <div class="section-header">
                 <h2>Häufig gestellte Fragen</h2>
@@ -391,7 +907,9 @@
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Ja! TickZero ist zu 100% kostenlos und Open-Source unter der MIT-Lizenz. Es nutzt den kostenlosen Tarif von Google Gemini (1500 Anfragen/Tag), was für ca. 50 Matches pro Tag ausreicht. Keine Kreditkarte erforderlich, keine versteckten Kosten.</p>
+                        <p>Ja! TickZero ist zu 100% kostenlos und Open-Source unter der MIT-Lizenz. Es nutzt den
+                            kostenlosen Tarif von Google Gemini (1500 Anfragen/Tag), was für ca. 50 Matches pro Tag
+                            ausreicht. Keine Kreditkarte erforderlich, keine versteckten Kosten.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -431,7 +949,8 @@
                             <li><strong>High-Skill Plays:</strong> Schnelle Reaktionen und schwierige Schüsse</li>
                             <li><strong>Low Health Clutches:</strong> Überleben mit minimalen HP</li>
                         </ul>
-                        <p>Sie können die minimale Prioritätsschwelle anpassen, um die Selektivität der KI zu steuern.</p>
+                        <p>Sie können die minimale Prioritätsschwelle anpassen, um die Selektivität der KI zu steuern.
+                        </p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -443,7 +962,11 @@
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Derzeit ist TickZero für die Zusammenarbeit mit OBS Studio über WebSocket für automatische Aufnahmesteuerung und präzise Zeitstempel-Synchronisation ausgelegt. Sie können jedoch manuell mit jeder Software aufnehmen und das Video nachträglich verarbeiten - Sie müssen nur sicherstellen, dass die Zeitstempel des Ereignisprotokolls mit der Startzeit der Aufnahme übereinstimmen.</p>
+                        <p>Derzeit ist TickZero für die Zusammenarbeit mit OBS Studio über WebSocket für automatische
+                            Aufnahmesteuerung und präzise Zeitstempel-Synchronisation ausgelegt. Sie können jedoch
+                            manuell mit jeder Software aufnehmen und das Video nachträglich verarbeiten - Sie müssen nur
+                            sicherstellen, dass die Zeitstempel des Ereignisprotokolls mit der Startzeit der Aufnahme
+                            übereinstimmen.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -455,7 +978,10 @@
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Ja! TickZero ist plattformübergreifend und funktioniert unter Windows, Linux und macOS. Die einzige Voraussetzung ist, dass Python 3.10+, OBS Studio und FFmpeg auf Ihrem System installiert sind. CS2 Game State Integration funktioniert ebenfalls auf allen Plattformen.</p>
+                        <p>Ja! TickZero ist plattformübergreifend und funktioniert unter Windows, Linux und macOS. Die
+                            einzige Voraussetzung ist, dass Python 3.10+, OBS Studio und FFmpeg auf Ihrem System
+                            installiert sind. CS2 Game State Integration funktioniert ebenfalls auf allen Plattformen.
+                        </p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -467,7 +993,9 @@
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>TickZero erfasst nur IHRE persönlichen Kills. Wenn Sie sterben und Teamkollegen zuschauen, filtert das System deren Kills automatisch anhand der SteamID-Verfolgung heraus. Dies gewährleistet eine genaue persönliche Highlight-Verfolgung und verhindert Fehlalarme.</p>
+                        <p>TickZero erfasst nur IHRE persönlichen Kills. Wenn Sie sterben und Teamkollegen zuschauen,
+                            filtert das System deren Kills automatisch anhand der SteamID-Verfolgung heraus. Dies
+                            gewährleistet eine genaue persönliche Highlight-Verfolgung und verhindert Fehlalarme.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -485,7 +1013,8 @@
                             <li><strong>Videoverarbeitung (GPU):</strong> 2-5 Sekunden pro Clip</li>
                             <li><strong>Videoverarbeitung (CPU):</strong> 10-20 Sekunden pro Clip</li>
                         </ul>
-                        <p>Ein typisches Match mit 3-5 Highlights wird mit GPU-Beschleunigung in weniger als 1 Minute verarbeitet.</p>
+                        <p>Ein typisches Match mit 3-5 Highlights wird mit GPU-Beschleunigung in weniger als 1 Minute
+                            verarbeitet.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -497,7 +1026,9 @@
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Derzeit sind Clips für TikTok/Reels optimiert (8-15 Sekunden, 1080×1920). Benutzerdefinierte Dauer und Formate sind für v2.0 geplant. Sie können den Quellcode ändern, um diese Parameter anzupassen, wenn Sie sich mit Python auskennen.</p>
+                        <p>Derzeit sind Clips für TikTok/Reels optimiert (8-15 Sekunden, 1080×1920). Benutzerdefinierte
+                            Dauer und Formate sind für v2.0 geplant. Sie können den Quellcode ändern, um diese Parameter
+                            anzupassen, wenn Sie sich mit Python auskennen.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -511,10 +1042,12 @@
                     <div class="faq-answer">
                         <p>Wir freuen uns über Feedback aus der Community! Sie können:</p>
                         <ul>
-                            <li><strong>Fehler melden:</strong> Einen <a href="https://github.com/MACULINX/TickZero/issues"
-                                    target="_blank">Issue öffnen</a> auf GitHub</li>
+                            <li><strong>Fehler melden:</strong> Einen <a
+                                    href="https://github.com/MACULINX/TickZero/issues" target="_blank">Issue öffnen</a>
+                                auf GitHub</li>
                             <li><strong>Funktionen anfragen:</strong> Eine <a
-                                    href="https://github.com/MACULINX/TickZero/discussions" target="_blank">Diskussion starten</a></li>
+                                    href="https://github.com/MACULINX/TickZero/discussions" target="_blank">Diskussion
+                                    starten</a></li>
                             <li><strong>Code beitragen:</strong> Pull Request senden</li>
                             <li><strong>Hilfe erhalten:</strong> Bestehende Issues und Diskussionen prüfen</li>
                         </ul>
@@ -593,7 +1126,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <img src="assets/images/logo.png" alt="TickZero Logo">
+                        <img src="assets/images/logo.png" alt="TickZero Logo" loading="lazy">
                         <span>TickZero</span>
                     </div>
                     <p class="footer-description">
@@ -623,7 +1156,8 @@
                     <ul class="footer-links">
                         <li><a href="https://github.com/MACULINX/TickZero/blob/master/docs/i18n/README.de.md"
                                 target="_blank">Dokumentation</a></li>
-                        <li><a href="https://github.com/MACULINX/TickZero/issues" target="_blank">Probleme melden</a></li>
+                        <li><a href="https://github.com/MACULINX/TickZero/issues" target="_blank">Probleme melden</a>
+                        </li>
                         <li><a href="https://github.com/MACULINX/TickZero/discussions" target="_blank">Diskussionen</a>
                         </li>
                         <li><a href="https://github.com/MACULINX/TickZero/blob/master/CONTRIBUTING.md"
@@ -647,8 +1181,8 @@
     </footer>
 
     <!-- JavaScript -->
-    <script src="assets/js/cookie-consent.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/cookie-consent.js" async></script>
+    <script src="assets/js/main.js" defer></script>
 </body>
 
 </html>
