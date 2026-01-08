@@ -12,11 +12,11 @@
 
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="TickZero - AI-Powered CS2 Highlight Generator">
-    <meta property="og:description" content="Transform your CS2 gameplay into viral clips automatically using FREE AI">
+    <meta property="og:title" content="TickZero - Générateur de Highlights CS2 par IA">
+    <meta property="og:description" content="Transformez votre gameplay CS2 en clips viraux automatiquement grâce à l'IA GRATUITE">
     <meta property="og:image" content="assets/images/logo.png">
 
-    <title>TickZero - AI-Powered CS2 Highlight Generator</title>
+    <title>TickZero - Générateur de Highlights CS2 par IA</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -59,7 +59,7 @@
                     <li><a href="#roadmap">Feuille de Route</a></li>
                     <li><a href="#faq">FAQ</a></li>
                     <li class="language-selector">
-                        <button class="lang-btn" aria-label="Select language">
+                        <button class="lang-btn" aria-label="Choisir la langue">
                             <span class="flag-icon flag-fr"></span><span class="lang-code">FR</span>
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
@@ -379,7 +379,7 @@
     </section>
 
     <!-- FAQ Section -->
-    <section id="faq" class="faq">
+        <section id="faq" class="faq">
         <div class="container">
             <div class="section-header">
                 <h2>Questions Fréquemment Posées</h2>
@@ -395,9 +395,7 @@
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Oui! TickZero est 100% gratuit et open-source sous licence MIT. It uses Google Gemini's
-                            free tier (1500 requests/day), which is enough for approximately 50 matches per day. No
-                            credit card required, no hidden costs.</p>
+                        <p>Oui! TickZero est 100% gratuit et open-source sous licence MIT. Il utilise le niveau gratuit de Google Gemini (1500 requêtes/jour), ce qui suffit pour environ 50 matchs par jour. Pas de carte de crédit requise, pas de frais cachés.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -412,7 +410,7 @@
                         <p>Vous aurez besoin de:</p>
                         <ul>
                             <li>Python 3.10 ou supérieur</li>
-                            <li>OBS Studio avec plugin WebSocket</li>
+                            <li>OBS Studio avec le plugin WebSocket</li>
                             <li>Counter-Strike 2</li>
                             <li>FFmpeg (pour le traitement vidéo)</li>
                             <li>Une clé API Google gratuite pour Gemini</li>
@@ -422,51 +420,46 @@
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">
-                        <span>Comment l'IA identifie-t-elle les moments forts?</span>
+                        <span>Comment l'IA sait-elle quels moments sont des temps forts?</span>
                         <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2">
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Google Gemini analyse le journal de votre gameplay et priorise les moments basés sur:</p>
+                        <p>Google Gemini analyse votre journal de jeu et priorise les moments basés sur:</p>
                         <ul>
-                            <li><strong>Multi-kills:</strong> Doubles kills, triples, quads et aces</li>
-                            <li><strong>Situations Clutch:</strong> Gagner des rounds en infériorité numérique</li>
+                            <li><strong>Multi-kills:</strong> Doubles, triples, quadruples et aces</li>
+                            <li><strong>Situations de Clutch:</strong> Gagner des rounds en infériorité numérique</li>
                             <li><strong>Précision Headshot:</strong> Kills précis en un coup</li>
-                            <li><strong>Actions de haute compétence:</strong> Réactions rapides et tirs difficiles</li>
-                            <li><strong>Clutchs avec peu de vie:</strong> Survivre avec un minimum de PV</li>
+                            <li><strong>Actions de Haute Compétence:</strong> Réactions rapides et tirs difficiles</li>
+                            <li><strong>Clutches à Vie Basse:</strong> Survivre avec très peu de PV</li>
                         </ul>
                         <p>Vous pouvez ajuster le seuil de priorité minimum pour contrôler la sélectivité de l'IA.</p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">
-                        <span>Puis-je utiliser ceci avec un autre logiciel d'enregistrement qu'OBS?</span>
+                        <span>Puis-je l'utiliser avec un autre logiciel d'enregistrement qu'OBS?</span>
                         <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2">
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Actuellement, TickZero est conçu pour fonctionner avec OBS Studio via WebSocket pour l'enregistrement automatique
-                            contrôle et synchronisation précise des timestamps. Cependant, vous pouvez enregistrer manuellement avec n'importe quel
-                            logiciel et traiter la vidéo ensuite - vous devrez juste vous assurer que les timestamps de votre journal d'événements
-                            s'alignent avec l'heure de début de l'enregistrement.</p>
+                        <p>Actuellement, TickZero est conçu pour fonctionner avec OBS Studio via WebSocket pour le contrôle automatique de l'enregistrement et la synchronisation précise des horodatages. Cependant, vous pouvez enregistrer manuellement avec n'importe quel logiciel et traiter la vidéo ensuite - vous devez juste vous assurer que les horodatages du journal d'événements s'alignent avec l'heure de début de l'enregistrement.</p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">
-                        <span>Cela fonctionnera-t-il sur Linux ou Mac?</span>
+                        <span>Cela fonctionne-t-il sur Linux ou Mac?</span>
                         <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2">
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Oui! TickZero est multiplateforme et fonctionne sur Windows, Linux et macOS. La seule exigence
-                            est d'avoir Python 3.10+, OBS Studio et FFmpeg installés sur votre système. L'intégration d'état de jeu CS2
-                            fonctionne également sur toutes les plateformes.</p>
+                        <p>Oui! TickZero est multiplateforme et fonctionne sur Windows, Linux et macOS. La seule exigence est d'avoir Python 3.10+, OBS Studio et FFmpeg installés sur votre système. L'intégration d'état de jeu CS2 fonctionne également sur toutes les plateformes.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -478,14 +471,12 @@
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>TickZero ne capture que VOS kills personnels. Lorsque vous mourez et regardez vos coéquipiers, le système
-                            filtre automatiquement leurs kills en utilisant le suivi SteamID. Cela garantit un suivi précis des moments forts personnels
-                            et évite les faux positifs.</p>
+                        <p>TickZero capture uniquement VOS kills personnels. Lorsque vous mourez et regardez vos coéquipiers, le système filtre automatiquement leurs kills en utilisant le suivi SteamID. Cela garantit un suivi précis des faits saillants personnels et évite les faux positifs.</p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">
-                        <span>Combien de temps faut-il pour traiter les moments forts?</span>
+                        <span>Combien de temps prend le traitement des temps forts?</span>
                         <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2">
                             <polyline points="6 9 12 15 18 9"></polyline>
@@ -498,26 +489,24 @@
                             <li><strong>Traitement Vidéo (GPU):</strong> 2-5 secondes par clip</li>
                             <li><strong>Traitement Vidéo (CPU):</strong> 10-20 secondes par clip</li>
                         </ul>
-                        <p>Un match typique avec 3-5 moments forts est traité en moins d'une minute avec accélération GPU.</p>
+                        <p>Un match typique avec 3-5 temps forts est traité en moins d'une minute avec l'accélération GPU.</p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">
-                        <span>Puis-je personnaliser la durée et le format des clips?</span>
+                        <span>Peut-on personnaliser la durée et le format du clip?</span>
                         <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2">
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Actuellement, les clips sont optimisés pour TikTok/Reels (8-15 secondes, 1080×1920). Les durées personnalisées
-                            et formats sont sur la feuille de route pour la v2.0. Vous pouvez modifier le code source pour ajuster ces
-                            paramètres si vous êtes à l'aise avec Python.</p>
+                        <p>Actuellement, les clips sont optimisés pour TikTok/Reels (8-15 secondes, 1080x1920). Des durées et formats personnalisés sont prévus pour la v2.0. Vous pouvez modifier le code source pour ajuster ces paramètres si vous êtes à l'aise avec Python.</p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">
-                        <span>Comment signaler des bugs ou demander des fonctionnalités?</span>
+                        <span>Comment signaler un bug ou demander une fonctionnalité?</span>
                         <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2">
                             <polyline points="6 9 12 15 18 9"></polyline>
@@ -526,13 +515,12 @@
                     <div class="faq-answer">
                         <p>Nous adorons les retours de la communauté! Vous pouvez:</p>
                         <ul>
-                            <li><strong>Signaler des bugs:</strong> <a href="https://github.com/MACULINX/TickZero/issues"
-                                    target="_blank">Ouvrir un ticket</a> on GitHub</li>
-                            <li><strong>Demander des fonctionnalités:</strong> <a
-                                    href="https://github.com/MACULINX/TickZero/discussions" target="_blank">Start a
-                                    discussion</a></li>
-                            <li><strong>Contribuer au code:</strong> Soumettre une pull request</li>
-                            <li><strong>Obtenir de l'aide:</strong> Vérifier les tickets et discussions existants</li>
+                            <li><strong>Signaler un bug:</strong> <a href="https://github.com/MACULINX/TickZero/issues"
+                                    target="_blank">Ouvrir une issue</a> sur GitHub</li>
+                            <li><strong>Demander une fonction:</strong> <a
+                                    href="https://github.com/MACULINX/TickZero/discussions" target="_blank">Lancer une discussion</a></li>
+                            <li><strong>Contribuer au code:</strong> Envoyer une pull request</li>
+                            <li><strong>Obtenir de l'aide:</strong> Consulter les issues et discussions existantes</li>
                         </ul>
                     </div>
                 </div>
