@@ -19,8 +19,8 @@
     --color-bg-card: #ffffff;
 
     --color-text-primary: #1a1a1a;
-    --color-text-secondary: #666666;
-    --color-text-tertiary: #999999;
+    --color-text-secondary: #333333;
+    --color-text-tertiary: #666666;
     --color-text-white: #ffffff;
 
     --color-border: #e0e0e0;
@@ -199,6 +199,10 @@ ul {
     color: var(--color-primary);
 }
 
+.nav-links .btn-primary {
+    padding: 0.625rem 1.75rem;
+}
+
 .mobile-menu-toggle {
     display: none;
     flex-direction: column;
@@ -237,26 +241,53 @@ ul {
 }
 
 .btn-primary {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid transparent;
+    background-image: var(--gradient-primary);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.2);
+    position: relative;
+}
+
+.btn-primary svg {
+    color: var(--color-primary);
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-md);
+    padding: 2px;
     background: var(--gradient-primary);
-    color: var(--color-text-white);
-    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: -1;
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 102, 255, 0.4);
+    box-shadow: 0 6px 20px rgba(0, 102, 255, 0.3);
 }
 
 .btn-secondary {
     background-color: transparent;
-    color: var(--color-text-primary);
-    border: 2px solid var(--color-border);
+    color: rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .btn-secondary:hover {
-    border-color: var(--color-primary);
-    color: var(--color-primary);
+    border-color: var(--color-secondary);
+    color: var(--color-secondary);
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
 }
 
 /* ===================================
@@ -319,7 +350,7 @@ ul {
 .hero-subtitle {
     font-size: clamp(1.125rem, 2vw, 1.25rem);
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
     max-width: 700px;
     margin: 0 auto var(--spacing-xl);
 }
