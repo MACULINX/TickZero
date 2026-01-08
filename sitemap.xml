@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    
+    <!-- English (Default) -->
+    <url>
+        <loc>https://maculinx.github.io/TickZero/</loc>
+        <lastmod>2026-01-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://maculinx.github.io/TickZero/index.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://maculinx.github.io/TickZero/index.it.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://maculinx.github.io/TickZero/index.es.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://maculinx.github.io/TickZero/index.fr.html"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://maculinx.github.io/TickZero/index.de.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://maculinx.github.io/TickZero/index.ru.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://maculinx.github.io/TickZero/index.zh.html"/>
+    </url>
+    
+    <!-- Italian -->
+    <url>
+        <loc>https://maculinx.github.io/TickZero/index.it.html</loc>
+        <lastmod>2026-01-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://maculinx.github.io/TickZero/index.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://maculinx.github.io/TickZero/index.it.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://maculinx.github.io/TickZero/index.es.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://maculinx.github.io/TickZero/index.fr.html"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://maculinx.github.io/TickZero/index.de.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://maculinx.github.io/TickZero/index.ru.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://maculinx.github.io/TickZero/index.zh.html"/>
+    </url>
+    
+    <!-- Spanish -->
+    <url>
+        <loc>https://maculinx.github.io/TickZero/index.es.html</loc>
+        <lastmod>2026-01-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://maculinx.github.io/TickZero/index.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://maculinx.github.io/TickZero/index.it.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://maculinx.github.io/TickZero/index.es.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://maculinx.github.io/TickZero/index.fr.html"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://maculinx.github.io/TickZero/index.de.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://maculinx.github.io/TickZero/index.ru.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://maculinx.github.io/TickZero/index.zh.html"/>
+    </url>
+    
+    <!-- French -->
+    <url>
+        <loc>https://maculinx.github.io/TickZero/index.fr.html</loc>
+        <lastmod>2026-01-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://maculinx.github.io/TickZero/index.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://maculinx.github.io/TickZero/index.it.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://maculinx.github.io/TickZero/index.es.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://maculinx.github.io/TickZero/index.fr.html"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://maculinx.github.io/TickZero/index.de.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://maculinx.github.io/TickZero/index.ru.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://maculinx.github.io/TickZero/index.zh.html"/>
+    </url>
+    
+    <!-- German -->
+    <url>
+        <loc>https://maculinx.github.io/TickZero/index.de.html</loc>
+        <lastmod>2026-01-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://maculinx.github.io/TickZero/index.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://maculinx.github.io/TickZero/index.it.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://maculinx.github.io/TickZero/index.es.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://maculinx.github.io/TickZero/index.fr.html"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://maculinx.github.io/TickZero/index.de.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://maculinx.github.io/TickZero/index.ru.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://maculinx.github.io/TickZero/index.zh.html"/>
+    </url>
+    
+    <!-- Russian -->
+    <url>
+        <loc>https://maculinx.github.io/TickZero/index.ru.html</loc>
+        <lastmod>2026-01-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://maculinx.github.io/TickZero/index.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://maculinx.github.io/TickZero/index.it.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://maculinx.github.io/TickZero/index.es.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://maculinx.github.io/TickZero/index.fr.html"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://maculinx.github.io/TickZero/index.de.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://maculinx.github.io/TickZero/index.ru.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://maculinx.github.io/TickZero/index.zh.html"/>
+    </url>
+    
+    <!-- Chinese -->
+    <url>
+        <loc>https://maculinx.github.io/TickZero/index.zh.html</loc>
+        <lastmod>2026-01-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://maculinx.github.io/TickZero/index.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://maculinx.github.io/TickZero/index.it.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://maculinx.github.io/TickZero/index.es.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://maculinx.github.io/TickZero/index.fr.html"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://maculinx.github.io/TickZero/index.de.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://maculinx.github.io/TickZero/index.ru.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://maculinx.github.io/TickZero/index.zh.html"/>
+    </url>
+    
+</urlset>

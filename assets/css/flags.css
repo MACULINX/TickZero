@@ -1,0 +1,47 @@
+/* Flag icons as inline SVG - High quality from SVGRepo */
+.flag-icon {
+    display: inline-block;
+    width: 20px;
+    height: 15px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    border-radius: 2px;
+}
+
+/* UK Flag - Union Jack (corrected) */
+.flag-gb {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30'%3E%3CclipPath id='a'%3E%3Cpath d='M0 0v30h60V0z'/%3E%3C/clipPath%3E%3CclipPath id='b'%3E%3Cpath d='M30 15h30v15zv15H0zH0V0zV0h30z'/%3E%3C/clipPath%3E%3Cg clip-path='url(%23a)'%3E%3Cpath d='M0 0v30h60V0z' fill='%23012169'/%3E%3Cpath d='M0 0l60 30m0-30L0 30' stroke='%23fff' stroke-width='6'/%3E%3Cpath d='M0 0l60 30m0-30L0 30' clip-path='url(%23b)' stroke='%23C8102E' stroke-width='4'/%3E%3Cpath d='M30 0v30M0 15h60' stroke='%23fff' stroke-width='10'/%3E%3Cpath d='M30 0v30M0 15h60' stroke='%23C8102E' stroke-width='6'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Italy Flag */
+.flag-it {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3Cpath fill='%23009246' d='M0 0h1v2H0z'/%3E%3Cpath fill='%23fff' d='M1 0h1v2H1z'/%3E%3Cpath fill='%23CE2B37' d='M2 0h1v2H2z'/%3E%3C/svg%3E");
+}
+
+/* Spain Flag */
+.flag-es {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 750 500'%3E%3Cpath fill='%23AA151B' d='M0 0h750v500H0z'/%3E%3Cpath fill='%23F1BF00' d='M0 125h750v250H0z'/%3E%3C/svg%3E");
+}
+
+/* France Flag */
+.flag-fr {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'%3E%3Cpath fill='%23002654' d='M0 0h900v600H0z'/%3E%3Cpath fill='%23fff' d='M300 0h600v600H300z'/%3E%3Cpath fill='%23ED2939' d='M600 0h300v600H600z'/%3E%3C/svg%3E");
+}
+
+/* Germany Flag */
+.flag-de {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 3'%3E%3Cpath d='M0 0h5v3H0z'/%3E%3Cpath fill='%23D00' d='M0 1h5v2H0z'/%3E%3Cpath fill='%23FFCE00' d='M0 2h5v1H0z'/%3E%3C/svg%3E");
+}
+
+/* Russia Flag */
+.flag-ru {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 6'%3E%3Cpath fill='%23fff' d='M0 0h9v3H0z'/%3E%3Cpath fill='%230039A6' d='M0 2h9v2H0z'/%3E%3Cpath fill='%23D52B1E' d='M0 4h9v2H0z'/%3E%3C/svg%3E");
+}
+
+/* China Flag */
+.flag-zh {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 20'%3E%3Cpath fill='%23DE2910' d='M0 0h30v20H0z'/%3E%3Cpath fill='%23FFDE00' d='m5 3 .949 2.894h3.048L6.964 7.612l.949 2.894L5 8.718 2.087 10.506l.949-2.894L.998 5.894h3.048z'/%3E%3C/svg%3E");
+}

@@ -217,6 +217,108 @@ ul {
     transition: all var(--transition-base);
 }
 
+/* Language Selector */
+.language-selector {
+    position: relative;
+    list-style: none;
+}
+
+.lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-size: 0.875rem;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    transition: all var(--transition-base);
+}
+
+.lang-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: rgba(0, 102, 255, 0.05);
+}
+
+.lang-btn svg {
+    width: 12px;
+    height: 12px;
+    transition: transform var(--transition-base);
+}
+
+.language-selector:hover .lang-btn svg {
+    transform: rotate(180deg);
+}
+
+.lang-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    min-width: 180px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all var(--transition-base);
+    z-index: 1000;
+    list-style: none;
+    padding: 0.5rem;
+    margin: 0;
+}
+
+.language-selector:hover .lang-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.lang-dropdown li {
+    list-style: none;
+}
+
+.lang-dropdown a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 1rem;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-base);
+    font-size: 0.938rem;
+    font-weight: var(--font-weight-medium);
+}
+
+.lang-dropdown a:hover {
+    background: rgba(0, 102, 255, 0.08);
+    color: var(--color-primary);
+}
+
+.lang-dropdown a.active {
+    background: rgba(0, 102, 255, 0.12);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* Language-specific font support */
+html[lang="ru"],
+html[lang="ru"] * {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+}
+
+html[lang="zh"],
+html[lang="zh"] * {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
 /* ===================================
    Buttons
    =================================== */

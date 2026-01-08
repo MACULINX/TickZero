@@ -1,0 +1,20 @@
+# Robots.txt for TickZero Landing Page
+# https://maculinx.github.io/TickZero/
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://maculinx.github.io/TickZero/sitemap.xml
+
+# Crawl-delay (optional, helps prevent server overload)
+Crawl-delay: 1
+
+# Disallow specific files if needed
+# Disallow: /assets/
+# Disallow: /*.json$
+
+# Allow all CSS and JS files for proper rendering
+Allow: /assets/css/
+Allow: /assets/js/
+Allow: /assets/images/

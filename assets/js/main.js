@@ -25,7 +25,7 @@ class Navigation {
     init() {
         // Scroll behavior
         window.addEventListener('scroll', () => this.handleScroll());
-        
+
         // Mobile menu toggle
         if (this.mobileToggle) {
             this.mobileToggle.addEventListener('click', () => this.toggleMobileMenu());
@@ -136,33 +136,33 @@ class GitHubStats {
 
     updateStat(element, value) {
         if (!element) return;
-        
+
         const formattedValue = this.formatNumber(value);
-        
+
         // Animate number counting
         this.animateNumber(element, 0, value, 1500, formattedValue);
     }
 
     animateNumber(element, start, end, duration, formattedEnd) {
         const startTime = performance.now();
-        
+
         const animate = (currentTime) => {
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
-            
+
             // Easing function (easeOutCubic)
             const easeProgress = 1 - Math.pow(1 - progress, 3);
             const current = Math.floor(start + (end - start) * easeProgress);
-            
+
             element.textContent = this.formatNumber(current);
-            
+
             if (progress < 1) {
                 requestAnimationFrame(animate);
             } else {
                 element.textContent = formattedEnd || this.formatNumber(end);
             }
         };
-        
+
         requestAnimationFrame(animate);
     }
 
@@ -200,12 +200,12 @@ class FAQ {
 
     toggleItem(item) {
         const isActive = item.classList.contains('active');
-        
+
         // Close all items
         this.faqItems.forEach(faqItem => {
             faqItem.classList.remove('active');
         });
-        
+
         // Open clicked item if it wasn't active
         if (!isActive) {
             item.classList.add('active');
@@ -231,7 +231,7 @@ class CopyButtons {
 
     async copyToClipboard(btn) {
         const text = btn.getAttribute('data-clipboard');
-        
+
         try {
             await navigator.clipboard.writeText(text);
             this.showCopySuccess(btn);
@@ -249,14 +249,14 @@ class CopyButtons {
         textarea.style.opacity = '0';
         document.body.appendChild(textarea);
         textarea.select();
-        
+
         try {
             document.execCommand('copy');
             this.showCopySuccess(btn);
         } catch (error) {
             console.error('Fallback copy failed:', error);
         }
-        
+
         document.body.removeChild(textarea);
     }
 
@@ -264,7 +264,7 @@ class CopyButtons {
         const originalHTML = btn.innerHTML;
         btn.classList.add('copied');
         btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-        
+
         setTimeout(() => {
             btn.classList.remove('copied');
             btn.innerHTML = originalHTML;
@@ -298,10 +298,10 @@ class ScrollReveal {
         });
 
         this.revealElements = document.querySelectorAll('.scroll-reveal');
-        
+
         // Initial check
         this.checkVisibility();
-        
+
         // Check on scroll with throttling
         let ticking = false;
         window.addEventListener('scroll', () => {
@@ -317,11 +317,11 @@ class ScrollReveal {
 
     checkVisibility() {
         const windowHeight = window.innerHeight;
-        
+
         this.revealElements.forEach(el => {
             const elementTop = el.getBoundingClientRect().top;
             const elementVisible = 150; // pixels from bottom before reveal
-            
+
             if (elementTop < windowHeight - elementVisible) {
                 el.classList.add('active');
             }
@@ -350,7 +350,7 @@ class DownloadTracker {
     trackDownload(url) {
         // Log download event
         console.log('Download initiated:', url);
-        
+
         // You can integrate with analytics here
         if (typeof gtag !== 'undefined') {
             gtag('event', 'download', {
@@ -395,7 +395,7 @@ class ThemeManager {
     init() {
         // Apply saved theme
         document.documentElement.setAttribute('data-theme', this.currentTheme);
-        
+
         // Theme toggle functionality can be added here in future
     }
 
@@ -487,7 +487,7 @@ const Utils = {
 
     throttle(func, limit) {
         let inThrottle;
-        return function(...args) {
+        return function (...args) {
             if (!inThrottle) {
                 func.apply(this, args);
                 inThrottle = true;
@@ -514,6 +514,97 @@ const Utils = {
 };
 
 // ===================================
+// Language Selector
+// ===================================
+
+class LanguageSelector {
+    constructor() {
+        this.langBtn = document.querySelector('.lang-btn');
+        this.langDropdown = document.querySelector('.lang-dropdown');
+        this.currentLang = this.detectLanguage();
+        this.init();
+    }
+
+    init() {
+        // Handle language preference from localStorage or browser
+        this.applyStoredLanguage();
+
+        // Add click handlers for language links (if not on the correct page already)
+        if (this.langDropdown) {
+            const langLinks = this.langDropdown.querySelectorAll('a');
+            langLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const href = link.getAttribute('href');
+                    const lang = this.getLangFromHref(href);
+                    if (lang) {
+                        localStorage.setItem('preferredLanguage', lang);
+                    }
+                });
+            });
+        }
+    }
+
+    detectLanguage() {
+        // Get language from current page URL
+        const path = window.location.pathname;
+        const match = path.match(/index\.([a-z]{2})\.html/);
+
+        if (match) {
+            return match[1];
+        }
+
+        // Default to English if no language in URL
+        return 'en';
+    }
+
+    getLangFromHref(href) {
+        const match = href.match(/index\.([a-z]{2})\.html/);
+        if (match) {
+            return match[1];
+        }
+        if (href === 'index.html') {
+            return 'en';
+        }
+        return null;
+    }
+
+    applyStoredLanguage() {
+        const browserLang = navigator.language || navigator.userLanguage;
+        const browserLangCode = browserLang.split('-')[0]; // Get 'it' from 'it-IT'
+
+        // Only auto-detect language on first visit
+        if (this.isFirstVisit()) {
+            const supportedLangs = ['en', 'it', 'es', 'fr', 'de', 'ru', 'zh'];
+            if (supportedLangs.includes(browserLangCode) && browserLangCode !== this.currentLang) {
+                // Save detected language and redirect
+                localStorage.setItem('preferredLanguage', browserLangCode);
+                localStorage.setItem('languageDetected', 'true');
+                this.redirectToLanguage(browserLangCode);
+            } else {
+                // Mark that we've detected the language (even if we didn't redirect)
+                localStorage.setItem('languageDetected', 'true');
+                localStorage.setItem('preferredLanguage', this.currentLang);
+            }
+        } else {
+            // On subsequent visits, just update the preference to current page
+            // This respects the user's manual language selection
+            localStorage.setItem('preferredLanguage', this.currentLang);
+        }
+    }
+
+    redirectToLanguage(lang) {
+        const targetPage = lang === 'en' ? 'index.html' : `index.${lang}.html`;
+        if (window.location.pathname.split('/').pop() !== targetPage) {
+            window.location.href = targetPage;
+        }
+    }
+
+    isFirstVisit() {
+        return !localStorage.getItem('languageDetected');
+    }
+}
+
+// ===================================
 // Initialize App
 // ===================================
 
@@ -535,9 +626,11 @@ class App {
         console.log('Initializing TickZero Landing Page...');
 
         try {
+            // Initialize GDPR cookie consent first
+            new CookieConsent();
+
             // Initialize all components
             new Navigation();
-            new GitHubStats();
             new FAQ();
             new CopyButtons();
             new ScrollReveal();
@@ -546,6 +639,11 @@ class App {
             new ThemeManager();
             new LoadingManager();
             new ErrorHandler();
+            new LanguageSelector();
+
+            // Only initialize GitHub stats if cookies are accepted
+            // (GitHub API doesn't set cookies, but we check for consistency)
+            new GitHubStats();
 
             console.log('✅ All components initialized successfully');
         } catch (error) {
