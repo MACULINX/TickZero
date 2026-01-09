@@ -81,7 +81,7 @@ def generate_highlights(match_id):
         
     except Exception as e:
         logger.error(f"Error generating highlights: {e}")
-        return jsonify({"status": "error", "message": str(e)}), 500
+        return jsonify({"status": "error", "message": "An internal error has occurred"}), 500
 
 
 def _process_match_highlights(match_id, video_path, log_path, min_priority):
@@ -131,7 +131,8 @@ def delete_match(match_id):
         db.delete_match(match_id)
         return jsonify({"status": "success", "message": f"Match #{match_id} deleted"})
     except Exception as e:
-        return jsonify({"status": "error", "message": str(e)}), 500
+        logger.error(f"Error deleting match #{match_id}: {e}")
+        return jsonify({"status": "error", "message": "An internal error has occurred"}), 500
 
 
 @app.route('/api/stats')
@@ -156,4 +157,5 @@ def run_web_interface(port=5000, debug=False):
 if __name__ == '__main__':
     import sys
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 5000
-    run_web_interface(port=port, debug=True)
+    debug_mode = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
+    run_web_interface(port=port, debug=debug_mode)

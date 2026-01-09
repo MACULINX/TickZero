@@ -24,7 +24,7 @@ def test_gemini_api():
         print("\n📖 Vedi SETUP_GEMINI.md per istruzioni dettagliate")
         return False
     
-    print(f"\n✓ GOOGLE_API_KEY trovata: {api_key[:20]}...")
+    print(f"\n✓ GOOGLE_API_KEY trovata: {'*' * 8}...")
     
     # Configure Gemini client
     try:
