@@ -189,24 +189,17 @@ class FAQ {
     }
 
     init() {
+        // Open all items by default
         this.faqItems.forEach(item => {
+            item.classList.add('active');
             const question = item.querySelector('.faq-question');
             question.addEventListener('click', () => this.toggleItem(item));
         });
     }
 
     toggleItem(item) {
-        const isActive = item.classList.contains('active');
-
-        // Close all items
-        this.faqItems.forEach(faqItem => {
-            faqItem.classList.remove('active');
-        });
-
-        // Open clicked item if it wasn't active
-        if (!isActive) {
-            item.classList.add('active');
-        }
+        // Toggle only the clicked item, allowing independent control
+        item.classList.toggle('active');
     }
 }
 
@@ -566,6 +559,11 @@ class LanguageSelector {
     }
 
     applyStoredLanguage() {
+        // Do not auto-redirect bots/crawlers as it messes up indexing
+        if (this.isBot()) {
+            return;
+        }
+
         const browserLang = navigator.language || navigator.userLanguage;
         const browserLangCode = browserLang.split('-')[0]; // Get 'it' from 'it-IT'
 
@@ -598,6 +596,12 @@ class LanguageSelector {
 
     isFirstVisit() {
         return !localStorage.getItem('languageDetected');
+    }
+
+    isBot() {
+        const botPattern = "(googlebot\/|bot|crawler|spider|robot|crawling)";
+        const re = new RegExp(botPattern, "i");
+        return re.test(navigator.userAgent);
     }
 }
 

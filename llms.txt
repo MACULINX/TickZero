@@ -1,0 +1,14 @@
+# TickZero
+
+> AI-driven highlight extraction for CS2. Transform your Counter-Strike 2 gameplay into viral TikTok/Reels clips automatically using FREE AI.
+
+TickZero is an open-source tool that uses Game State Integration (GSI) and Google Gemini AI to identify and record highlight moments from CS2 matches.
+
+## Documentation
+
+- [README](https://raw.githubusercontent.com/MACULINX/TickZero/master/README.md): Comprehensive guide including installation, configuration, and usage.
+- [Contributing](https://raw.githubusercontent.com/MACULINX/TickZero/master/CONTRIBUTING.md): Guidelines for contributing to the project.
+
+## Legal
+
+- [Privacy Policy](privacy-policy.html): Privacy policy detailing data usage, GDPR compliance, and third-party services.
