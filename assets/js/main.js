@@ -623,16 +623,8 @@ class App {
         console.log('Initializing TickZero Landing Page...');
 
         try {
-            // Initialize GDPR cookie consent first
-            try {
-                if (typeof CookieConsent !== 'undefined') {
-                    new CookieConsent();
-                } else {
-                    console.warn('CookieConsent class not found');
-                }
-            } catch (e) {
-                console.error('Error initializing CookieConsent:', e);
-            }
+            // CookieConsent initialization removed
+
 
             // Initialize all components
             new Navigation();
