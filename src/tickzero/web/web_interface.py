@@ -3,7 +3,7 @@ Web Interface: Flask application for browsing match history and generating highl
 Provides web UI for selecting past matches and triggering highlight generation.
 """
 from flask import Flask, render_template, jsonify, request, redirect, url_for
-from src.web.match_database import MatchDatabase
+from tickzero.web.match_database import MatchDatabase
 from pathlib import Path
 import logging
 import subprocess
@@ -100,7 +100,7 @@ def _process_match_highlights(match_id, video_path, log_path, min_priority):
         
         # Call main.py process command using module syntax
         cmd = [
-            sys.executable, '-m', 'src.main', 'process',
+            sys.executable, '-m', 'tickzero.main', 'process',
             video_path,
             str(min_priority)
         ]

@@ -28,8 +28,10 @@
 - **Google API Key** for Gemini (FREE tier available - no credit card required!)
 
 ### Python Dependencies
+Using **Poetry** (Recommended):
 ```bash
-pip install -r requirements.txt
+pip install poetry
+poetry install
 ```
 
 **Dependencies:** `google-genai`, `obs-websocket-py`, `flask`
@@ -41,7 +43,7 @@ pip install -r requirements.txt
 **Single command to access all features:**
 
 ```bash
-python launcher.py
+python -m tickzero.launcher
 ```
 
 This opens an interactive menu where you can:
@@ -53,9 +55,9 @@ This opens an interactive menu where you can:
 
 **Direct commands also available:**
 ```bash
-python launcher.py --record    # Start recording
-python launcher.py --browse    # Open match history browser
-python launcher.py --help      # Show help
+python -m tickzero.launcher record    # Start recording
+python -m tickzero.launcher process --last # Process last match
+python -m tickzero.launcher --help      # Show help
 ```
 
 ---
@@ -69,7 +71,8 @@ If you prefer direct control:
 ```bash
 git clone https://github.com/MACULINX/TickZero.git
 cd TickZero
-pip install -r requirements.txt
+pip install poetry
+poetry install
 ```
 
 ### 2. Configure OBS WebSocket
@@ -120,9 +123,9 @@ source ~/.bashrc
 
 ### Recommended: Use the Unified Launcher
 
-**Start the launcher:**
+**Start the launch:**
 ```bash
-python launcher.py
+python -m tickzero.launcher
 ```
 
 **From the menu:**
@@ -145,7 +148,7 @@ The launcher provides a **two-phase pipeline**:
 Run this **BEFORE** starting your CS2 match:
 
 ```bash
-python main.py live
+python -m tickzero.launcher record
 ```
 
 **What happens:**
@@ -174,13 +177,14 @@ python main.py process <path_to_recording.mp4> [api_key] [min_priority]
 
 **Example:**
 ```bash
-python main.py process "C:\Videos\cs2_match.mp4" 6
+python -m tickzero.launcher process --video "C:\Videos\cs2_match.mp4" --log "match_log.json"
 ```
 
 **Parameters:**
-- `<path_to_recording.mp4>` - Path to your OBS recording (required)
-- `[api_key]` - Google API key (optional if `GOOGLE_API_KEY` env var is set)
-- `[min_priority]` - Minimum clip priority 1-10 (default: 6)
+- `<path_to_recording.mp4>` - Path to your OBS recording (via `--video`)
+- `<path_to_log.json>` - Path to GSI log (via `--log`)
+- `[api_key]` - Google API key (via env var `GOOGLE_API_KEY`)
+- `[last]` - Use `--last` to automatically find recent files
 
 **What happens:**
 1. 🤖 AI analyzes `match_log.json`

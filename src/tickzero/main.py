@@ -8,11 +8,11 @@ import logging
 import threading
 from pathlib import Path
 
-from src.core.obs_manager import OBSManager
-from src.core.gsi_server import GSIServer
-from src.core.ai_director import AIDirector
-from src.core.video_editor import VideoEditor
-from src.web.match_database import MatchDatabase
+from tickzero.core.obs_manager import OBSManager
+from tickzero.core.gsi_server import GSIServer
+from tickzero.core.ai_director import AIDirector
+from tickzero.core.video_editor import VideoEditor
+from tickzero.web.match_database import MatchDatabase
 
 logging.basicConfig(
     level=logging.INFO,

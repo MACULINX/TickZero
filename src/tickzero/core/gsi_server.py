@@ -161,7 +161,13 @@ class GSIServer:
     
     def _check_map_phase(self, event_time, map_phase, map_data):
         """Check map-level phase changes for match start/end detection."""
-        video_timestamp = self.obs_manager.calculate_video_timestamp(event_time)
+        # Try to get timestamp from OBS using new OBSClient interface
+        if hasattr(self.obs_manager, 'get_current_timestamp'):
+            timestamp_ms = self.obs_manager.get_current_timestamp()
+            video_timestamp = timestamp_ms / 1000.0 if timestamp_ms > 0 else 0.0
+        else:
+            # Fallback for old OBSManager
+            video_timestamp = self.obs_manager.calculate_video_timestamp(event_time)
         
         logger.info(f"🗺️  Map Phase: {map_phase} | Video Time: {video_timestamp:.2f}s")
         
@@ -180,7 +186,11 @@ class GSIServer:
     
     def _log_round_phase_change(self, event_time, phase, round_data):
         """Log round phase changes."""
-        video_timestamp = self.obs_manager.calculate_video_timestamp(event_time)
+        if hasattr(self.obs_manager, 'get_current_timestamp'):
+            timestamp_ms = self.obs_manager.get_current_timestamp()
+            video_timestamp = timestamp_ms / 1000.0 if timestamp_ms > 0 else 0.0
+        else:
+            video_timestamp = self.obs_manager.calculate_video_timestamp(event_time)
         current_round = round_data.get('round', 0)
         
         event = {
@@ -209,7 +219,11 @@ class GSIServer:
         - Health remaining
         - Current round number
         """
-        video_timestamp = self.obs_manager.calculate_video_timestamp(event_time)
+        if hasattr(self.obs_manager, 'get_current_timestamp'):
+            timestamp_ms = self.obs_manager.get_current_timestamp()
+            video_timestamp = timestamp_ms / 1000.0 if timestamp_ms > 0 else 0.0
+        else:
+            video_timestamp = self.obs_manager.calculate_video_timestamp(event_time)
         
         # Extract weapon and state information
         weapons = player_data.get('weapons', {})

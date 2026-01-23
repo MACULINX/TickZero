@@ -40,18 +40,17 @@ git checkout -b feature/your-feature-name
 
 ### 4. Set Up Development Environment
 
+### 4. Set Up Development Environment
+
 ```bash
-# Create virtual environment
-python -m venv venv
+# Install Poetry (if not already installed)
+pip install poetry
 
-# Activate it
-# Windows:
-.\venv\Scripts\Activate.ps1
-# Linux/Mac:
-source venv/bin/activate
+# Install dependencies and create environment
+poetry install
 
-# Install dependencies
-pip install -r requirements.txt
+# Activate shell
+poetry shell
 ```
 
 ### 5. Make Your Changes

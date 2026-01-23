@@ -8,7 +8,7 @@
 
 ## ✅ Setup Complete
 
-Virtual environment created and dependencies installed!
+Virtual environment created and dependencies installed via Poetry!
 
 ## 🔑 Next Step: Configure Gemini API Key
 
@@ -34,8 +34,7 @@ $env:GOOGLE_API_KEY = "AIzaSyC-your-key-here"
 ### Option 3: Test Gemini
 
 ```powershell
-.\venv\Scripts\Activate.ps1
-python examples\test_gemini_api.py
+poetry run python examples/test_gemini_api.py
 ```
 
 You should see: `✅ GEMINI WORKS PERFECTLY!`
@@ -44,8 +43,7 @@ You should see: `✅ GEMINI WORKS PERFECTLY!`
 
 ### Phase 1: Record the Match
 ```powershell
-.\venv\Scripts\Activate.ps1
-python main.py live
+poetry run python -m tickzero.launcher record
 ```
 
 Start BEFORE playing CS2. Logs all events.
@@ -53,8 +51,7 @@ Press `Ctrl+C` when finished.
 
 ### Phase 2: Create Highlights
 ```powershell
-.\venv\Scripts\Activate.ps1
-python main.py process "path\to\video.mp4"
+poetry run python -m tickzero.launcher process --video "path\to\video.mp4" --log "match_log.json"
 ```
 
 Creates vertical clips in `highlights/`!
@@ -62,8 +59,8 @@ Creates vertical clips in `highlights/`!
 ## 📋 Setup Checklist
 
 - [x] Python 3.10+ installed
-- [x] Virtual environment created (`venv/`)
-- [x] Dependencies installed (`google-genai`, `obs-websocket-py`)
+- [x] Poetry installed
+- [x] Dependencies installed (`poetry install`)
 - [ ] Gemini API key configured
 - [ ] OBS WebSocket enabled
 - [ ] CS2 GSI config copied
