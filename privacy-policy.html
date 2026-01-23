@@ -21,7 +21,7 @@
         rel="stylesheet">
 
     <style>
-         :root {
+        :root {
             --color-primary: #0066ff;
             --color-secondary: #00d4ff;
             --color-bg-primary: #ffffff;
@@ -68,7 +68,7 @@
             align-items: center;
             gap: 0.5rem;
         }
-        
+
         .logo img {
             height: 40px;
             width: auto;
@@ -83,14 +83,17 @@
         h2 {
             font-size: 1.5rem;
             margin-top: 2rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
             color: var(--color-primary);
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 0.5rem;
         }
 
         h3 {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             margin-top: 1.5rem;
             margin-bottom: 0.5rem;
+            font-weight: 600;
         }
 
         p {
@@ -108,10 +111,25 @@
             margin-bottom: 0.5rem;
         }
 
+        strong {
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
         .last-updated {
             font-size: 0.9rem;
             color: #666;
             margin-bottom: 2rem;
+            font-style: italic;
         }
 
         .back-link {
@@ -142,54 +160,116 @@
         <h1>Privacy Policy</h1>
         <p class="last-updated">Last Updated: January 23, 2026</p>
 
-        <p>This Privacy Policy describes how MACULINX ("we", "us", or "our") collects, uses, and discloses your information when you use our website (tickzero.maculinx.com). We are committed to protecting your privacy and ensuring compliance with the General Data Protection Regulation (GDPR).</p>
+        <p>This Privacy Policy describes how <strong>MACULINX</strong> ("we", "us", or "the Data Controller") collects,
+            uses, and discloses your information in relation to your use of the website
+            <strong>tickzero.maculinx.com</strong> ("Website") and the open-source software <strong>TickZero</strong>
+            ("Software"), in compliance with the General Data Protection Regulation (EU) 2016/679 (GDPR).</p>
 
-        <h2>1. Data Usage & Collection</h2>
-        <p>TickZero is an open-source software application. The software itself runs locally on your machine and does not transmit personal gameplay data to our servers. However, when you visit our website, we use certain third-party services to improve user experience and analyze traffic.</p>
+        <h2>1. Data Controller</h2>
+        <p>The Data Controller responsible for your personal data is:</p>
+        <p>
+            <strong>MACULINX</strong><br>
+            Contact Email: <strong>privacy@maculinx.com</strong><br>
+            Support Channel: <a href="https://github.com/MACULINX/TickZero/issues">GitHub Repository Issues</a>
+        </p>
 
-        <h2>2. Third-Party Services</h2>
-        <p>We use the following third-party services which may collect and process data:</p>
+        <h2>2. Types of Data Collected and Processing Methods</h2>
 
-        <h3>2.1 Google Analytics 4 (via Google Tag Manager)</h3>
-        <p>We use Google Analytics 4 (GA4) to understand how visitors interact with our website. GA4 collects data such as:</p>
+        <h3>2.1 Website Data</h3>
+        <p>When you visit our Website, we automatically collect certain information via third-party services to improve
+            user experience and analyze traffic:</p>
         <ul>
-            <li>Pages visited and time spent on pages</li>
-            <li>Browser type and operating system</li>
-            <li>Approximate geographic location (country/city level only; IP addresses are anonymized)</li>
-            <li>Referral sources</li>
+            <li><strong>Navigation and Analytics Data (Google Analytics 4):</strong> We collect aggregated and
+                anonymized data such as pages visited, time spent on pages, browser type, and approximate geographic
+                location (IP anonymized).</li>
+            <li><strong>Google Fonts:</strong> To properly display text, your IP address may be transferred to Google's
+                domains (<code>fonts.googleapis.com</code>).</li>
         </ul>
-        <p>Usage data is aggregated and anonymized. We do not use Google Analytics to track individual users across different websites.</p>
 
-        <h3>2.2 Google Fonts</h3>
-        <p>Our website uses Google Fonts to display text. When your browser requests these fonts, your IP address is transferred to Google's domains (fonts.googleapis.com and fonts.gstatic.com). This is necessary for the proper rendering of the website. Google may store this data for analytics and abuse prevention.</p>
-
-        <h2>3. Cookies</h2>
-        <p>We use cookies to enhance your experience. Cookies are small text files stored on your device.</p>
+        <h3>2.2 TickZero Software Data</h3>
+        <p>The TickZero software is designed to run locally on your machine.</p>
         <ul>
-            <li><strong>Essential Cookies:</strong> Necessary for the website to function (e.g., remembering your cookie consent preferences).</li>
-            <li><strong>Analytics Cookies:</strong> Used by Google Analytics to track website performance (only activated with your consent).</li>
+            <li><strong>Local Processing:</strong> The software processes game log files ("Game State Integration"),
+                real-time events, and video recordings directly on your hardware (CPU/GPU). <strong>We do not receive or
+                    store your gameplay data or video clips on our servers.</strong></li>
+            <li><strong>SteamID:</strong> The software uses your SteamID to identify the player and filter gameplay
+                actions (e.g., distinguishing your kills from your teammates' to prevent false positives). This data is
+                processed locally.</li>
+            <li><strong>Artificial Intelligence Integration (Google Gemini):</strong> To analyze highlights, the
+                software utilizes the Google Gemini API. You must provide your own personal API key. In this context,
+                textual log data is transmitted directly from your device to Google servers for analysis. MACULINX does
+                not have access to this data or your API key. The use of Gemini is subject to <a
+                    href="https://policies.google.com/privacy">Google's Privacy Policy</a>.</li>
+        </ul>
+
+        <h2>3. Purpose of Processing and Legal Basis</h2>
+        <p>We process personal data for the following purposes:</p>
+        <ol style="margin-bottom: 1rem; padding-left: 2rem; color: var(--color-text-secondary);">
+            <li style="margin-bottom: 0.5rem;"><strong>Website Functionality:</strong> To ensure navigation and font
+                rendering.<br>
+                <em>Legal basis: Legitimate Interest and Performance of a Service (Art. 6(1)(b), (f) GDPR).</em>
+            </li>
+            <li style="margin-bottom: 0.5rem;"><strong>Statistical Analysis:</strong> To understand how the website is
+                used via analytics cookies.<br>
+                <em>Legal basis: <strong>Consent</strong> (Art. 6(1)(a) GDPR), expressed via the cookie banner.</em>
+            </li>
+            <li style="margin-bottom: 0.5rem;"><strong>Software Functionality:</strong> Local processing of data (logs,
+                SteamID) is necessary to provide the clip creation features requested by the user.<br>
+                <em>Legal basis: Performance of a Contract/Service (Art. 6(1)(b) GDPR).</em>
+            </li>
+        </ol>
+
+        <h2>4. Third-Party Services and Data Transfers</h2>
+        <p>We use third-party service providers who may act as independent controllers or processors. Data may be
+            transferred outside the European Economic Area (EEA):</p>
+        <ul>
+            <li><strong>Google Analytics 4 & Google Fonts:</strong> Technical data (such as IP addresses) may be
+                transferred to servers located in the USA. Such transfers are based on Standard Contractual Clauses or
+                Adequacy Decisions adopted by the European Commission (Art. 45, 46 GDPR).</li>
+        </ul>
+
+        <h2>5. Cookies</h2>
+        <p>The Website uses cookies to enhance your experience:</p>
+        <ul>
+            <li><strong>Essential Cookies:</strong> Necessary for the website to function and to store your consent
+                preferences.</li>
+            <li><strong>Analytical Cookies:</strong> Used by Google Analytics to track website performance. These are
+                only activated with your <strong>explicit consent</strong>.</li>
         </ul>
         <p>You can manage or delete cookies via your browser settings at any time.</p>
 
-        <h2>4. Data Retention</h2>
-        <p>Data collected via Google Analytics is retained for a period of 14 months, after which it is automatically deleted. We do not store any personal data on our own servers.</p>
-
-        <h2>5. Your Rights (GDPR)</h2>
-        <p>Under the GDPR, you have the following rights regarding your personal data:</p>
+        <h2>6. Data Retention</h2>
         <ul>
-            <li><strong>Right to Access:</strong> You can request information about the data we hold about you.</li>
-            <li><strong>Right to Rectification:</strong> You can request correction of inaccurate data.</li>
-            <li><strong>Right to Erasure:</strong> You can request deletion of your data ("Right to be forgotten").</li>
-            <li><strong>Right to Restrict Processing:</strong> You can request that we limit how we use your data.</li>
-            <li><strong>Right to Object:</strong> You can object to the processing of your data.</li>
+            <li><strong>Analytics Data:</strong> Data collected via Google Analytics is retained for a period of
+                <strong>14 months</strong>, after which it is automatically deleted.</li>
+            <li><strong>Software Data:</strong> Data processed by the TickZero Software (videos, logs) resides
+                exclusively on the user's device. Its retention is entirely at the user's discretion.</li>
         </ul>
-        <p>To exercise these rights, please contact us via the GitHub repository issues page.</p>
 
-        <h2>6. Changes to This Policy</h2>
-        <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated "Last Updated" date.</p>
+        <h2>7. Your Rights (GDPR)</h2>
+        <p>Under the GDPR (Articles 15-21), you have the following rights regarding your personal data:</p>
+        <ul>
+            <li><strong>Right of Access:</strong> Request confirmation as to whether or not your data is being
+                processed.</li>
+            <li><strong>Right to Rectification:</strong> Request the correction of inaccurate data.</li>
+            <li><strong>Right to Erasure ("Right to be Forgotten"):</strong> Request the deletion of data if it is no
+                longer necessary or if you withdraw consent.</li>
+            <li><strong>Right to Restriction:</strong> Request the limitation of processing in certain circumstances.
+            </li>
+            <li><strong>Right to Portability:</strong> Receive your data in a structured format and transmit it to
+                another controller.</li>
+            <li><strong>Right to Object:</strong> Object to the processing of your data at any time.</li>
+            <li><strong>Right to Withdraw Consent:</strong> Withdraw your consent at any time without affecting the
+                lawfulness of processing based on consent before its withdrawal.</li>
+        </ul>
+        <p>To exercise these rights, please contact us via email at <strong>privacy@maculinx.com</strong> or by opening
+            an issue on our <a href="https://github.com/MACULINX/TickZero">GitHub Repository</a>.</p>
+        <p>You also have the right to lodge a complaint with a <strong>Supervisory Authority</strong> if you believe the
+            processing violates the GDPR (Art. 77 GDPR).</p>
 
-        <h2>7. Contact Us</h2>
-        <p>If you have any questions about this Privacy Policy, please contact us via our <a href="https://github.com/MACULINX/TickZero">GitHub Repository</a>.</p>
+        <h2>8. Changes to this Policy</h2>
+        <p>We may update this Privacy Policy. Any changes will be posted on this page with an updated "Last Updated"
+            date. We encourage you to review it periodically.</p>
 
     </div>
 </body>
