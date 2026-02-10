@@ -1,731 +1,1129 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag("consent", "default", {
-            "ad_storage": "denied",
-            "ad_user_data": "denied",
-            "ad_personalization": "denied",
-            "analytics_storage": "denied"
-        });
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("consent", "default", {
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+        analytics_storage: "denied",
+      });
     </script>
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NRTS6KHP');</script>
-<!-- End Google Tag Manager -->
-    <script type="text/javascript" charset="UTF-8" src="//cdn.cookie-script.com/s/41ad1d41746f78d5a6420eb2e80079a5.js"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="TickZero - AI-driven highlight extraction for CS2. Transform your Counter-Strike 2 gameplay into viral TikTok/Reels clips automatically using FREE AI.">
-    <meta name="keywords"
-        content="CS2, Counter-Strike 2, highlights, TikTok, Reels, AI, clips, gaming, content creation">
-    <meta name="author" content="MACULINX">
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-NRTS6KHP");
+    </script>
+    <!-- End Google Tag Manager -->
+    <script
+      type="text/javascript"
+      charset="UTF-8"
+      src="//cdn.cookie-script.com/s/41ad1d41746f78d5a6420eb2e80079a5.js"
+    ></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="TickZero - AI-driven highlight extraction for CS2. Transform your Counter-Strike 2 gameplay into viral TikTok/Reels clips automatically using FREE AI."
+    />
+    <meta
+      name="keywords"
+      content="CS2, Counter-Strike 2, highlights, TikTok, Reels, AI, clips, gaming, content creation"
+    />
+    <meta name="author" content="MACULINX" />
 
     <!-- Open Graph / Social Media -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="TickZero - AI-Powered CS2 Highlight Generator">
-    <meta property="og:description" content="Transform your CS2 gameplay into viral clips automatically using FREE AI">
-    <meta property="og:image" content="assets/images/logo.png">
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="TickZero - AI-Powered CS2 Highlight Generator"
+    />
+    <meta
+      property="og:description"
+      content="Transform your CS2 gameplay into viral clips automatically using FREE AI"
+    />
+    <meta property="og:image" content="assets/images/logo.png" />
 
     <title>TickZero - AI-Powered CS2 Highlight Generator</title>
 
     <!-- Resource Hints -->
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link rel="dns-prefetch" href="https://api.github.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="https://api.github.com" />
 
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-
-
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Styles -->
     <link rel="stylesheet" href="assets/css/style.min.css" />
     <link rel="stylesheet" href="assets/css/flags.min.css" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <link rel="icon" type="image/png" href="assets/images/logo.png" />
 
     <!-- hreflang tags for multilingual SEO -->
-    <link rel="alternate" hreflang="en" href="https://tickzero.maculinx.com/">
-    <link rel="alternate" hreflang="it" href="https://tickzero.maculinx.com/index.it.html">
-    <link rel="alternate" hreflang="es" href="https://tickzero.maculinx.com/index.es.html">
-    <link rel="alternate" hreflang="fr" href="https://tickzero.maculinx.com/index.fr.html">
-    <link rel="alternate" hreflang="de" href="https://tickzero.maculinx.com/index.de.html">
-    <link rel="alternate" hreflang="ru" href="https://tickzero.maculinx.com/index.ru.html">
-    <link rel="alternate" hreflang="zh" href="https://tickzero.maculinx.com/index.zh.html">
-    <link rel="alternate" hreflang="x-default" href="https://tickzero.maculinx.com/">
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="https://tickzero.maculinx.com/index.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="it"
+      href="https://tickzero.maculinx.com/index.it.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="es"
+      href="https://tickzero.maculinx.com/index.es.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="fr"
+      href="https://tickzero.maculinx.com/index.fr.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="de"
+      href="https://tickzero.maculinx.com/index.de.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="ru"
+      href="https://tickzero.maculinx.com/index.ru.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="zh"
+      href="https://tickzero.maculinx.com/index.zh.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://tickzero.maculinx.com/index.html"
+    />
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://tickzero.maculinx.com/">
+    <link rel="canonical" href="https://tickzero.maculinx.com/index.html" />
 
     <!-- Theme Color -->
-    <meta name="theme-color" content="#0f172a">
+    <meta name="theme-color" content="#0f172a" />
 
     <!-- Structured Data -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "TickZero",
-      "description": "AI-powered highlight extraction for Counter-Strike 2. Transform your CS2 gameplay into viral TikTok and Reels-ready content automatically using FREE AI technology.",
-      "applicationCategory": "GameApplication",
-      "operatingSystem": "Windows, macOS, Linux",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "author": {
-        "@type": "Organization",
-        "name": "MACULINX"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "5",
-        "ratingCount": "1"
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "TickZero",
+        "description": "AI-powered highlight extraction for Counter-Strike 2. Transform your CS2 gameplay into viral TikTok and Reels-ready content automatically using FREE AI technology.",
+        "applicationCategory": "GameApplication",
+        "operatingSystem": "Windows, macOS, Linux",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "MACULINX"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5",
+          "ratingCount": "1"
+        }
       }
-    }
     </script>
+  </head>
 
-</head>
-
-<body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NRTS6KHP"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-NRTS6KHP"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="container">
-            <div class="nav-content">
-                <div class="logo">
-                    <img src="assets/images/logo.png" alt="TickZero Logo" class="logo-img">
-                    <span class="logo-text">TickZero</span>
-                </div>
-                <ul class="nav-links">
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#how-it-works">How It Works</a></li>
-                    <li><a href="#roadmap">Roadmap</a></li>
-                    <li><a href="#faq">FAQ</a></li>
-                    <li class="language-selector">
-                        <button class="lang-btn" aria-label="Select language">
-                            <span class="flag-icon flag-gb"></span>
-                            <span class="lang-code">EN</span>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </button>
-                        <ul class="lang-dropdown">
-                            <li><a href="index.html" class="active"><span class="flag-icon flag-gb"></span>English</a>
-                            </li>
-                            <li><a href="index.it.html"><span class="flag-icon flag-it"></span>Italiano</a></li>
-                            <li><a href="index.es.html"><span class="flag-icon flag-es"></span>Español</a></li>
-                            <li><a href="index.fr.html"><span class="flag-icon flag-fr"></span>Français</a></li>
-                            <li><a href="index.de.html"><span class="flag-icon flag-de"></span>Deutsch</a></li>
-                            <li><a href="index.ru.html"><span class="flag-icon flag-ru"></span>Русский</a></li>
-                            <li><a href="index.zh.html"><span class="flag-icon flag-zh"></span>中文</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#download" class="btn-primary">Download</a></li>
-                </ul>
-                <button class="mobile-menu-toggle" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
+      <div class="container">
+        <div class="nav-content">
+          <div class="logo">
+            <img
+              src="assets/images/logo.png"
+              alt="TickZero Logo"
+              class="logo-img"
+            />
+            <span class="logo-text">TickZero</span>
+          </div>
+          <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#roadmap">Roadmap</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li class="language-selector">
+              <button class="lang-btn" aria-label="Select language">
+                <span class="flag-icon flag-gb"></span>
+                <span class="lang-code">EN</span>
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <ul class="lang-dropdown">
+                <li>
+                  <a href="index.html" class="active"
+                    ><span class="flag-icon flag-gb"></span>English</a
+                  >
+                </li>
+                <li>
+                  <a href="index.it.html"
+                    ><span class="flag-icon flag-it"></span>Italiano</a
+                  >
+                </li>
+                <li>
+                  <a href="index.es.html"
+                    ><span class="flag-icon flag-es"></span>Español</a
+                  >
+                </li>
+                <li>
+                  <a href="index.fr.html"
+                    ><span class="flag-icon flag-fr"></span>Français</a
+                  >
+                </li>
+                <li>
+                  <a href="index.de.html"
+                    ><span class="flag-icon flag-de"></span>Deutsch</a
+                  >
+                </li>
+                <li>
+                  <a href="index.ru.html"
+                    ><span class="flag-icon flag-ru"></span>Русский</a
+                  >
+                </li>
+                <li>
+                  <a href="index.zh.html"
+                    ><span class="flag-icon flag-zh"></span>中文</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li><a href="#download" class="btn-primary">Download</a></li>
+          </ul>
+          <button class="mobile-menu-toggle" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
+      </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <span class="badge">🚀 Open Source • 100% Free</span>
-                </div>
-                <h1 class="hero-title">
-                    Transform Your CS2 Gameplay Into
-                    <span class="gradient-text">Viral Clips</span>
-                </h1>
-                <p class="hero-subtitle">
-                    AI-powered highlight extraction for Counter-Strike 2. Automatically create TikTok and Reels-ready
-                    content from your best moments using FREE AI technology.
-                </p>
-                <div class="hero-cta">
-                    <a href="#download" class="btn btn-large btn-primary">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                        Download Now
-                    </a>
-                    <a href="https://github.com/MACULINX/TickZero" class="btn btn-large btn-secondary" target="_blank"
-                        rel="noopener">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                        </svg>
-                        View on GitHub
-                    </a>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <div class="stat-value" id="clone-count">-</div>
-                        <div class="stat-label">Clones</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-value" id="star-count">-</div>
-                        <div class="stat-label">GitHub Stars</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-value">100%</div>
-                        <div class="stat-label">Free & Open</div>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="badge">🚀 Open Source • 100% Free</span>
+          </div>
+          <h1 class="hero-title">
+            Transform Your CS2 Gameplay Into
+            <span class="gradient-text">Viral Clips</span>
+          </h1>
+          <p class="hero-subtitle">
+            AI-powered highlight extraction for Counter-Strike 2. Automatically
+            create TikTok and Reels-ready content from your best moments using
+            FREE AI technology.
+          </p>
+          <div class="hero-cta">
+            <a href="#download" class="btn btn-large btn-primary">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Download Now
+            </a>
+            <a
+              href="https://github.com/MACULINX/TickZero"
+              class="btn btn-large btn-secondary"
+              target="_blank"
+              rel="noopener"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                />
+              </svg>
+              View on GitHub
+            </a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat">
+              <div class="stat-value" id="clone-count">-</div>
+              <div class="stat-label">Clones</div>
             </div>
+            <div class="stat">
+              <div class="stat-value" id="star-count">-</div>
+              <div class="stat-label">GitHub Stars</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">100%</div>
+              <div class="stat-label">Free & Open</div>
+            </div>
+          </div>
         </div>
-        <div class="hero-background"></div>
+      </div>
+      <div class="hero-background"></div>
     </section>
 
     <!-- Features Section -->
     <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2>Why Choose TickZero?</h2>
-                <p>Everything you need to turn your gameplay into content-ready highlights</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                    </div>
-                    <h3>Real-Time Event Logging</h3>
-                    <p>Captures kills, headshots, and round events live via CS2 Game State Integration with precise OBS
-                        timestamp synchronization.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path
-                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
-                            </path>
-                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                        </svg>
-                    </div>
-                    <h3>AI-Powered Analysis</h3>
-                    <p>Google Gemini (FREE tier) intelligently identifies highlight-worthy moments: multi-kills,
-                        clutches, headshots, and epic plays.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                            <path d="M16 3h5v5"></path>
-                            <line x1="22" y1="2" x2="15" y2="9"></line>
-                        </svg>
-                    </div>
-                    <h3>Automatic Video Editing</h3>
-                    <p>FFmpeg-based conversion to vertical format (9:16) optimized for TikTok and Instagram Reels with
-                        professional quality.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
-                            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
-                            <line x1="6" y1="1" x2="6" y2="4"></line>
-                            <line x1="10" y1="1" x2="10" y2="4"></line>
-                            <line x1="14" y1="1" x2="14" y2="4"></line>
-                        </svg>
-                    </div>
-                    <h3>Multi-GPU Support</h3>
-                    <p>Automatic hardware acceleration with support for NVIDIA NVENC, AMD AMF, Intel QuickSync, and CPU
-                        fallback.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <polyline points="23 4 23 10 17 10"></polyline>
-                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
-                        </svg>
-                    </div>
-                    <h3>Continuous Recording</h3>
-                    <p>Record multiple matches seamlessly with automatic processing between games. Perfect for marathon
-                        gaming sessions.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                    </div>
-                    <h3>100% Free</h3>
-                    <p>Completely open-source with no hidden costs. Uses Google Gemini's FREE tier (1500 requests/day -
-                        enough for ~50 matches daily).</p>
-                </div>
-            </div>
+      <div class="container">
+        <div class="section-header">
+          <h2>Why Choose TickZero?</h2>
+          <p>
+            Everything you need to turn your gameplay into content-ready
+            highlights
+          </p>
         </div>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <h3>Real-Time Event Logging</h3>
+            <p>
+              Captures kills, headshots, and round events live via CS2 Game
+              State Integration with precise OBS timestamp synchronization.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+                ></path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+              </svg>
+            </div>
+            <h3>AI-Powered Analysis</h3>
+            <p>
+              Google Gemini (FREE tier) intelligently identifies
+              highlight-worthy moments: multi-kills, clutches, headshots, and
+              epic plays.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                <path d="M16 3h5v5"></path>
+                <line x1="22" y1="2" x2="15" y2="9"></line>
+              </svg>
+            </div>
+            <h3>Automatic Video Editing</h3>
+            <p>
+              FFmpeg-based conversion to vertical format (9:16) optimized for
+              TikTok and Instagram Reels with professional quality.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                <line x1="6" y1="1" x2="6" y2="4"></line>
+                <line x1="10" y1="1" x2="10" y2="4"></line>
+                <line x1="14" y1="1" x2="14" y2="4"></line>
+              </svg>
+            </div>
+            <h3>Multi-GPU Support</h3>
+            <p>
+              Automatic hardware acceleration with support for NVIDIA NVENC, AMD
+              AMF, Intel QuickSync, and CPU fallback.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+              </svg>
+            </div>
+            <h3>Continuous Recording</h3>
+            <p>
+              Record multiple matches seamlessly with automatic processing
+              between games. Perfect for marathon gaming sessions.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <h3>100% Free</h3>
+            <p>
+              Completely open-source with no hidden costs. Uses Google Gemini's
+              FREE tier (1500 requests/day - enough for ~50 matches daily).
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- How It Works Section -->
     <section id="how-it-works" class="how-it-works">
-        <div class="container">
-            <div class="section-header">
-                <h2>How It Works</h2>
-                <p>From gameplay to viral content in three simple steps</p>
-            </div>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3>Play CS2</h3>
-                        <p>Launch TickZero's live logging mode before your match. The system automatically starts
-                            recording when the first round goes live and captures every kill, headshot, and clutch
-                            moment with precise timestamps.</p>
-                        <div class="code-snippet">
-                            <code>python launcher.py --record</code>
-                        </div>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h3>AI Analysis</h3>
-                        <p>After your match, Google Gemini AI analyzes your gameplay log to identify highlight-worthy
-                            moments. It prioritizes aces, multi-kills, clutches, headshot streaks, and high-skill plays.
-                        </p>
-                        <ul class="highlight-list">
-                            <li>🔥 Multi-kills (2K, 3K, 4K, ACE)</li>
-                            <li>💪 Clutch situations (1v2, 1v3, 1v4)</li>
-                            <li>🎯 Headshot streaks</li>
-                            <li>⚡ Low health clutches</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h3>Export & Share</h3>
-                        <p>TickZero automatically generates vertical (9:16) clips optimized for TikTok and Reels. Each
-                            clip is hardware-accelerated, professionally formatted, and ready to upload.</p>
-                        <div class="output-info">
-                            <div class="output-spec">
-                                <strong>Resolution:</strong> 1080×1920
-                            </div>
-                            <div class="output-spec">
-                                <strong>Duration:</strong> 8-15 seconds
-                            </div>
-                            <div class="output-spec">
-                                <strong>Format:</strong> MP4 (H.264)
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="container">
+        <div class="section-header">
+          <h2>How It Works</h2>
+          <p>From gameplay to viral content in three simple steps</p>
         </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h3>Play CS2</h3>
+              <p>
+                Launch TickZero's live logging mode before your match. The
+                system automatically starts recording when the first round goes
+                live and captures every kill, headshot, and clutch moment with
+                precise timestamps.
+              </p>
+              <div class="code-snippet">
+                <code>python launcher.py --record</code>
+              </div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h3>AI Analysis</h3>
+              <p>
+                After your match, Google Gemini AI analyzes your gameplay log to
+                identify highlight-worthy moments. It prioritizes aces,
+                multi-kills, clutches, headshot streaks, and high-skill plays.
+              </p>
+              <ul class="highlight-list">
+                <li>🔥 Multi-kills (2K, 3K, 4K, ACE)</li>
+                <li>💪 Clutch situations (1v2, 1v3, 1v4)</li>
+                <li>🎯 Headshot streaks</li>
+                <li>⚡ Low health clutches</li>
+              </ul>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h3>Export & Share</h3>
+              <p>
+                TickZero automatically generates vertical (9:16) clips optimized
+                for TikTok and Reels. Each clip is hardware-accelerated,
+                professionally formatted, and ready to upload.
+              </p>
+              <div class="output-info">
+                <div class="output-spec">
+                  <strong>Resolution:</strong> 1080×1920
+                </div>
+                <div class="output-spec">
+                  <strong>Duration:</strong> 8-15 seconds
+                </div>
+                <div class="output-spec">
+                  <strong>Format:</strong> MP4 (H.264)
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Roadmap Section -->
     <section id="roadmap" class="roadmap">
-        <div class="container">
-            <div class="section-header">
-                <h2>Development Roadmap</h2>
-                <p>Our vision for the future of TickZero</p>
-            </div>
-            <div class="timeline">
-                <div class="timeline-item completed">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>v1.0 - Core Foundation</h3>
-                            <span class="timeline-status completed">Completed</span>
-                        </div>
-                        <ul>
-                            <li>✅ Game State Integration with CS2</li>
-                            <li>✅ OBS WebSocket synchronization</li>
-                            <li>✅ Basic AI highlight detection</li>
-                            <li>✅ Vertical video conversion</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item completed">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>v1.5 - Enhanced Features</h3>
-                            <span class="timeline-status completed">Completed</span>
-                        </div>
-                        <ul>
-                            <li>✅ Multi-GPU hardware acceleration</li>
-                            <li>✅ Continuous recording mode</li>
-                            <li>✅ Unified launcher interface</li>
-                            <li>✅ Match history browser</li>
-                            <li>✅ Automatic match end detection</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item in-progress">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>v2.0 - Smart Editing</h3>
-                            <span class="timeline-status in-progress">In Progress</span>
-                        </div>
-                        <ul>
-                            <li>🚧 Enhanced AI clip selection</li>
-                            <li>🚧 Custom clip templates</li>
-                            <li>🚧 Automatic captions/subtitles</li>
-                            <li>🚧 Music and effects library</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item planned">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>v2.5 - Social Integration</h3>
-                            <span class="timeline-status planned">Planned</span>
-                        </div>
-                        <ul>
-                            <li>📋 Direct TikTok/Reels upload</li>
-                            <li>📋 Auto-generated descriptions and hashtags</li>
-                            <li>📋 Thumbnail generation</li>
-                            <li>📋 Content scheduling</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item planned">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>v3.0 - Advanced Features</h3>
-                            <span class="timeline-status planned">Planned</span>
-                        </div>
-                        <ul>
-                            <li>📋 Multi-game support (Valorant, Overwatch)</li>
-                            <li>📋 Team collaboration features</li>
-                            <li>📋 Advanced analytics dashboard</li>
-                            <li>📋 Custom AI training for personal style</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+      <div class="container">
+        <div class="section-header">
+          <h2>Development Roadmap</h2>
+          <p>Our vision for the future of TickZero</p>
         </div>
+        <div class="timeline">
+          <div class="timeline-item completed">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <h3>v1.0 - Core Foundation</h3>
+                <span class="timeline-status completed">Completed</span>
+              </div>
+              <ul>
+                <li>✅ Game State Integration with CS2</li>
+                <li>✅ OBS WebSocket synchronization</li>
+                <li>✅ Basic AI highlight detection</li>
+                <li>✅ Vertical video conversion</li>
+              </ul>
+            </div>
+          </div>
+          <div class="timeline-item completed">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <h3>v1.5 - Enhanced Features</h3>
+                <span class="timeline-status completed">Completed</span>
+              </div>
+              <ul>
+                <li>✅ Multi-GPU hardware acceleration</li>
+                <li>✅ Continuous recording mode</li>
+                <li>✅ Unified launcher interface</li>
+                <li>✅ Match history browser</li>
+                <li>✅ Automatic match end detection</li>
+              </ul>
+            </div>
+          </div>
+          <div class="timeline-item in-progress">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <h3>v2.0 - Smart Editing</h3>
+                <span class="timeline-status in-progress">In Progress</span>
+              </div>
+              <ul>
+                <li>🚧 Enhanced AI clip selection</li>
+                <li>🚧 Custom clip templates</li>
+                <li>🚧 Automatic captions/subtitles</li>
+                <li>🚧 Music and effects library</li>
+              </ul>
+            </div>
+          </div>
+          <div class="timeline-item planned">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <h3>v2.5 - Social Integration</h3>
+                <span class="timeline-status planned">Planned</span>
+              </div>
+              <ul>
+                <li>📋 Direct TikTok/Reels upload</li>
+                <li>📋 Auto-generated descriptions and hashtags</li>
+                <li>📋 Thumbnail generation</li>
+                <li>📋 Content scheduling</li>
+              </ul>
+            </div>
+          </div>
+          <div class="timeline-item planned">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <h3>v3.0 - Advanced Features</h3>
+                <span class="timeline-status planned">Planned</span>
+              </div>
+              <ul>
+                <li>📋 Multi-game support (Valorant, Overwatch)</li>
+                <li>📋 Team collaboration features</li>
+                <li>📋 Advanced analytics dashboard</li>
+                <li>📋 Custom AI training for personal style</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- FAQ Section -->
     <section id="faq" class="faq">
-        <div class="container">
-            <div class="section-header">
-                <h2>Frequently Asked Questions</h2>
-                <p>Everything you need to know about TickZero</p>
-            </div>
-            <div class="faq-list">
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>Is TickZero really free?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Yes! TickZero is 100% free and open-source under the MIT License. It uses Google Gemini's
-                            free tier (1500 requests/day), which is enough for approximately 50 matches per day. No
-                            credit card required, no hidden costs.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>What do I need to get started?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>You'll need:</p>
-                        <ul>
-                            <li>Python 3.10 or higher</li>
-                            <li>OBS Studio with WebSocket plugin</li>
-                            <li>Counter-Strike 2</li>
-                            <li>FFmpeg (for video processing)</li>
-                            <li>A free Google API key for Gemini</li>
-                        </ul>
-                        <p>All installation instructions are included in the documentation.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>How does the AI know which moments are highlights?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Google Gemini analyzes your gameplay log and prioritizes moments based on:</p>
-                        <ul>
-                            <li><strong>Multi-kills:</strong> Double kills, triples, quads, and aces</li>
-                            <li><strong>Clutch situations:</strong> Winning rounds when outnumbered</li>
-                            <li><strong>Headshot accuracy:</strong> Precision one-tap kills</li>
-                            <li><strong>High-skill plays:</strong> Quick reactions and difficult shots</li>
-                            <li><strong>Low health clutches:</strong> Surviving with minimal HP</li>
-                        </ul>
-                        <p>You can adjust the minimum priority threshold to control how selective the AI is.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>Can I use this with other recording software besides OBS?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Currently, TickZero is designed to work with OBS Studio via WebSocket for automatic recording
-                            control and precise timestamp synchronization. However, you can manually record with any
-                            software and process the video afterwards - you'll just need to ensure your event log
-                            timestamps align with the recording start time.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>Will this work on Linux or Mac?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Yes! TickZero is cross-platform and works on Windows, Linux, and macOS. The only requirement
-                            is that you have Python 3.10+, OBS Studio, and FFmpeg installed on your system. CS2 Game
-                            State Integration works on all platforms as well.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>Does it only capture my kills or teammates' kills too?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>TickZero only captures YOUR personal kills. When you die and spectate teammates, the system
-                            automatically filters out their kills using SteamID tracking. This ensures accurate personal
-                            highlight tracking and prevents false positives.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>How long does it take to process highlights?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Processing time depends on your hardware and the number of clips:</p>
-                        <ul>
-                            <li><strong>AI Analysis:</strong> 5-10 seconds per match</li>
-                            <li><strong>Video Processing (GPU):</strong> 2-5 seconds per clip</li>
-                            <li><strong>Video Processing (CPU):</strong> 10-20 seconds per clip</li>
-                        </ul>
-                        <p>A typical match with 3-5 highlights processes in under 1 minute with GPU acceleration.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>Can I customize the clip duration and format?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Currently, clips are optimized for TikTok/Reels (8-15 seconds, 1080×1920). Custom durations
-                            and formats are on the roadmap for v2.0. You can modify the source code to adjust these
-                            parameters if you're comfortable with Python.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>How do I report bugs or request features?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>We love community feedback! You can:</p>
-                        <ul>
-                            <li><strong>Report bugs:</strong> <a href="https://github.com/MACULINX/TickZero/issues"
-                                    target="_blank">Open an issue</a> on GitHub</li>
-                            <li><strong>Request features:</strong> <a
-                                    href="https://github.com/MACULINX/TickZero/discussions" target="_blank">Start a
-                                    discussion</a></li>
-                            <li><strong>Contribute code:</strong> Submit a pull request</li>
-                            <li><strong>Get help:</strong> Check existing issues and discussions</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+      <div class="container">
+        <div class="section-header">
+          <h2>Frequently Asked Questions</h2>
+          <p>Everything you need to know about TickZero</p>
         </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Is TickZero really free?</span>
+              <svg
+                class="faq-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Yes! TickZero is 100% free and open-source under the MIT
+                License. It uses Google Gemini's free tier (1500 requests/day),
+                which is enough for approximately 50 matches per day. No credit
+                card required, no hidden costs.
+              </p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>What do I need to get started?</span>
+              <svg
+                class="faq-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>You'll need:</p>
+              <ul>
+                <li>Python 3.10 or higher</li>
+                <li>OBS Studio with WebSocket plugin</li>
+                <li>Counter-Strike 2</li>
+                <li>FFmpeg (for video processing)</li>
+                <li>A free Google API key for Gemini</li>
+              </ul>
+              <p>
+                All installation instructions are included in the documentation.
+              </p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>How does the AI know which moments are highlights?</span>
+              <svg
+                class="faq-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Google Gemini analyzes your gameplay log and prioritizes moments
+                based on:
+              </p>
+              <ul>
+                <li>
+                  <strong>Multi-kills:</strong> Double kills, triples, quads,
+                  and aces
+                </li>
+                <li>
+                  <strong>Clutch situations:</strong> Winning rounds when
+                  outnumbered
+                </li>
+                <li>
+                  <strong>Headshot accuracy:</strong> Precision one-tap kills
+                </li>
+                <li>
+                  <strong>High-skill plays:</strong> Quick reactions and
+                  difficult shots
+                </li>
+                <li>
+                  <strong>Low health clutches:</strong> Surviving with minimal
+                  HP
+                </li>
+              </ul>
+              <p>
+                You can adjust the minimum priority threshold to control how
+                selective the AI is.
+              </p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">
+              <span
+                >Can I use this with other recording software besides OBS?</span
+              >
+              <svg
+                class="faq-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Currently, TickZero is designed to work with OBS Studio via
+                WebSocket for automatic recording control and precise timestamp
+                synchronization. However, you can manually record with any
+                software and process the video afterwards - you'll just need to
+                ensure your event log timestamps align with the recording start
+                time.
+              </p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Will this work on Linux or Mac?</span>
+              <svg
+                class="faq-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Yes! TickZero is cross-platform and works on Windows, Linux, and
+                macOS. The only requirement is that you have Python 3.10+, OBS
+                Studio, and FFmpeg installed on your system. CS2 Game State
+                Integration works on all platforms as well.
+              </p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">
+              <span
+                >Does it only capture my kills or teammates' kills too?</span
+              >
+              <svg
+                class="faq-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>
+                TickZero only captures YOUR personal kills. When you die and
+                spectate teammates, the system automatically filters out their
+                kills using SteamID tracking. This ensures accurate personal
+                highlight tracking and prevents false positives.
+              </p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>How long does it take to process highlights?</span>
+              <svg
+                class="faq-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Processing time depends on your hardware and the number of
+                clips:
+              </p>
+              <ul>
+                <li><strong>AI Analysis:</strong> 5-10 seconds per match</li>
+                <li>
+                  <strong>Video Processing (GPU):</strong> 2-5 seconds per clip
+                </li>
+                <li>
+                  <strong>Video Processing (CPU):</strong> 10-20 seconds per
+                  clip
+                </li>
+              </ul>
+              <p>
+                A typical match with 3-5 highlights processes in under 1 minute
+                with GPU acceleration.
+              </p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Can I customize the clip duration and format?</span>
+              <svg
+                class="faq-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Currently, clips are optimized for TikTok/Reels (8-15 seconds,
+                1080×1920). Custom durations and formats are on the roadmap for
+                v2.0. You can modify the source code to adjust these parameters
+                if you're comfortable with Python.
+              </p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>How do I report bugs or request features?</span>
+              <svg
+                class="faq-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>We love community feedback! You can:</p>
+              <ul>
+                <li>
+                  <strong>Report bugs:</strong>
+                  <a
+                    href="https://github.com/MACULINX/TickZero/issues"
+                    target="_blank"
+                    >Open an issue</a
+                  >
+                  on GitHub
+                </li>
+                <li>
+                  <strong>Request features:</strong>
+                  <a
+                    href="https://github.com/MACULINX/TickZero/discussions"
+                    target="_blank"
+                    >Start a discussion</a
+                  >
+                </li>
+                <li><strong>Contribute code:</strong> Submit a pull request</li>
+                <li>
+                  <strong>Get help:</strong> Check existing issues and
+                  discussions
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Download Section -->
     <section id="download" class="download">
-        <div class="container">
-            <div class="download-content">
-                <h2>Ready to Create Content?</h2>
-                <p>Get started with TickZero in seconds. No credit card required.</p>
-                <div class="download-buttons">
-                    <a href="https://github.com/MACULINX/TickZero/archive/refs/heads/master.zip"
-                        class="btn btn-large btn-primary download-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                        Download ZIP
-                    </a>
-                    <a href="https://github.com/MACULINX/TickZero" class="btn btn-large btn-secondary" target="_blank"
-                        rel="noopener">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                        </svg>
-                        Clone Repository
-                    </a>
-                </div>
-                <div class="quick-start">
-                    <p class="quick-start-label">Quick Start:</p>
-                    <div class="code-block">
-                        <code>git clone https://github.com/MACULINX/TickZero.git</code>
-                        <button class="copy-btn" data-clipboard="git clone https://github.com/MACULINX/TickZero.git">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="code-block">
-                        <code>cd TickZero && pip install -r requirements.txt</code>
-                        <button class="copy-btn" data-clipboard="cd TickZero && pip install -r requirements.txt">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="code-block">
-                        <code>python launcher.py</code>
-                        <button class="copy-btn" data-clipboard="python launcher.py">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="download-content">
+          <h2>Ready to Create Content?</h2>
+          <p>Get started with TickZero in seconds. No credit card required.</p>
+          <div class="download-buttons">
+            <a
+              href="https://github.com/MACULINX/TickZero/archive/refs/heads/master.zip"
+              class="btn btn-large btn-primary download-btn"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Download ZIP
+            </a>
+            <a
+              href="https://github.com/MACULINX/TickZero"
+              class="btn btn-large btn-secondary"
+              target="_blank"
+              rel="noopener"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                />
+              </svg>
+              Clone Repository
+            </a>
+          </div>
+          <div class="quick-start">
+            <p class="quick-start-label">Quick Start:</p>
+            <div class="code-block">
+              <code>git clone https://github.com/MACULINX/TickZero.git</code>
+              <button
+                class="copy-btn"
+                data-clipboard="git clone https://github.com/MACULINX/TickZero.git"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path
+                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                  ></path>
+                </svg>
+              </button>
             </div>
+            <div class="code-block">
+              <code>cd TickZero && pip install -r requirements.txt</code>
+              <button
+                class="copy-btn"
+                data-clipboard="cd TickZero && pip install -r requirements.txt"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path
+                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+            <div class="code-block">
+              <code>python launcher.py</code>
+              <button class="copy-btn" data-clipboard="python launcher.py">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path
+                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <img src="assets/images/logo.png" alt="TickZero Logo" loading="lazy">
-                        <span>TickZero</span>
-                    </div>
-                    <p class="footer-description">
-                        AI-powered highlight extraction for CS2 players and content creators.
-                    </p>
-                    <div class="footer-social">
-                        <a href="https://github.com/MACULINX/TickZero" target="_blank" rel="noopener"
-                            aria-label="GitHub">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="#how-it-works">How It Works</a></li>
-                        <li><a href="#roadmap">Roadmap</a></li>
-                        <li><a href="#faq">FAQ</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Resources</h3>
-                    <ul class="footer-links">
-                        <li><a href="https://github.com/MACULINX/TickZero/blob/master/README.md"
-                                target="_blank">Documentation</a></li>
-                        <li><a href="https://github.com/MACULINX/TickZero/issues" target="_blank">Report Issues</a></li>
-                        <li><a href="https://github.com/MACULINX/TickZero/discussions" target="_blank">Discussions</a>
-                        </li>
-                        <li><a href="https://github.com/MACULINX/TickZero/blob/master/CONTRIBUTING.md"
-                                target="_blank">Contributing</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Legal</h3>
-                    <ul class="footer-links">
-                        <li><a href="https://github.com/MACULINX/TickZero/blob/master/LICENSE" target="_blank">MIT
-                                License</a></li>
-                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                        <li><a href="https://github.com/MACULINX" target="_blank">About Developer</a></li>
-                    </ul>
-                </div>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <div class="footer-logo">
+              <img
+                src="assets/images/logo.png"
+                alt="TickZero Logo"
+                loading="lazy"
+              />
+              <span>TickZero</span>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 TickZero. Made with ❤️ by <a href="https://github.com/MACULINX"
-                        target="_blank">MACULINX</a>. Open source under MIT License.</p>
+            <p class="footer-description">
+              AI-powered highlight extraction for CS2 players and content
+              creators.
+            </p>
+            <div class="footer-social">
+              <a
+                href="https://github.com/MACULINX/TickZero"
+                target="_blank"
+                rel="noopener"
+                aria-label="GitHub"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                  />
+                </svg>
+              </a>
             </div>
+          </div>
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+              <li><a href="#features">Features</a></li>
+              <li><a href="#how-it-works">How It Works</a></li>
+              <li><a href="#roadmap">Roadmap</a></li>
+              <li><a href="#faq">FAQ</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Resources</h3>
+            <ul class="footer-links">
+              <li>
+                <a
+                  href="https://github.com/MACULINX/TickZero/blob/master/README.md"
+                  target="_blank"
+                  >Documentation</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://github.com/MACULINX/TickZero/issues"
+                  target="_blank"
+                  >Report Issues</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://github.com/MACULINX/TickZero/discussions"
+                  target="_blank"
+                  >Discussions</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://github.com/MACULINX/TickZero/blob/master/CONTRIBUTING.md"
+                  target="_blank"
+                  >Contributing</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Legal</h3>
+            <ul class="footer-links">
+              <li>
+                <a
+                  href="https://github.com/MACULINX/TickZero/blob/master/LICENSE"
+                  target="_blank"
+                  >MIT License</a
+                >
+              </li>
+              <li><a href="privacy-policy.html">Privacy Policy</a></li>
+              <li>
+                <a href="https://github.com/MACULINX" target="_blank"
+                  >About Developer</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2026 TickZero. Made with ❤️ by
+            <a href="https://github.com/MACULINX" target="_blank">MACULINX</a>.
+            Open source under MIT License.
+          </p>
+        </div>
+      </div>
     </footer>
 
     <!-- JavaScript -->
     <script src="assets/js/main.min.js" defer></script>
-</body>
-
+  </body>
 </html>
