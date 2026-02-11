@@ -19,7 +19,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-NRTS6KHP');</script>
 <!-- End Google Tag Manager -->
-    <script type="text/javascript" charset="UTF-8" src="//cdn.cookie-script.com/s/41ad1d41746f78d5a6420eb2e80079a5.js" defer></script>
+    <script type="text/javascript" charset="UTF-8" src="//cdn.cookie-script.com/s/41ad1d41746f78d5a6420eb2e80079a5.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
@@ -40,7 +40,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <!-- Resource Hints -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link rel="dns-prefetch" href="https://api.github.com">
+    <link rel="dns-prefetch" href="https://maculinx.altervista.org">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -61,7 +61,32 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="manifest" href="/site.webmanifest" />
+    <!-- Web App Manifest (inlined for performance) -->
+    <script type="application/json" id="web-app-manifest">
+      {
+        "name": "TickZero - Генератор хайлайтов CS2 с ИИ",
+        "short_name": "TickZero",
+        "description": "Автоматически превращайте свой геймплей CS2 в вирусные клипы с помощью БЕСПЛАТНОГО ИИ",
+        "icons": [
+          {"src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png"},
+          {"src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png"}
+        ],
+        "theme_color": "#6366f1",
+        "background_color": "#0a0a0f",
+        "display": "standalone",
+        "start_url": "/ru/",
+        "scope": "/"
+      }
+    </script>
+    <script>
+      const manifestContent = document.getElementById('web-app-manifest').textContent;
+      const blob = new Blob([manifestContent], { type: 'application/json' });
+      const manifestURL = URL.createObjectURL(blob);
+      const link = document.createElement('link');
+      link.rel = 'manifest';
+      link.href = manifestURL;
+      document.head.appendChild(link);
+    </script>
     <!-- hreflang tags for multilingual SEO -->
     <link rel="alternate" hreflang="en" href="https://tickzero.maculinx.com/">
     <link rel="alternate" hreflang="it" href="https://tickzero.maculinx.com/it/">
@@ -115,7 +140,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="container">
             <div class="nav-content">
                 <div class="logo">
-                    <img src="/assets/images/logo.png" alt="TickZero Logo" class="logo-img" width="32" height="32">
+                    <picture>
+                        <source srcset="/assets/images/logo.webp" type="image/webp">
+                        <img src="/assets/images/logo.png" alt="TickZero Logo" class="logo-img" width="32" height="32">
+                    </picture>
                     <span class="logo-text">TickZero</span>
                 </div>
                 <ul class="nav-links">
@@ -679,7 +707,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <img src="/assets/images/logo.png" alt="TickZero Logo" loading="lazy" width="32" height="32">
+                        <picture>
+                            <source srcset="/assets/images/logo.webp" type="image/webp">
+                            <img src="/assets/images/logo.png" alt="TickZero Logo" loading="lazy" width="32" height="32">
+                        </picture>
                         <span>TickZero</span>
                     </div>
                     <p class="footer-description">

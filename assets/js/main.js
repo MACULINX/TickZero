@@ -105,31 +105,26 @@ class GitHubStats {
 
   async fetchStats() {
     try {
-      // Fetch clones from external tracker
-      const clonesResponse = await fetch(
-        `https://maculinx.altervista.org/github/tickzero/clones_public.json?t=${new Date().getTime()}`,
+      // Fetch both clones and stars from unified API endpoint
+      const response = await fetch(
+        `https://maculinx.altervista.org/github/tickzero/clones_public.php`,
       );
-      let clones = 0;
-      if (clonesResponse.ok) {
-        const clonesData = await clonesResponse.json();
-        clones = clonesData.count || 0;
-      }
 
-      // Fetch stars directly from GitHub API
-      const starsResponse = await fetch(CONFIG.githubApiUrl);
-      let stars = 0;
-      if (starsResponse.ok) {
-        const starsData = await starsResponse.json();
-        stars = starsData.stargazers_count || 0;
-      }
+      if (response.ok) {
+        const data = await response.json();
+        const clones = data.clones_count || 0;
+        const stars = data.stars_count || 0;
 
-      // Update UI
-      if (this.starCountEl) {
-        this.updateStat(this.starCountEl, stars);
-      }
+        // Update UI
+        if (this.starCountEl) {
+          this.updateStat(this.starCountEl, stars);
+        }
 
-      if (this.cloneCountEl) {
-        this.updateStat(this.cloneCountEl, clones);
+        if (this.cloneCountEl) {
+          this.updateStat(this.cloneCountEl, clones);
+        }
+      } else {
+        this.setFallbackValues();
       }
     } catch (error) {
       console.error("Error in fetchStats:", error);
