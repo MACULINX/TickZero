@@ -7,6 +7,7 @@ env/
 __pycache__/
 *.py[cod]
 *$py.class
+*.py
 *.so
 
 # Ignore generated files
@@ -28,6 +29,7 @@ highlights/
 .env.local
 
 # Ignore OS files
+tools/
 .DS_Store
 Thumbs.db
 desktop.ini
