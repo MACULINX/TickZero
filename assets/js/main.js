@@ -547,22 +547,26 @@ class LanguageSelector {
   detectLanguage() {
     // Get language from current page URL
     const path = window.location.pathname;
-    const match = path.match(/index\.([a-z]{2})\.html/);
+
+    // Match new structure: /it/index.html, /ru/index.html, etc.
+    const match = path.match(/\/([a-z]{2})\/index\.html/);
 
     if (match) {
       return match[1];
     }
 
-    // Default to English if no language in URL
+    // Default to English if no language in URL (root index.html)
     return "en";
   }
 
   getLangFromHref(href) {
-    const match = href.match(/index\.([a-z]{2})\.html/);
+    // Match new structure: /it/index.html, /ru/index.html, etc.
+    const match = href.match(/\/([a-z]{2})\/index\.html/);
     if (match) {
       return match[1];
     }
-    if (href === "index.html") {
+    // Root index.html or /index.html is English
+    if (href === "index.html" || href === "/index.html" || href === "/") {
       return "en";
     }
     return null;
@@ -601,8 +605,9 @@ class LanguageSelector {
   }
 
   redirectToLanguage(lang) {
-    const targetPage = lang === "en" ? "index.html" : `index.${lang}.html`;
-    if (window.location.pathname.split("/").pop() !== targetPage) {
+    // New structure: /it/index.html, /ru/index.html, etc.
+    const targetPage = lang === "en" ? "/index.html" : `/${lang}/index.html`;
+    if (window.location.pathname !== targetPage) {
       window.location.href = targetPage;
     }
   }

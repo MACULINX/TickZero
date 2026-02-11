@@ -19,7 +19,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-NRTS6KHP');</script>
 <!-- End Google Tag Manager -->
-    <script type="text/javascript" charset="UTF-8" src="//cdn.cookie-script.com/s/41ad1d41746f78d5a6420eb2e80079a5.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="//cdn.cookie-script.com/s/41ad1d41746f78d5a6420eb2e80079a5.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
@@ -45,14 +45,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
+        rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
 
     
 
     <!-- Styles -->
     <link rel="stylesheet" href="/assets/css/style.min.css" />
-    <link rel="stylesheet" href="/assets/css/flags.min.css" />
+    <link rel="stylesheet" href="/assets/css/flags.css" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="/assets/css/flags.css" /></noscript>
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -112,7 +115,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="container">
             <div class="nav-content">
                 <div class="logo">
-                    <img src="/assets/images/logo.png" alt="TickZero Logo" class="logo-img">
+                    <img src="/assets/images/logo.png" alt="TickZero Logo" class="logo-img" width="32" height="32">
                     <span class="logo-text">TickZero</span>
                 </div>
                 <ul class="nav-links">
@@ -637,7 +640,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <p class="quick-start-label">Démarrage Rapide:</p>
                     <div class="code-block">
                         <code>git clone https://github.com/MACULINX/TickZero.git</code>
-                        <button class="copy-btn" data-clipboard="git clone https://github.com/MACULINX/TickZero.git">
+                        <button class="copy-btn" data-clipboard="git clone https://github.com/MACULINX/TickZero.git" aria-label="Copier la commande git clone">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -647,7 +650,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </div>
                     <div class="code-block">
                         <code>cd TickZero && pip install -r requirements.txt</code>
-                        <button class="copy-btn" data-clipboard="cd TickZero && pip install -r requirements.txt">
+                        <button class="copy-btn" data-clipboard="cd TickZero && pip install -r requirements.txt" aria-label="Copier la commande d'installation">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -657,7 +660,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </div>
                     <div class="code-block">
                         <code>python launcher.py</code>
-                        <button class="copy-btn" data-clipboard="python launcher.py">
+                        <button class="copy-btn" data-clipboard="python launcher.py" aria-label="Copier la commande de lancement">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -676,7 +679,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <img src="/assets/images/logo.png" alt="TickZero Logo" loading="lazy">
+                        <img src="/assets/images/logo.png" alt="TickZero Logo" loading="lazy" width="32" height="32">
                         <span>TickZero</span>
                     </div>
                     <p class="footer-description">
